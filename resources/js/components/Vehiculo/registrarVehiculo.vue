@@ -205,8 +205,8 @@
 </template>
 
 <script>
-import Vehículo from "./PestanasVehiculos/contenedor1";
-import Capacidad from "./PestanasVehiculos/contenedor2";
+import Vehículo from "./contenedor1";
+import Capacidad from "./contenedor2";
 
 export default {
   name: "registrarVehiculo",

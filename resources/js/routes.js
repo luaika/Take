@@ -2,14 +2,14 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 //Inicio - se importan todos los componentes
-import CrearHorario from './components/crearHorario';
-import CrearTercero from './components/registrarTerceros';
-import RegitrarVehiculo from './components/registrarVehiculo';
-import RegistrarRuta from './components/registrarRutas';
-import ConsultarRutasVehiculos from './components/consultarRutaVehiculo';
-import Despacho from './components/despacho';
-import CantidadPasajeros from './components/cantidadPasajeros';
-import RegistrarUsuarios from './components/registrarUsuarios'
+import CrearHorario from './components/Horario/crearHorario';
+import CrearTercero from './components/Tercero/registrarTerceros';
+import RegitrarVehiculo from './components/Vehiculo/registrarVehiculo';
+import RegistrarRuta from './components/Ruta/registrarRutas';
+import ConsultarRutasVehiculos from './components/Ruta/consultarRutaVehiculo';
+import Despacho from './components/Vehiculo/despacho';
+import CantidadPasajeros from './components/Pasajero/cantidadPasajeros';
+import RegistrarUsuarios from './components/Tercero/registrarUsuarios';
 Vue.use(VueRouter);
 
 const router =  new VueRouter({

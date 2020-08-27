@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import Usuario from "./PestanasTerceros/contenedor1";
-import Empresa from "./PestanasTerceros/contenedor2";
+import Usuario from "./contenedor1";
+import Empresa from "./contenedor2";
 
 export default {
   name: "Tercero",
