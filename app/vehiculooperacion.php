@@ -24,5 +24,3 @@ class vehiculooperacion extends Model
 
     ];
 }
-
-',
