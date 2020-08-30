@@ -4,17 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class vehiculortm extends Model
+class vehiculopoliza extends Model
 {
     protected $fillable = [
         
-        'idVehiculoRTM',
+        'idVehiculoPoliza',
         'idVehiculo',
+        'idPoliza',
         'idTercero',
-        'numeroCertificado',
+        'numeroPoliza',
         'fechaExpedicion',
-        'fechaVigenciaInicia',
-        'fechaVigenciaFin',
+        'fechaVigenciaInicio',
+        'fechaVegenciaFin',
         'observaciones',
         'estado',
         'fechaCrea',
