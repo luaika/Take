@@ -23,6 +23,7 @@
         </form>
     </div>
 
+
     <div class="listado">
     <table class="table md-7" >
       <thead class=" encabezadoFormulario text-white " >
