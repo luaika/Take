@@ -26,7 +26,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::view('/crearHorario', 'Home');
 Route::view('/registrarTercero','Home');
 Route::view('/registrarVehiculo','Home');
+
+//Ruta
 Route::view('/registrarRutas','Home');
+Route::post('/setRuta', 'RutaController@store');
+
 Route::view('/consultarRutasVehiculos','Home');
 Route::view('/despacho','Home');
 Route::view('/cantidadPasajeros','Home');

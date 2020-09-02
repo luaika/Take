@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ruta extends Model
 {
-    protected $table = 'Ruta';
-     protected $primaryKey = 'idRuta';
+    protected $table = 'ruta';
+    protected $primaryKey = 'idRuta';
 
      protected $fillable = [
 
