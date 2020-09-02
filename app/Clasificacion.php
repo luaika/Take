@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Clasificacion extends Model
 {
-    protected $table = 'Clasificacion';
+
+    protected $table = 'clasificacion';
     protected $primaryKey = 'idClasificacion';
 
     protected $fillable = [
