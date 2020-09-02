@@ -11,7 +11,7 @@
 
   <!-- Favicons -->
   <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
-  
+
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -43,7 +43,7 @@
   <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
   <!-- ======= Header ======= -->
   <header id="header">
-      
+
     <div class="d-flex flex-column">
       <div class="profile">
         <img src="{{asset ('img/logo.png')}}" alt="" class="img-fluid rounded-circle">
@@ -53,7 +53,7 @@
           <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
           <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
           <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-          <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>         
+          <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
         </div>
       </div>
 
@@ -88,13 +88,13 @@
         </ul>
       </nav>
 
-     
+
       <!-- .nav-menu -->
       <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
 
     </div>
   </header>
-  
+
   <!-- End Header -->
 
   <!-- Main Content -->
@@ -103,7 +103,7 @@
       @yield('content')
     </div>
   </div>
- 
+
 
   <!-- ======= Footer ======= -->
   <footer id="footer">
