@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tercero extends Model
 {
+
     protected $table = 'tercero';
+
      protected $primaryKey = 'idTercero';
 
      protected $fillable = [
