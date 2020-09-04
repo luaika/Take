@@ -22,6 +22,7 @@ Route::get('/login', function () {
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('my-notification/{type}', 'HomeController@myNotification');
 
 Route::view('/crearHorario', 'Home');
 Route::view('/registrarTercero','Home');

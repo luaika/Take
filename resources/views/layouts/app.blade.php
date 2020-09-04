@@ -35,6 +35,14 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+	<link rel="stylesheet" href="http://demo.itsolutionstuff.com/plugin/bootstrap-3.min.css">
+
+	<script src="http://demo.itsolutionstuff.com/plugin/jquery.js"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -131,5 +139,6 @@
   <!-- Template Main JS File -->
   <script src="{{asset ('js/main.js')}}"></script>
   @yield('js')
-</body>
+  @include('sweet::alert')
+</body>s
 </html>
