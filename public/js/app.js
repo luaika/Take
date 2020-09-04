@@ -2133,15 +2133,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2213,42 +2204,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "registrarRutas",
   data: function data() {
-    return _defineProperty({
+    return {
       codigo: '',
       descripcion: '',
       idBarrioInicia: '',
       idBarrioTermina: '',
       estado: '',
-      fechaCrea: '',
-      fechaModifica: '',
-      idUsuarioModifica: ''
-    }, "idUsuarioModifica", '');
+      idUsuarioModifica: '',
+      idUsuarioCrea: ''
+    };
   },
   methods: {
     setRuta: function setRuta() {
       var _this = this;
 
-      var formData = _defineProperty({
+      var formData = {
         'codigo': this.codigo,
         'descripcion': this.descripcion,
         'idBarrioInicia': this.idBarrioInicia,
         'idBarrioTermina': this.idBarrioTermina,
         'estado': this.estado,
-        'fechaCrea': this.fechaCrea,
-        'fechaModifica': this.fechaModifica,
-        'idUsuarioModifica': this.idUsuarioModifica
-      }, "idUsuarioModifica", this.idUsuarioModifica);
-
+        'idUsuarioModifica': this.idUsuarioModifica,
+        'idUsuarioCrea': this.idUsuarioModifica
+      };
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/setRuta', formData).then(function (response) {
         _this.codigo = '';
         _this.descripcion = '';
         _this.idBarrioInicia = '';
         _this.idBarrioTermina = '';
         _this.estado = '';
-        _this.fechaCrea = '';
-        _this.fechaModifica = '';
         _this.idUsuarioModifica = '';
-        _this.idUsuarioModifica = ''; //  swal("OK!", "Ruta creada exitosamente!", "success");
+        _this.idUsuarioCrea = ''; //  swal("OK!", "Ruta creada exitosamente!", "success");
 
         alert("Muy bien");
       })["catch"](function (error) {
@@ -4782,7 +4768,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "form-group col-md-6" }, [
+            _c("div", { staticClass: "form-group col-md-4" }, [
               _c("label", { attrs: { for: "estado" } }, [_vm._v("Estado")]),
               _vm._v(" "),
               _c("i", { staticClass: "fas fa-map-marker-alt iconosRutas" }),
@@ -4810,7 +4796,7 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group col-md-6" }, [
+            _c("div", { staticClass: "form-group col-md-4" }, [
               _c("label", { attrs: { for: "idUsuarioModifica" } }, [
                 _vm._v("idUsuarioModifica")
               ]),
@@ -4838,61 +4824,33 @@ var render = function() {
                   }
                 }
               })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "form-group col-md-6" }, [
-              _c("label", { attrs: { for: "fechaCrea" } }, [
-                _vm._v("Fecha Creación")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.fechaCrea,
-                    expression: "fechaCrea"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "date", id: "fechaCrea", required: "" },
-                domProps: { value: _vm.fechaCrea },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.fechaCrea = $event.target.value
-                  }
-                }
-              })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group col-md-6" }, [
-              _c("label", { attrs: { for: "fechaModifica" } }, [
-                _vm._v("Fecha Modificación")
+            _c("div", { staticClass: "form-group col-md-4" }, [
+              _c("label", { attrs: { for: "idUsuarioCrea" } }, [
+                _vm._v("idUsuarioCrea")
               ]),
+              _vm._v(" "),
+              _c("i", { staticClass: "fas fa-map-marked-alt iconosRutas" }),
               _vm._v(" "),
               _c("input", {
                 directives: [
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.fechaModifica,
-                    expression: "fechaModifica"
+                    value: _vm.idUsuarioCrea,
+                    expression: "idUsuarioCrea"
                   }
                 ],
-                staticClass: "form-control",
-                attrs: { type: "date", id: "fechaModifica", required: "" },
-                domProps: { value: _vm.fechaModifica },
+                staticClass: "form-control inputRutas",
+                attrs: { type: "text", id: "idUsuarioCrea", required: "" },
+                domProps: { value: _vm.idUsuarioCrea },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.fechaModifica = $event.target.value
+                    _vm.idUsuarioCrea = $event.target.value
                   }
                 }
               })
@@ -22566,8 +22524,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Estefania\Documents\TakevaProject5\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Estefania\Documents\TakevaProject5\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\ACER\Documents\proyecto_takeva\Takeva5\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\ACER\Documents\proyecto_takeva\Takeva5\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
