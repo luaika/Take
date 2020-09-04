@@ -102,12 +102,9 @@ export default {
                 this.estado = '';
                 this.idUsuarioModifica = '';
                 this.idUsuarioCrea = '';
-
-                    swal("OK!", "Ruta creada exitosamente!", "success");
-                    
+                    swal("OK!", "Ruta creada exitosamente!", "success");                 
                 }).catch((error) => {
                    swal("Lo sentimos!", "Parece que algo salio mal!", "error");
-                   alert("Error");
                     console.log(error.response);
                 });           
        }, 
