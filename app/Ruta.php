@@ -6,10 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ruta extends Model
 {
+
     protected $table = 'ruta';
     protected $primaryKey = 'idRuta';
+<<<<<<< HEAD
 
     protected $fillable = [
+=======
+     protected $fillable = [
+>>>>>>> 96f59a96637be6be98c1df177fd1a5ea441a6714
 
         'idRuta',
         'codigo',
