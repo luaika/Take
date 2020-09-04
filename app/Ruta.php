@@ -9,7 +9,7 @@ class Ruta extends Model
     protected $table = 'ruta';
     protected $primaryKey = 'idRuta';
 
-     protected $fillable = [
+    protected $fillable = [
 
         'idRuta',
         'codigo',
@@ -17,8 +17,7 @@ class Ruta extends Model
         'idBarrioInicia',
         'idBarrioTermina',
         'estado',
-        'fechaCrea',
-        'fechaModifica',
+        'idUsuarioCrea',
         'idUsuarioModifica',
     ];
 

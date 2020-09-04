@@ -36,31 +36,24 @@
             </div>
 
             <div class="row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                 <label for="estado">Estado</label>
                 <i class="fas fa-map-marker-alt iconosRutas"></i>
                 <input type="text" id="estado" class="form-control inputRutas" v-model="estado" required>
                 </div>
 
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                 <label for="idUsuarioModifica">idUsuarioModifica</label>
                 <i class="fas fa-map-marked-alt iconosRutas"></i>
                 <input type="text" id="idUsuarioModifica" class="form-control inputRutas" v-model="idUsuarioModifica" required>
                 </div>
-            </div>
 
-            <div class="row">
-            <div class="form-group col-md-6">
-                <label for="fechaCrea">Fecha Creación</label>
-                <input type="date" id="fechaCrea" class="form-control"  v-model="fechaCrea" required>
+                <div class="form-group col-md-4">
+                <label for="idUsuarioCrea">idUsuarioCrea</label>
+                <i class="fas fa-map-marked-alt iconosRutas"></i>
+                <input type="text" id="idUsuarioCrea" class="form-control inputRutas" v-model="idUsuarioCrea" required>
+                </div>
             </div>
-
-            <div class="form-group col-md-6">
-                <label for="fechaModifica">Fecha Modificación</label>
-                <input type="date" id="fechaModifica" class="form-control" v-model="fechaModifica" required>
-            </div>
-            </div>
-
             <div class="btn-width">
                 <button class="btn  botonCancelar botones" >Cancelar</button>
                 <button class="btn botonAgregar botones" type="submit">Agregar</button>
@@ -78,15 +71,14 @@ export default {
     name: "registrarRutas",
      data(){
             return {
-               codigo : '',
+                codigo : '',
                 descripcion : '',
                 idBarrioInicia : '',
                 idBarrioTermina : '',
                 estado : '',
-                fechaCrea : '',
-                fechaModifica : '',
-                idUsuarioModifica : '',
-                idUsuarioModifica : '',
+                idUsuarioModifica: '',
+                idUsuarioCrea:'',
+               
             }
         },
     methods:{
@@ -97,10 +89,8 @@ export default {
                 'idBarrioInicia': this.idBarrioInicia,
                 'idBarrioTermina': this.idBarrioTermina,
                 'estado': this.estado,
-                'fechaCrea': this.fechaCrea,
-                'fechaModifica': this.fechaModifica,
                 'idUsuarioModifica': this.idUsuarioModifica,
-                'idUsuarioModifica': this.idUsuarioModifica
+                'idUsuarioCrea': this.idUsuarioModifica
            };
             axios.post('/setRuta', formData).then((response) =>{
                 this.codigo = '';
@@ -108,10 +98,8 @@ export default {
                 this.idBarrioInicia = '';
                 this.idBarrioTermina = '';
                 this.estado = '';
-                this.fechaCrea = '';
-                this.fechaModifica = '';
                 this.idUsuarioModifica = '';
-                this.idUsuarioModifica = '';
+                this.idUsuarioCrea = '';
 
               //  swal("OK!", "Ruta creada exitosamente!", "success");
                     alert("Muy bien");

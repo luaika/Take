@@ -37,15 +37,14 @@ class RutaController extends Controller
     public function store(Request $request)
     {
         $ruta = Ruta::create([
-            //'idRuta' => Auth::user()->id,
+            
             'codigo' => $request->codigo,
             'descripcion' => $request->descripcion,
             'idBarrioInicia' => $request->idBarrioInicia,
             'idBarrioTermina' => $request->idBarrioTermina,
             'estado' => $request->estado,
-            'fechaCrea'  => $request->fechaCrea,
-            'fechaModifica' => $request->fechaModifica,
             'idUsuarioModifica' => $request->idUsuarioModifica,
+            'idUsuarioCrea' => $request->idUsuarioCrea
             ]);
  
          return response()->json($ruta);
