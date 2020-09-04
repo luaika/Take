@@ -36,18 +36,20 @@
             </div>
 
             <div class="row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                 <label for="estado">Estado</label>
                 <i class="fas fa-map-marker-alt iconosRutas"></i>
                 <input type="text" id="estado" class="form-control inputRutas" v-model="estado" required>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                 <label for="idUsuarioModifica">idUsuarioModifica</label>
                 <i class="fas fa-map-marked-alt iconosRutas"></i>
                 <input type="text" id="idUsuarioModifica" class="form-control inputRutas" v-model="idUsuarioModifica" required>
                 </div>
 
+            </div>
+            <div class="row">
                 <div class="form-group col-md-4">
                 <label for="idUsuarioCrea">idUsuarioCrea</label>
                 <i class="fas fa-map-marked-alt iconosRutas"></i>
@@ -101,10 +103,10 @@ export default {
                 this.idUsuarioModifica = '';
                 this.idUsuarioCrea = '';
 
-              //  swal("OK!", "Ruta creada exitosamente!", "success");
-                    alert("Muy bien");
+                    swal("OK!", "Ruta creada exitosamente!", "success");
+                    
                 }).catch((error) => {
-                   // swal("Oops!", "Parece que algo salio mal!", "error");
+                   swal("Lo sentimos!", "Parece que algo salio mal!", "error");
                    alert("Error");
                     console.log(error.response);
                 });           
