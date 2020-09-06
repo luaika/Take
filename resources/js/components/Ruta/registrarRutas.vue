@@ -1,6 +1,6 @@
 <template>
 
-    <div class="container contaRuta">
+    <div class="container contaRuta" id="Ruta">
         <div class="modal-header encabezadoFormulario" >
             <h5 class="text-center text-white" id="exampleModalLabel">Registrar Rutas</h5>
         </div>
@@ -46,6 +46,7 @@
                 <div class="form-group col-md-6">
                 <label>Estado</label>
                 <select class="custom-select" v-model="estado">
+                    <option value="-1">Seleccionar Estado</option>
                     <option value="1">Activo</option>
                     <option value="0">Inactivo</option>
                 </select>
@@ -86,7 +87,7 @@ export default {
                 descripcion : '',
                 idBarrioInicia : 0,
                 idBarrioTermina : 0,
-                estado : '',
+                estado : -1,
                 idUsuarioModifica: '',
                 idUsuarioCrea:'',
                 show_barrios:true,
@@ -111,7 +112,7 @@ export default {
     },
     methods:{
        setRuta:function() {
-            if (this.idBarrioInicia == 0 || this.idBarrioTermina == 0 || this.estado == 0) {
+            if (this.idBarrioInicia == 0 || this.idBarrioTermina == 0 || this.estado == -1) {
                 this.show_alert.create.state = true;
                 this.show_alert.create.messaje = 'Debe seleccionar origen, destino y estado ';
                 setTimeout(() => this.show_alert.create.state = false, 2000);
@@ -137,11 +138,14 @@ export default {
                 this.estado = '';
                 this.idUsuarioModifica = '';
                 this.idUsuarioCrea = '';
-                    swal("OK!", "Ruta creada exitosamente!", "success");                 
+                    swal("OK!", "Ruta creada exitosamente!", "success"); 
+                    this.buttons.create.name = 'Agregar' ;
+                    this.buttons.create.state = false ;  
+                    $("#Ruta").modal('hide'); 
                 }).catch((error) => {
                     swal("Lo sentimos!", "Parece que algo salio mal!", "error");
                     console.log(error.response);
-                });           
+                });          
             };
        }, 
        
