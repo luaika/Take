@@ -6,7 +6,11 @@
         </div>
     <div class="card cardRutas"> 
        <form method="POST" id="form-ruta"  v-on:submit.prevent="setRuta" >
-              <div class="row">
+           
+            <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ show_alert.create.messaje }}
+            </div>
+            <div class="row">
 
             <div class="form-group col-md-6">
                 <label for="codigo">Codigo</label>
@@ -23,23 +27,28 @@
 
             <div class="row">
                 <div class="form-group col-md-6">
-                <label for="idBarrioInicia">Origen</label>
-                <i class="fas fa-map-marker-alt iconosRutas"></i>
-                <input type="text" id="idBarrioInicia" class="form-control inputRutas" v-model="idBarrioInicia" required>
+                     <label>Barrio de origen: <span class="text-danger">*</span></label>
+                    <select class="custom-select" v-model="idBarrioInicia" required>
+                        <option value="0">Seleccionar Barrio</option>
+                         <option v-for="idBarrioInicia in barrio" :value="idBarrioInicia.idBarrio" v-text="idBarrioInicia.descripcion" v-bind:key="idBarrioInicia"></option>
+                    </select>
                 </div>
-
                 <div class="form-group col-md-6">
-                <label for="idBarrioTermina">Destino</label>
-                <i class="fas fa-map-marked-alt iconosRutas"></i>
-                <input type="text" id="idBarrioTermina" class="form-control inputRutas" v-model="idBarrioTermina" required>
+                     <label>Barrio de Destino: <span class="text-danger">*</span></label>
+                    <select class="custom-select" v-model="idBarrioTermina" required>
+                        <option value="0">Seleccionar Barrio</option>
+                         <option v-for="idBarrioTermina in barrio" :value="idBarrioTermina.idBarrio" v-text="idBarrioTermina.descripcion" v-bind:key="idBarrioTermina"></option>
+                    </select>
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group col-md-6">
-                <label for="estado">Estado</label>
-                <i class="fas fa-map-marker-alt iconosRutas"></i>
-                <input type="text" id="estado" class="form-control inputRutas" v-model="estado" required>
+                <label>Estado</label>
+                <select class="custom-select" v-model="estado">
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
                 </div>
 
                 <div class="form-group col-md-6">
@@ -58,7 +67,7 @@
             </div>
             <div class="btn-width">
                 <button class="btn  botonCancelar botones" >Cancelar</button>
-                <button class="btn botonAgregar botones" type="submit">Agregar</button>
+                <button class="btn botonAgregar botones"  :disabled="buttons.create.state">{{ buttons.create.name }}</button>
             </div>
         </form>
         </div>
@@ -75,42 +84,76 @@ export default {
             return {
                 codigo : '',
                 descripcion : '',
-                idBarrioInicia : '',
-                idBarrioTermina : '',
+                idBarrioInicia : 0,
+                idBarrioTermina : 0,
                 estado : '',
                 idUsuarioModifica: '',
                 idUsuarioCrea:'',
-               
+                show_barrios:true,
+                barrio:[],
+                show_alert: {
+                    create: {
+                        state: false ,
+                        messaje: ''
+                    } ,
+                },
+                buttons: {
+                    create: {
+                        name: 'Agregar',
+                        state: false,
+                    },
+                },
             }
+            
         },
+    mounted() {
+            this.getListBarrios();
+    },
     methods:{
        setRuta:function() {
-           let formData = {
-                'codigo': this.codigo,
-                'descripcion': this.descripcion,
-                'idBarrioInicia': this.idBarrioInicia,
-                'idBarrioTermina': this.idBarrioTermina,
-                'estado': this.estado,
-                'idUsuarioModifica': this.idUsuarioModifica,
-                'idUsuarioCrea': this.idUsuarioModifica
-           };
+            if (this.idBarrioInicia == 0 || this.idBarrioTermina == 0 || this.estado == 0) {
+                this.show_alert.create.state = true;
+                this.show_alert.create.messaje = 'Debe seleccionar origen, destino y estado ';
+                setTimeout(() => this.show_alert.create.state = false, 2000);
+            } 
+            else {
+                this.buttons.create.name = 'Agregando ...';
+                this.buttons.create.state = true;
+                let formData = {
+                    'codigo': this.codigo,
+                    'descripcion': this.descripcion,
+                    'idBarrioInicia': this.idBarrioInicia,
+                    'idBarrioTermina': this.idBarrioTermina,
+                    'estado': this.estado,
+                    'idUsuarioModifica': this.idUsuarioModifica,
+                    'idUsuarioCrea': this.idUsuarioModifica
+                }
+                
             axios.post('/setRuta', formData).then((response) =>{
                 this.codigo = '';
                 this.descripcion = '';
-                this.idBarrioInicia = '';
-                this.idBarrioTermina = '';
+                this.idBarrioInicia = 0;
+                this.idBarrioTermina = 0;
                 this.estado = '';
                 this.idUsuarioModifica = '';
                 this.idUsuarioCrea = '';
-
-                    swal("OK!", "Ruta creada exitosamente!", "success");
-                    
+                    swal("OK!", "Ruta creada exitosamente!", "success");                 
                 }).catch((error) => {
-                   swal("Lo sentimos!", "Parece que algo salio mal!", "error");
-                   alert("Error");
+                    swal("Lo sentimos!", "Parece que algo salio mal!", "error");
                     console.log(error.response);
                 });           
+            };
        }, 
+       
+            // Lista Categorias
+            getListBarrios: function () {
+                axios.get('/barrio-resource').then((response) => {
+                    console.log('response_ '+JSON.stringify(response.data));
+                    this.barrio = response.data;
+                }).catch((error) => {
+                    console.log(error.response);
+                });
+            },
     }
 }
 </script>

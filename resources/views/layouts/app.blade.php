@@ -36,7 +36,6 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 
-	<link rel="stylesheet" href="http://demo.itsolutionstuff.com/plugin/bootstrap-3.min.css">
 
 	<script src="http://demo.itsolutionstuff.com/plugin/jquery.js"></script>
 
@@ -140,5 +139,5 @@
   <script src="{{asset ('js/main.js')}}"></script>
   @yield('js')
   @include('sweet::alert')
-</body>s
+</body>
 </html>
