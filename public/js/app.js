@@ -2133,6 +2133,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
+<<<<<<< HEAD
+=======
+//
+//
+>>>>>>> pb/Ruta
 //
 //
 //
@@ -2234,11 +2239,16 @@ __webpack_require__.r(__webpack_exports__);
         _this.idBarrioTermina = '';
         _this.estado = '';
         _this.idUsuarioModifica = '';
+<<<<<<< HEAD
         _this.idUsuarioCrea = ''; //  swal("OK!", "Ruta creada exitosamente!", "success");
 
         alert("Muy bien");
+=======
+        _this.idUsuarioCrea = '';
+        swal("OK!", "Ruta creada exitosamente!", "success");
+>>>>>>> pb/Ruta
       })["catch"](function (error) {
-        // swal("Oops!", "Parece que algo salio mal!", "error");
+        swal("Lo sentimos!", "Parece que algo salio mal!", "error");
         alert("Error");
         console.log(error.response);
       });
@@ -4824,12 +4834,24 @@ var render = function() {
                   }
                 }
               })
+<<<<<<< HEAD
             ]),
             _vm._v(" "),
+=======
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+>>>>>>> pb/Ruta
             _c("div", { staticClass: "form-group col-md-4" }, [
               _c("label", { attrs: { for: "idUsuarioCrea" } }, [
                 _vm._v("idUsuarioCrea")
               ]),
+<<<<<<< HEAD
+=======
+              _vm._v(" "),
+              _c("i", { staticClass: "fas fa-map-marked-alt iconosRutas" }),
+>>>>>>> pb/Ruta
               _vm._v(" "),
               _c("i", { staticClass: "fas fa-map-marked-alt iconosRutas" }),
               _vm._v(" "),

@@ -17,11 +17,15 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/login', function () {
-    return view('auth/login');
-});
+Route::get('/login', 'LoginController@index');
+
+//inicio de administrador
+Route::get('/inicio', function () {
+    return view('layouts/inicio');
+}); 
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('my-notification/{type}', 'HomeController@myNotification');
 
 Route::view('/crearHorario', 'Home');
 Route::view('/registrarTercero','Home');
@@ -29,7 +33,11 @@ Route::view('/registrarVehiculo','Home');
 
 //Ruta
 Route::view('/registrarRutas','Home');
+Route::resource('/rutas-resource', 'RutaController');
 Route::post('/setRuta', 'RutaController@store');
+
+//Barrio
+Route::resource('/barrio-resource', 'BarrioController');
 
 Route::view('/consultarRutasVehiculos','Home');
 Route::view('/despacho','Home');

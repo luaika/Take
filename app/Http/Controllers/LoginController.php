@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Ruta;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class RutaController extends Controller
+class LoginController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +12,8 @@ class RutaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-      return response()->json(Ruta::all()) ;
+    {      
+            return view('auth/login');
     }
 
     /**
@@ -36,18 +34,7 @@ class RutaController extends Controller
      */
     public function store(Request $request)
     {
-        $ruta = Ruta::create([
-            
-            'codigo' => $request->codigo,
-            'descripcion' => $request->descripcion,
-            'idBarrioInicia' => $request->idBarrioInicia,
-            'idBarrioTermina' => $request->idBarrioTermina,
-            'estado' => $request->estado,
-            'idUsuarioModifica' => $request->idUsuarioModifica,
-            'idUsuarioCrea' => $request->idUsuarioCrea
-            ]);
- 
-         return response()->json($ruta);
+        //
     }
 
     /**

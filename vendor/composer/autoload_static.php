@@ -533,6 +533,7 @@ class ComposerStaticInitabefdcb73d96aa05a979fc52e6ccc495
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'App\\Usuario' => __DIR__ . '/../..' . '/app/Usuario.php',
         'App\\VehiculoMatricula' => __DIR__ . '/../..' . '/app/VehiculoMatricula.php',
+        'App\\vehiculmatricula' => __DIR__ . '/../..' . '/app/vehiculmatricula.php',
         'App\\vehiculo' => __DIR__ . '/../..' . '/app/vehiculo.php',
         'App\\vehiculooperacion' => __DIR__ . '/../..' . '/app/vehiculooperacion.php',
         'App\\vehiculopoliza' => __DIR__ . '/../..' . '/app/vehiculopoliza.php',

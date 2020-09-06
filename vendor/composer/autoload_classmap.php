@@ -39,6 +39,7 @@ return array(
     'App\\User' => $baseDir . '/app/User.php',
     'App\\Usuario' => $baseDir . '/app/Usuario.php',
     'App\\VehiculoMatricula' => $baseDir . '/app/VehiculoMatricula.php',
+    'App\\vehiculmatricula' => $baseDir . '/app/vehiculmatricula.php',
     'App\\vehiculo' => $baseDir . '/app/vehiculo.php',
     'App\\vehiculooperacion' => $baseDir . '/app/vehiculooperacion.php',
     'App\\vehiculopoliza' => $baseDir . '/app/vehiculopoliza.php',
