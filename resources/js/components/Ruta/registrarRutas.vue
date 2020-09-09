@@ -4,9 +4,9 @@
         <div class="modal-header encabezadoFormulario" >
             <h5 class="text-center text-white" id="exampleModalLabel">Registrar Rutas</h5>
         </div>
-    <div class="card cardRutas"> 
+    <div class="card cardRutas">
        <form method="POST" id="form-ruta"  v-on:submit.prevent="setRuta" >
-           
+
             <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ show_alert.create.messaje }}
             </div>
@@ -105,7 +105,7 @@ export default {
                     },
                 },
             }
-            
+
         },
     mounted() {
             this.getListBarrios();
@@ -116,7 +116,7 @@ export default {
                 this.show_alert.create.state = true;
                 this.show_alert.create.messaje = 'Debe seleccionar origen, destino y estado ';
                 setTimeout(() => this.show_alert.create.state = false, 2000);
-            } 
+            }
             else {
                 this.buttons.create.name = 'Agregando ...';
                 this.buttons.create.state = true;
@@ -129,7 +129,7 @@ export default {
                     'idUsuarioModifica': this.idUsuarioModifica,
                     'idUsuarioCrea': this.idUsuarioModifica
                 }
-                
+
             axios.post('/setRuta', formData).then((response) =>{
                 this.codigo = '';
                 this.descripcion = '';
@@ -138,17 +138,17 @@ export default {
                 this.estado = '';
                 this.idUsuarioModifica = '';
                 this.idUsuarioCrea = '';
-                    swal("OK!", "Ruta creada exitosamente!", "success"); 
+                    swal("OK!", "Ruta creada exitosamente!", "success");
                     this.buttons.create.name = 'Agregar' ;
-                    this.buttons.create.state = false ;  
-                    $("#Ruta").modal('hide'); 
+                    this.buttons.create.state = false ;
+                    $("#Ruta").modal('hide');
                 }).catch((error) => {
                     swal("Lo sentimos!", "Parece que algo salio mal!", "error");
                     console.log(error.response);
-                });          
+                });
             };
-       }, 
-       
+       },
+
             // Lista Categorias
             getListBarrios: function () {
                 axios.get('/barrio-resource').then((response) => {

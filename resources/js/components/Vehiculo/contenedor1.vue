@@ -1,21 +1,21 @@
 <template>
     <div class="card-bady contenidoFormulario" >
-      
+
 
             <div class="form-group">
                 <div class="row">
                     <div class="col">
                         <label>Placa</label>
-                        <i class="fas fa-digital-tachograph iconos"></i>   
+                        <i class="fas fa-digital-tachograph iconos"></i>
                         <input type="text" class="form-control inputTeceros">
                     </div>
                     <div class="col">
-                        <label >Matrícula</label>
-                        <i class="fas fa-city iconos"></i>
+                        <label >idMatrícula</label>
+                        <i class=""></i>
                         <input type="text" class="form-control inputTeceros">
                     </div>
                     <div class="col">
-                        <label >Servicio</label>
+                        <label >idServicio</label>
                         <i class="fas fa-city iconos"></i>
                         <input type="text" class="form-control inputTeceros">
                     </div>
@@ -25,17 +25,17 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col">
-                        <label for="">Clase</label>
+                        <label for="">idClase</label>
                         <i class="fas fa-city iconos"></i>
                         <input type="text" class="form-control inputTeceros">
                     </div>
                     <div class="col">
-                        <label for="">Marca</label>
+                        <label for="">idMarca</label>
                         <i class="fas fa-city iconos"></i>
                         <input type="text" class="form-control inputTeceros" >
                     </div>
                     <div class="col">
-                        <label for="">Color</label>
+                        <label for="">idColor</label>
                         <i class="fas fa-palette iconos"></i>
                         <input type="text" class="form-control inputTeceros">
                     </div>
@@ -45,12 +45,12 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col">
-                        <label for="">Carroceria</label>
+                        <label for="">idCarroceria</label>
                         <i class="fas fa-city iconos"></i>
                         <input type="text" class="form-control inputTeceros">
                     </div>
                     <div class="col">
-                        <label for="">Combustible</label>
+                        <label for="">idCombustible</label>
                         <i class="fas fa-gas-pump iconos"></i>
                         <input type="text" class="form-control inputTeceros">
                     </div>
@@ -59,7 +59,7 @@
                         <i class="fas fa-palette iconos"></i>
                         <input type="text" class="form-control inputTeceros">
                     </div>
-                            
+
                 </div>
            </div>
 
@@ -69,7 +69,7 @@
                     <div class="col-4">
                         <label for="">Modelo</label>
                         <i class="fas fa-palette iconos"></i>
-                        <input type="number" class="form-control inputTeceros">                    
+                        <input type="number" class="form-control inputTeceros">
                     </div>
                     <div class="col">
                         <label for="">Número de serie</label>
@@ -84,6 +84,6 @@
 
 <script>
 export default {
-    
+
 }
 </script>

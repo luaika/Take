@@ -3,7 +3,7 @@
         <div class="modal-header encabezadoFormulario" >
             <h5 class="text-center text-white" id="exampleModalLabel">Registrar Usuarios</h5>
         </div>
-    <div class="card cardRutas"> 
+    <div class="card cardRutas">
 
               <div class="row">
 
@@ -29,7 +29,7 @@
                             <option>Jose</option>
                           </select>
                       </div>
-                    
+
 
                 <div class="form-group col-md-6">
                 <label for="validationServer01">Email</label>
