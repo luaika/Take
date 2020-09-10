@@ -129,7 +129,7 @@ export default {
                     'idUsuarioModifica': this.idUsuarioModifica,
                     'idUsuarioCrea': this.idUsuarioModifica
                 }
-                
+                 
             axios.post('/setRuta', formData).then((response) =>{
                 this.codigo = '';
                 this.descripcion = '';
@@ -141,7 +141,7 @@ export default {
                     swal("OK!", "Ruta creada exitosamente!", "success"); 
                     this.buttons.create.name = 'Agregar' ;
                     this.buttons.create.state = false ;  
-                    $("#Ruta").modal('hide'); 
+                   
                 }).catch((error) => {
                     swal("Lo sentimos!", "Parece que algo salio mal!", "error");
                     console.log(error.response);
