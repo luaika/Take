@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Ruta;
+use App\Barrio;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth; 
 
 class RutaController extends Controller
 {
@@ -15,9 +16,21 @@ class RutaController extends Controller
      */
     public function index()
     {
-      return response()->json(Ruta::all()) ;
+      //return response()->json(Ruta::all()) ;
+      $lista = Ruta::join('barrio', 'barrio.idBarrio', 'ruta.idBarrioInicia')
+                    ->select('ruta.*' , 'barrio.descripcion as barrio_inicia')
+                ->get();
+                return response()->json($lista);
     }
 
+    /* public function rutaFinal()
+    {
+        $destino = Ruta::join('barrio', 'barrio.idBarrio', 'ruta.idBarrioTermina')
+                    ->select('ruta.idBarrioTermina' , 'barrio.descripcion as barrio_termina')
+                ->get();
+                return response()->json($destino);
+    }
+ */
     /**
      * Show the form for creating a new resource.
      *
