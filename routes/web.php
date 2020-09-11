@@ -39,6 +39,7 @@ Route::post('/setRuta', 'RutaController@store');
 //Barrio
 Route::resource('/barrio-resource', 'BarrioController');
 
+
 Route::view('/consultarRutasVehiculos','Home');
 Route::view('/despacho','Home');
 Route::view('/cantidadPasajeros','Home');

@@ -9,7 +9,9 @@ class Ruta extends Model
 
     protected $table = 'ruta';
     protected $primaryKey = 'idRuta';
+
      protected $fillable = [
+
         'idRuta',
         'codigo',
         'descripcion',
