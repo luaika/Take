@@ -16,9 +16,7 @@ class Usuario extends Model
         'idTercero',
         'codigo',
         'clave',
-        'estado',
-        'fechaCrea',
-        'fechaModifica',
+        'estado'
     ];
 
   /**
