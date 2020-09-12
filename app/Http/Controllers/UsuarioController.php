@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Tercero;
+use App\Usuario;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class TerceroController extends Controller
+class UsuarioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +15,7 @@ class TerceroController extends Controller
      */
     public function index()
     {
-
-        $query = Tercero::where([
-            ['estado', 1],
-        ])->orderBy('nombres')->get();
-        return response()->json($query);
+        return response()->json(Usuario::all()) ;
     }
 
     /**
@@ -39,28 +36,16 @@ class TerceroController extends Controller
      */
     public function store(Request $request)
     {
-        $tercero = Tercero::create([
+        $usuario = Usuario::create([
 
-            'numeroIdentificacion' => $request->numeroIdentificacion,
-            'tipoIdentificacion' => $request->tipoIdentificacion,
-            'nombres' => $request->nombres,
-            'apellidos' => $request->apellidos,
-            'razonSocial' => $request->razonSocial,
-            'nombreComercial' => $request->nombreComercial,
-            'genero' => $request->genero,
-            'fechaNacimiento' => $request->fechaNacimiento,
-            'telefono' => $request->telefono,
-            'celular' => $request->celular,
-            'email' => $request->email,
-            'direccion' => $request->direccion,
-            'idMunicipio' => $request->idMunicipio,
-            'foto' => $request->foto,
+            'idTercero' => $request->idTercero,
             'estado' => $request->estado,
-            'idUsuarioCrea' => $request->idUsuarioCrea,
-            'idUsuarioModifica' => $request->idUsuarioModifica,
+            'codigo' => $request->codigo,
+            'clave' => $request->clave
+
             ]);
 
-         return response()->json($tercero);
+         return response()->json($usuario);
     }
 
     /**
