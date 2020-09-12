@@ -195,7 +195,7 @@ export default {
                     'idUsuarioModifica': this.idUsuarioModifica,
                     'idUsuarioCrea': this.idUsuarioModifica
                 }
-                
+                 
             axios.post('/setRuta', formData).then((response) =>{
                 this.codigo = '';
                 this.descripcion = '';
@@ -207,6 +207,7 @@ export default {
                     swal("OK!", "Ruta creada exitosamente!", "success"); 
                     this.buttons.create.name = 'Agregar' ;
                     this.buttons.create.state = false ;  
+
                     this.getRutas();
                     this.getBarrioTermina();
                     $("#Ruta").modal('hide'); 

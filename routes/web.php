@@ -28,7 +28,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('my-notification/{type}', 'HomeController@myNotification');
 
 Route::view('/crearHorario', 'Home');
+
+//Terceros
 Route::view('/registrarTercero','Home');
+Route::post('/setTercero', 'TerceroController@store');
 Route::view('/registrarVehiculo','Home');
 
 //Ruta
