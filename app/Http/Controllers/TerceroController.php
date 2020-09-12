@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Tercero;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class TerceroController extends Controller
@@ -15,6 +14,7 @@ class TerceroController extends Controller
      */
     public function index()
     {
+
         $query = Tercero::where([
             ['estado', 1],
         ])->orderBy('nombres')->get();
@@ -39,7 +39,28 @@ class TerceroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tercero = Tercero::create([
+
+            'numeroIdentificacion' => $request->numeroIdentificacion,
+            'tipoIdentificacion' => $request->tipoIdentificacion,
+            'nombres' => $request->nombres,
+            'apellidos' => $request->apellidos,
+            'razonSocial' => $request->razonSocial,
+            'nombreComercial' => $request->nombreComercial,
+            'genero' => $request->genero,
+            'fechaNacimiento' => $request->fechaNacimiento,
+            'telefono' => $request->telefono,
+            'celular' => $request->celular,
+            'email' => $request->email,
+            'direccion' => $request->direccion,
+            'idMunicipio' => $request->idMunicipio,
+            'foto' => $request->foto,
+            'estado' => $request->estado,
+            'idUsuarioCrea' => $request->idUsuarioCrea,
+            'idUsuarioModifica' => $request->idUsuarioModifica,
+            ]);
+
+         return response()->json($tercero);
     }
 
     /**

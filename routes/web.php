@@ -28,7 +28,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('my-notification/{type}', 'HomeController@myNotification');
 
 Route::view('/crearHorario', 'Home');
+
+//Terceros
 Route::view('/registrarTercero','Home');
+Route::post('/setTercero', 'TerceroController@store');
 Route::view('/registrarVehiculo','Home');
 
 //Ruta
@@ -44,6 +47,7 @@ Route::resource('/tercero-resource', 'TerceroController');
 
 //Usuario
 Route::post('/setUsuario', 'UsuarioController@store');
+
 
 Route::view('/consultarRutasVehiculos','Home');
 Route::view('/despacho','Home');

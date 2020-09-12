@@ -72,13 +72,26 @@
             </div>
         </form>
         </div>
-
+        <br>
+        <div class="container-fluid">
+            <vue-bootstrap4-table :rows="rutas" :columns="columns"  :config = "config">
+                <templete slot="edit">
+                    <button type="button" class="btn btn-warning"><i class="icofont-pencil-alt-1"></i></button>
+                </templete>
+                <templete slot="state" slot-scope="props">
+                    <button type="button" class="btn btn-warning">{{props.row.estado}}</button>
+                </templete>
+            </vue-bootstrap4-table>
+        </div>
     </div>
+
+
 
 </template>
 <script>
 import axios from 'axios';
 import router from '../../routes';
+import VueBootstrap4Table from 'vue-bootstrap4-table';
 export default {
     name: "registrarRutas",
      data(){
@@ -92,6 +105,7 @@ export default {
                 idUsuarioCrea:'',
                 show_barrios:true,
                 barrio:[],
+                rutas:[],
                 show_alert: {
                     create: {
                         state: false ,
@@ -104,13 +118,65 @@ export default {
                         state: false,
                     },
                 },
-            }
+                columns: [
+                {
+                    label: "Código",
+                    name: "codigo",
+                    sort: false,
+                },
+                {
+                    label: "Descripción",
+                    name: "descripcion",
+                    sort: true,
+                },
+                {
+                    label: "Inicio",
+                    name: "barrio_inicia",
+                    sort: false,
+                },
+                {
+                    label: "Destino",
+                    name: "idBarrioTermina",
+                    sort: true,
+                },
+                {
+                    label: "Editar",
+                    name: "edit",
+                    sort: false,
+                },
+                {
+                    label: "Estado",
+                    name: "state",
+                    sort: false,
+                },
+            ],
+            config: {
+                 pagination: true, // default true
+                    pagination_info: true, // default true
+                    num_of_visibile_pagination_buttons: 7, // default 5
+                    per_page: 5, // default 10
+                    per_page_options:  [5,  10,  20,  30],
+                filas_seleccionables: true,
+                card_title: "RUTAS",
+                show_refresh_button: false,
+                show_reset_button: false,
+                global_search: {
+                        placeholder: "Buscar ",
+                },
+            },
             
+            }
         },
+    components:{
+        VueBootstrap4Table
+    },
     mounted() {
             this.getListBarrios();
+            this.getRutas();
+            this.getBarrioTermina();
     },
     methods:{
+    //insertar ruta
        setRuta:function() {
             if (this.idBarrioInicia == 0 || this.idBarrioTermina == 0 || this.estado == -1) {
                 this.show_alert.create.state = true;
@@ -129,7 +195,7 @@ export default {
                     'idUsuarioModifica': this.idUsuarioModifica,
                     'idUsuarioCrea': this.idUsuarioModifica
                 }
-                
+                 
             axios.post('/setRuta', formData).then((response) =>{
                 this.codigo = '';
                 this.descripcion = '';
@@ -141,6 +207,9 @@ export default {
                     swal("OK!", "Ruta creada exitosamente!", "success"); 
                     this.buttons.create.name = 'Agregar' ;
                     this.buttons.create.state = false ;  
+
+                    this.getRutas();
+                    this.getBarrioTermina();
                     $("#Ruta").modal('hide'); 
                 }).catch((error) => {
                     swal("Lo sentimos!", "Parece que algo salio mal!", "error");
@@ -148,16 +217,28 @@ export default {
                 });          
             };
        }, 
-       
-            // Lista Categorias
-            getListBarrios: function () {
-                axios.get('/barrio-resource').then((response) => {
-                    console.log('response_ '+JSON.stringify(response.data));
-                    this.barrio = response.data;
-                }).catch((error) => {
+    // Lista Barrios
+        getListBarrios: function () {
+            axios.get('/barrio-resource').then((response) => {
+                console.log('response_ '+JSON.stringify(response.data));
+                this.barrio = response.data;
+            }).catch((error) => {
                     console.log(error.response);
-                });
-            },
+            });
+        },
+    //Listar Rutas    
+        getRutas: function () {
+            axios.get('/rutas-resource').then( (response)  => {
+                if (response.data.length > 0) {
+                    this.rutas = response.data ;
+                    console.log(this.rutas);
+                } else {
+                    this.message = 'No hay registro de cupones!!!';
+                }
+            }).catch((error) => {
+                console.log(error.response);
+            });
+        },
     }
 }
 </script>
