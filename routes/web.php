@@ -22,7 +22,7 @@ Route::get('/login', 'LoginController@index');
 //inicio de administrador
 Route::get('/inicio', function () {
     return view('layouts/inicio');
-}); 
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('my-notification/{type}', 'HomeController@myNotification');
@@ -38,6 +38,12 @@ Route::post('/setRuta', 'RutaController@store');
 
 //Barrio
 Route::resource('/barrio-resource', 'BarrioController');
+
+//Vehiculo
+Route::resource('/vehiculo-resource', 'VehiculoController');
+
+//Horario
+Route::post('/setHorario', 'HorarioController@store');
 
 Route::view('/consultarRutasVehiculos','Home');
 Route::view('/despacho','Home');

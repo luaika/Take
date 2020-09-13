@@ -6,8 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class vehiculo extends Model
 {
+    protected $table = 'vehiculo';
+
+    protected $primaryKey = 'idVehiculo';
+
     protected $fillable = [
-        
+
         'idVehiculo',
         'placa',
         'numeroInterno',

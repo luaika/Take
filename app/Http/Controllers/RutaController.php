@@ -15,7 +15,18 @@ class RutaController extends Controller
      */
     public function index()
     {
-      return response()->json(Ruta::all()) ;
+    switch($_GET['Q']){
+
+        case 0:
+        return response()->json(Ruta::all()) ;
+
+        case 1:
+        $query = Ruta::where([
+        ['estado', 1],
+        ])->orderBy('descripcion')->get();
+        return response()->json($query);
+    }
+
     }
 
     /**
@@ -37,7 +48,7 @@ class RutaController extends Controller
     public function store(Request $request)
     {
         $ruta = Ruta::create([
-            
+
             'codigo' => $request->codigo,
             'descripcion' => $request->descripcion,
             'idBarrioInicia' => $request->idBarrioInicia,
@@ -46,7 +57,7 @@ class RutaController extends Controller
             'idUsuarioModifica' => $request->idUsuarioModifica,
             'idUsuarioCrea' => $request->idUsuarioCrea
             ]);
- 
+
          return response()->json($ruta);
     }
 

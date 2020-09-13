@@ -9,8 +9,12 @@ class Horario extends Model
     protected $table = 'horario';
     protected $primaryKey = 'idHorario';
      protected $fillable = [
-        'idHorario',
 
+        'idHorario',
+        'hora',
+        'fecha',
+        'idRuta',
+        'idVehiculo',
     ];
 
   /**

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Horario;
+use App\Vehiculo;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class HorarioController extends Controller
+class VehiculoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,10 @@ class HorarioController extends Controller
      */
     public function index()
     {
-        return response()->json(Horario::all()) ;
+        $query = Vehiculo::where([
+            ['estado', 1],
+        ])->orderBy('placa')->get();
+        return response()->json($query);
     }
 
     /**
@@ -36,15 +39,7 @@ class HorarioController extends Controller
      */
     public function store(Request $request)
     {
-        $horario = Horario::create([
-
-            'fecha' => $request->fecha,
-            'hora' => $request->hora,
-            'idRuta' => $request->idRuta,
-            'idVehiculo' => $request->idVehiculo
-            ]);
-
-         return response()->json($horario);
+        //
     }
 
     /**
