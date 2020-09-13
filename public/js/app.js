@@ -1965,6 +1965,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "crearHorario",
   created: function created() {},
@@ -2201,6 +2205,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2209,38 +2223,80 @@ __webpack_require__.r(__webpack_exports__);
     return {
       codigo: '',
       descripcion: '',
-      idBarrioInicia: '',
-      idBarrioTermina: '',
-      estado: '',
+      idBarrioInicia: 0,
+      idBarrioTermina: 0,
+      estado: -1,
       idUsuarioModifica: '',
-      idUsuarioCrea: ''
+      idUsuarioCrea: '',
+      show_barrios: true,
+      barrio: [],
+      show_alert: {
+        create: {
+          state: false,
+          messaje: ''
+        }
+      },
+      buttons: {
+        create: {
+          name: 'Agregar',
+          state: false
+        }
+      }
     };
+  },
+  mounted: function mounted() {
+    this.getListBarrios();
   },
   methods: {
     setRuta: function setRuta() {
       var _this = this;
 
-      var formData = {
-        'codigo': this.codigo,
-        'descripcion': this.descripcion,
-        'idBarrioInicia': this.idBarrioInicia,
-        'idBarrioTermina': this.idBarrioTermina,
-        'estado': this.estado,
-        'idUsuarioModifica': this.idUsuarioModifica,
-        'idUsuarioCrea': this.idUsuarioModifica
-      };
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/setRuta', formData).then(function (response) {
-        _this.codigo = '';
-        _this.descripcion = '';
-        _this.idBarrioInicia = '';
-        _this.idBarrioTermina = '';
-        _this.estado = '';
-        _this.idUsuarioModifica = '';
-        _this.idUsuarioCrea = '';
-        swal("OK!", "Ruta creada exitosamente!", "success");
+      if (this.idBarrioInicia == 0 || this.idBarrioTermina == 0 || this.estado == -1) {
+        this.show_alert.create.state = true;
+        this.show_alert.create.messaje = 'Debe seleccionar origen, destino y estado ';
+        setTimeout(function () {
+          return _this.show_alert.create.state = false;
+        }, 2000);
+      } else {
+        this.buttons.create.name = 'Agregando ...';
+        this.buttons.create.state = true;
+        var formData = {
+          'codigo': this.codigo,
+          'descripcion': this.descripcion,
+          'idBarrioInicia': this.idBarrioInicia,
+          'idBarrioTermina': this.idBarrioTermina,
+          'estado': this.estado,
+          'idUsuarioModifica': this.idUsuarioModifica,
+          'idUsuarioCrea': this.idUsuarioModifica
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/setRuta', formData).then(function (response) {
+          _this.codigo = '';
+          _this.descripcion = '';
+          _this.idBarrioInicia = 0;
+          _this.idBarrioTermina = 0;
+          _this.estado = '';
+          _this.idUsuarioModifica = '';
+          _this.idUsuarioCrea = '';
+          swal("OK!", "Ruta creada exitosamente!", "success");
+          _this.buttons.create.name = 'Agregar';
+          _this.buttons.create.state = false;
+          $("#Ruta").modal('hide');
+        })["catch"](function (error) {
+          swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+          console.log(error.response);
+        });
+      }
+
+      ;
+    },
+    // Lista Categorias
+    getListBarrios: function getListBarrios() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/barrio-resource').then(function (response) {
+        console.log('response_ ' + JSON.stringify(response.data));
+        _this2.barrio = response.data;
       })["catch"](function (error) {
-        swal("Lo sentimos!", "Parece que algo salio mal!", "error");
-        alert("Error");
         console.log(error.response);
       });
     }
@@ -2629,6 +2685,21 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4240,90 +4311,212 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container contaRuta" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "card cardRutas" }, [
+      _c("div", { staticClass: "form-group col-md-12" }, [
+        _c("label", [_vm._v("Hora")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.hora,
+              expression: "hora"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "time" },
+          domProps: { value: _vm.hora },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.hora = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group col-md-12" }, [
+        _c("label", [_vm._v("Fecha")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.fecha,
+              expression: "fecha"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "date" },
+          domProps: { value: _vm.fecha },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.fecha = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group col-md-12" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.ruta,
+                expression: "ruta"
+              }
+            ],
+            staticClass: "custom-select",
+            attrs: { required: "" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.ruta = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "0" } }, [
+              _vm._v("Seleccionar Ruta")
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.ruta, function(ruta) {
+              return _c("option", {
+                key: ruta,
+                domProps: {
+                  value: ruta.idRuta,
+                  textContent: _vm._s(ruta.descripcion)
+                }
+              })
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group col-md-12" }, [
+        _c("label", [_vm._v("Vehiculo")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.vehiculo,
+                expression: "vehiculo"
+              }
+            ],
+            staticClass: "custom-select",
+            attrs: { required: "" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.vehiculo = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "0" } }, [
+              _vm._v("Seleccionar Vehiculo")
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.vehiculo, function(vehiculo) {
+              return _c("option", {
+                key: vehiculo,
+                domProps: {
+                  value: vehiculo.idVehiculo,
+                  textContent: _vm._s(vehiculo.placa)
+                }
+              })
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(2)
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container contaRuta" }, [
-      _c("div", { staticClass: "modal-header encabezadoFormulario" }, [
-        _c(
-          "h5",
-          {
-            staticClass: "text-center text-white",
-            attrs: { id: "exampleModalLabel" }
-          },
-          [_vm._v("Habilitar Horario")]
-        )
-      ]),
+    return _c("div", { staticClass: "modal-header encabezadoFormulario" }, [
+      _c(
+        "h5",
+        {
+          staticClass: "text-center text-white",
+          attrs: { id: "exampleModalLabel" }
+        },
+        [_vm._v("Habilitar Horario")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [
+      _vm._v("Ruta "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "btn-width" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn  botonCancelar botones",
+          attrs: { type: "submit" }
+        },
+        [_vm._v("Cancelar")]
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "card cardRutas" }, [
-        _c("div", { staticClass: "form-group col-md-12" }, [
-          _c("label", [_vm._v("Hora")]),
-          _vm._v(" "),
-          _c("i", { staticClass: "fas fa-clock iconos" }),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control inputTeceros",
-            attrs: { type: "time" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group col-md-12" }, [
-          _c("label", [_vm._v("Fecha")]),
-          _vm._v(" "),
-          _c("i", { staticClass: "far fa-calendar-alt iconos" }),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control inputTeceros",
-            attrs: { type: "date" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group col-md-12" }, [
-          _c("label", [_vm._v("Ruta")]),
-          _vm._v(" "),
-          _c("i", { staticClass: "fas fa-route iconos" }),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control inputTeceros",
-            attrs: { type: "text" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group col-md-12" }, [
-          _c("label", [_vm._v("Vehiculo")]),
-          _vm._v(" "),
-          _c("i", { staticClass: "fas fa-bus iconos" }),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control inputTeceros",
-            attrs: { type: "text" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "btn-width" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn  botonCancelar botones",
-              attrs: { type: "submit" }
-            },
-            [_vm._v("Cancelar")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn botonAgregar botones",
-              attrs: { type: "submit" }
-            },
-            [_vm._v("Agregar")]
-          )
-        ])
-      ])
+      _c(
+        "button",
+        { staticClass: "btn botonAgregar botones", attrs: { type: "submit" } },
+        [_vm._v("Agregar")]
+      )
     ])
   }
 ]
@@ -4630,241 +4823,339 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container contaRuta" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "card cardRutas" }, [
-      _c(
-        "form",
-        {
-          attrs: { method: "POST", id: "form-ruta" },
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.setRuta($event)
+  return _c(
+    "div",
+    { staticClass: "container contaRuta", attrs: { id: "Ruta" } },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "card cardRutas" }, [
+        _c(
+          "form",
+          {
+            attrs: { method: "POST", id: "form-ruta" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.setRuta($event)
+              }
             }
-          }
-        },
-        [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "form-group col-md-6" }, [
-              _c("label", { attrs: { for: "codigo" } }, [_vm._v("Codigo")]),
-              _vm._v(" "),
-              _c("i", { staticClass: "fas fa-asterisk iconosRutas" }),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
+          },
+          [
+            _vm.show_alert.create.state
+              ? _c(
+                  "div",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.codigo,
-                    expression: "codigo"
-                  }
-                ],
-                staticClass: "form-control inputRutas",
-                attrs: { type: "text", id: "codigo", required: "" },
-                domProps: { value: _vm.codigo },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+                    staticClass:
+                      "alert alert-danger alert-dismissible fade show",
+                    attrs: { role: "alert" }
+                  },
+                  [
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(_vm.show_alert.create.messaje) +
+                        "\n        "
+                    )
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "form-group col-md-6" }, [
+                _c("label", { attrs: { for: "codigo" } }, [_vm._v("Codigo")]),
+                _vm._v(" "),
+                _c("i", { staticClass: "fas fa-asterisk iconosRutas" }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.codigo,
+                      expression: "codigo"
                     }
-                    _vm.codigo = $event.target.value
+                  ],
+                  staticClass: "form-control inputRutas",
+                  attrs: { type: "text", id: "codigo", required: "" },
+                  domProps: { value: _vm.codigo },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.codigo = $event.target.value
+                    }
                   }
-                }
-              })
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group col-md-6" }, [
+                _c("label", { attrs: { for: "descripcion" } }, [
+                  _vm._v("Descripción")
+                ]),
+                _vm._v(" "),
+                _c("i", { staticClass: "far fa-edit iconosRutas" }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.descripcion,
+                      expression: "descripcion"
+                    }
+                  ],
+                  staticClass: "form-control inputRutas",
+                  attrs: { type: "text", id: "descripcion", required: "" },
+                  domProps: { value: _vm.descripcion },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.descripcion = $event.target.value
+                    }
+                  }
+                })
+              ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group col-md-6" }, [
-              _c("label", { attrs: { for: "descripcion" } }, [
-                _vm._v("Descripción")
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "form-group col-md-6" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.idBarrioInicia,
+                        expression: "idBarrioInicia"
+                      }
+                    ],
+                    staticClass: "custom-select",
+                    attrs: { required: "" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.idBarrioInicia = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "0" } }, [
+                      _vm._v("Seleccionar Barrio")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.barrio, function(idBarrioInicia) {
+                      return _c("option", {
+                        key: idBarrioInicia,
+                        domProps: {
+                          value: idBarrioInicia.idBarrio,
+                          textContent: _vm._s(idBarrioInicia.descripcion)
+                        }
+                      })
+                    })
+                  ],
+                  2
+                )
               ]),
               _vm._v(" "),
-              _c("i", { staticClass: "far fa-edit iconosRutas" }),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
+              _c("div", { staticClass: "form-group col-md-6" }, [
+                _vm._m(2),
+                _vm._v(" "),
+                _c(
+                  "select",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.descripcion,
-                    expression: "descripcion"
-                  }
-                ],
-                staticClass: "form-control inputRutas",
-                attrs: { type: "text", id: "descripcion", required: "" },
-                domProps: { value: _vm.descripcion },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.idBarrioTermina,
+                        expression: "idBarrioTermina"
+                      }
+                    ],
+                    staticClass: "custom-select",
+                    attrs: { required: "" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.idBarrioTermina = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
                     }
-                    _vm.descripcion = $event.target.value
-                  }
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "form-group col-md-6" }, [
-              _c("label", { attrs: { for: "idBarrioInicia" } }, [
-                _vm._v("Origen")
-              ]),
-              _vm._v(" "),
-              _c("i", { staticClass: "fas fa-map-marker-alt iconosRutas" }),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.idBarrioInicia,
-                    expression: "idBarrioInicia"
-                  }
-                ],
-                staticClass: "form-control inputRutas",
-                attrs: { type: "text", id: "idBarrioInicia", required: "" },
-                domProps: { value: _vm.idBarrioInicia },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.idBarrioInicia = $event.target.value
-                  }
-                }
-              })
+                  },
+                  [
+                    _c("option", { attrs: { value: "0" } }, [
+                      _vm._v("Seleccionar Barrio")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.barrio, function(idBarrioTermina) {
+                      return _c("option", {
+                        key: idBarrioTermina,
+                        domProps: {
+                          value: idBarrioTermina.idBarrio,
+                          textContent: _vm._s(idBarrioTermina.descripcion)
+                        }
+                      })
+                    })
+                  ],
+                  2
+                )
+              ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group col-md-6" }, [
-              _c("label", { attrs: { for: "idBarrioTermina" } }, [
-                _vm._v("Destino")
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "form-group col-md-6" }, [
+                _c("label", [_vm._v("Estado")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.estado,
+                        expression: "estado"
+                      }
+                    ],
+                    staticClass: "custom-select",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.estado = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "-1" } }, [
+                      _vm._v("Seleccionar Estado")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "1" } }, [_vm._v("Activo")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "0" } }, [
+                      _vm._v("Inactivo")
+                    ])
+                  ]
+                )
               ]),
               _vm._v(" "),
-              _c("i", { staticClass: "fas fa-map-marked-alt iconosRutas" }),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.idBarrioTermina,
-                    expression: "idBarrioTermina"
-                  }
-                ],
-                staticClass: "form-control inputRutas",
-                attrs: { type: "text", id: "idBarrioTermina", required: "" },
-                domProps: { value: _vm.idBarrioTermina },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "form-group col-md-6" }, [
+                _c("label", { attrs: { for: "idUsuarioModifica" } }, [
+                  _vm._v("idUsuarioModifica")
+                ]),
+                _vm._v(" "),
+                _c("i", { staticClass: "fas fa-map-marked-alt iconosRutas" }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.idUsuarioModifica,
+                      expression: "idUsuarioModifica"
                     }
-                    _vm.idBarrioTermina = $event.target.value
-                  }
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "form-group col-md-6" }, [
-              _c("label", { attrs: { for: "estado" } }, [_vm._v("Estado")]),
-              _vm._v(" "),
-              _c("i", { staticClass: "fas fa-map-marker-alt iconosRutas" }),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.estado,
-                    expression: "estado"
-                  }
-                ],
-                staticClass: "form-control inputRutas",
-                attrs: { type: "text", id: "estado", required: "" },
-                domProps: { value: _vm.estado },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+                  ],
+                  staticClass: "form-control inputRutas",
+                  attrs: {
+                    type: "text",
+                    id: "idUsuarioModifica",
+                    required: ""
+                  },
+                  domProps: { value: _vm.idUsuarioModifica },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.idUsuarioModifica = $event.target.value
                     }
-                    _vm.estado = $event.target.value
                   }
-                }
-              })
+                })
+              ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group col-md-6" }, [
-              _c("label", { attrs: { for: "idUsuarioModifica" } }, [
-                _vm._v("idUsuarioModifica")
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "form-group col-md-4" }, [
+                _c("label", { attrs: { for: "idUsuarioCrea" } }, [
+                  _vm._v("idUsuarioCrea")
+                ]),
+                _vm._v(" "),
+                _c("i", { staticClass: "fas fa-map-marked-alt iconosRutas" }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.idUsuarioCrea,
+                      expression: "idUsuarioCrea"
+                    }
+                  ],
+                  staticClass: "form-control inputRutas",
+                  attrs: { type: "text", id: "idUsuarioCrea", required: "" },
+                  domProps: { value: _vm.idUsuarioCrea },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.idUsuarioCrea = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "btn-width" }, [
+              _c("button", { staticClass: "btn  botonCancelar botones" }, [
+                _vm._v("Cancelar")
               ]),
               _vm._v(" "),
-              _c("i", { staticClass: "fas fa-map-marked-alt iconosRutas" }),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.idUsuarioModifica,
-                    expression: "idUsuarioModifica"
-                  }
-                ],
-                staticClass: "form-control inputRutas",
-                attrs: { type: "text", id: "idUsuarioModifica", required: "" },
-                domProps: { value: _vm.idUsuarioModifica },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.idUsuarioModifica = $event.target.value
-                  }
-                }
-              })
+              _c(
+                "button",
+                {
+                  staticClass: "btn botonAgregar botones",
+                  attrs: { disabled: _vm.buttons.create.state }
+                },
+                [_vm._v(_vm._s(_vm.buttons.create.name))]
+              )
             ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "form-group col-md-4" }, [
-              _c("label", { attrs: { for: "idUsuarioCrea" } }, [
-                _vm._v("idUsuarioCrea")
-              ]),
-              _vm._v(" "),
-              _c("i", { staticClass: "fas fa-map-marked-alt iconosRutas" }),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.idUsuarioCrea,
-                    expression: "idUsuarioCrea"
-                  }
-                ],
-                staticClass: "form-control inputRutas",
-                attrs: { type: "text", id: "idUsuarioCrea", required: "" },
-                domProps: { value: _vm.idUsuarioCrea },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.idUsuarioCrea = $event.target.value
-                  }
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _vm._m(1)
-        ]
-      )
-    ])
-  ])
+          ]
+        )
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -4886,16 +5177,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "btn-width" }, [
-      _c("button", { staticClass: "btn  botonCancelar botones" }, [
-        _vm._v("Cancelar")
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn botonAgregar botones", attrs: { type: "submit" } },
-        [_vm._v("Agregar")]
-      )
+    return _c("label", [
+      _vm._v("Barrio de origen: "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [
+      _vm._v("Barrio de Destino: "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   }
 ]
@@ -5429,9 +5722,9 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col" }, [
-            _c("label", [_vm._v("Matrícula")]),
+            _c("label", [_vm._v("idMatrícula")]),
             _vm._v(" "),
-            _c("i", { staticClass: "fas fa-city iconos" }),
+            _c("i", {}),
             _vm._v(" "),
             _c("input", {
               staticClass: "form-control inputTeceros",
@@ -5440,7 +5733,7 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col" }, [
-            _c("label", [_vm._v("Servicio")]),
+            _c("label", [_vm._v("idServicio")]),
             _vm._v(" "),
             _c("i", { staticClass: "fas fa-city iconos" }),
             _vm._v(" "),
@@ -5455,7 +5748,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "form-group" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col" }, [
-            _c("label", { attrs: { for: "" } }, [_vm._v("Clase")]),
+            _c("label", { attrs: { for: "" } }, [_vm._v("idClase")]),
             _vm._v(" "),
             _c("i", { staticClass: "fas fa-city iconos" }),
             _vm._v(" "),
@@ -5466,7 +5759,7 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col" }, [
-            _c("label", { attrs: { for: "" } }, [_vm._v("Marca")]),
+            _c("label", { attrs: { for: "" } }, [_vm._v("idMarca")]),
             _vm._v(" "),
             _c("i", { staticClass: "fas fa-city iconos" }),
             _vm._v(" "),
@@ -5477,7 +5770,7 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col" }, [
-            _c("label", { attrs: { for: "" } }, [_vm._v("Color")]),
+            _c("label", { attrs: { for: "" } }, [_vm._v("idColor")]),
             _vm._v(" "),
             _c("i", { staticClass: "fas fa-palette iconos" }),
             _vm._v(" "),
@@ -5492,7 +5785,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "form-group" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col" }, [
-            _c("label", { attrs: { for: "" } }, [_vm._v("Carroceria")]),
+            _c("label", { attrs: { for: "" } }, [_vm._v("idCarroceria")]),
             _vm._v(" "),
             _c("i", { staticClass: "fas fa-city iconos" }),
             _vm._v(" "),
@@ -5503,7 +5796,7 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col" }, [
-            _c("label", { attrs: { for: "" } }, [_vm._v("Combustible")]),
+            _c("label", { attrs: { for: "" } }, [_vm._v("idCombustible")]),
             _vm._v(" "),
             _c("i", { staticClass: "fas fa-gas-pump iconos" }),
             _vm._v(" "),
@@ -5658,6 +5951,32 @@ var staticRenderFns = [
             _c("input", {
               staticClass: "form-control inputTeceros",
               attrs: { type: "text" }
+            })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col" }, [
+            _c("label", { attrs: { for: "" } }, [_vm._v("idUsuarioCrea")]),
+            _vm._v(" "),
+            _c("i", { staticClass: "fas fa-hashtag iconos" }),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control inputTeceros",
+              attrs: { type: "number" }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col" }, [
+            _c("label", { attrs: { for: "" } }, [_vm._v("idUsuarioModifica")]),
+            _vm._v(" "),
+            _c("i", { staticClass: "fas fa-users iconos" }),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control inputTeceros",
+              attrs: { type: "number" }
             })
           ])
         ])
@@ -22527,8 +22846,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\ACER\Documents\proyecto_takeva\Takeva5\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\ACER\Documents\proyecto_takeva\Takeva5\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Estefania\Documents\TAKEVA\TakevaProject5\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Estefania\Documents\TAKEVA\TakevaProject5\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

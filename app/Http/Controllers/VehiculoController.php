@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Ruta;
+use App\Vehiculo;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class RutaController extends Controller
+class VehiculoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,18 +15,10 @@ class RutaController extends Controller
      */
     public function index()
     {
-    switch($_GET['Q']){
-
-        case 0:
-        return response()->json(Ruta::all()) ;
-
-        case 1:
-        $query = Ruta::where([
-        ['estado', 1],
-        ])->orderBy('descripcion')->get();
+        $query = Vehiculo::where([
+            ['estado', 1],
+        ])->orderBy('placa')->get();
         return response()->json($query);
-    }
-
     }
 
     /**
@@ -47,18 +39,7 @@ class RutaController extends Controller
      */
     public function store(Request $request)
     {
-        $ruta = Ruta::create([
-
-            'codigo' => $request->codigo,
-            'descripcion' => $request->descripcion,
-            'idBarrioInicia' => $request->idBarrioInicia,
-            'idBarrioTermina' => $request->idBarrioTermina,
-            'estado' => $request->estado,
-            'idUsuarioModifica' => $request->idUsuarioModifica,
-            'idUsuarioCrea' => $request->idUsuarioCrea
-            ]);
-
-         return response()->json($ruta);
+        //
     }
 
     /**
