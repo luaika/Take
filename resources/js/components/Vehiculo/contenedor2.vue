@@ -15,7 +15,7 @@
             </div>
         </div>
 
- 
+
         <div class="form-group">
            <div class="row">
                 <div class="col">
@@ -23,7 +23,7 @@
                     <i class="fas fa-hashtag iconos"></i>
                     <input type="number" class="form-control inputTeceros">
                 </div>
-                           
+
                 <div class="col">
                    <label for="">Número de pasajeros</label>
                     <i class="fas fa-users iconos"></i>
@@ -37,16 +37,31 @@
                 <div class="col">
                     <label for="">Observaciones</label>
                     <i class="fas fa-hand-point-right iconos"></i>
-                    <input type="text" class="form-control inputTeceros">              
+                    <input type="text" class="form-control inputTeceros">
                 </div>
                 <div class="col">
                     <label for="">Estado</label>
                     <i class="fas fa-palette iconos"></i>
-                    <input type="text" class="form-control inputTeceros">       
+                    <input type="text" class="form-control inputTeceros">
                     </div>
                 </div>
             </div>
 
+            <div class="form-group">
+           <div class="row">
+                <div class="col">
+                    <label for="">idUsuarioCrea</label>
+                    <i class="fas fa-hashtag iconos"></i>
+                    <input type="number" class="form-control inputTeceros">
+                </div>
+
+                <div class="col">
+                   <label for="">idUsuarioModifica</label>
+                    <i class="fas fa-users iconos"></i>
+                    <input type="number" class="form-control inputTeceros">
+                </div>
+            </div>
+        </div>
 
 
             <div class="form-group">
@@ -56,7 +71,7 @@
                     </div>
                 </div>
             </div>
-         
+
 </template>
 <script>
 export default {

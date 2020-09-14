@@ -45,12 +45,17 @@ Route::post('/setRuta', 'RutaController@store');
 //Barrio
 Route::resource('/barrio-resource', 'BarrioController');
 
+//Vehiculo
+Route::resource('/vehiculo-resource', 'VehiculoController');
+
+//Horario
+Route::post('/setHorario', 'HorarioController@store');
+
 //Tercero
 Route::resource('/tercero-resource', 'TerceroController');
 
 //Usuario
 Route::post('/setUsuario', 'UsuarioController@store');
-
 
 Route::view('/consultarRutasVehiculos','Home');
 Route::view('/despacho','Home');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Vehiculo;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class VehiculoController extends Controller
@@ -13,7 +14,10 @@ class VehiculoController extends Controller
      */
     public function index()
     {
-        return response()->json(Vehiculo::all()) ;
+        $query = Vehiculo::where([
+            ['estado', 1],
+        ])->orderBy('placa')->get();
+        return response()->json($query);
     }
 
     /**
@@ -25,7 +29,6 @@ class VehiculoController extends Controller
     {
         //
     }
-    
 
     /**
      * Store a newly created resource in storage.
@@ -68,6 +71,7 @@ class VehiculoController extends Controller
      */
     public function show($id)
     {
+
     }
 
     /**

@@ -5,6 +5,7 @@
         </div>
     <div class="card cardRutas">
 
+
         <form method="POST" id="form-usuario" v-on:submit.prevent="setUsuario" >
 
             <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -49,7 +50,6 @@
                 <i class="icofont-eye-blocked iconosRutas"></i>
                 <input type="password" class="form-control inputRutas" v-model="clave" id="clave" required>
                </div>
-
             </div>
             <div class="btn-width">
                 <button class="btn  botonCancelar botones" >Cancelar</button>
