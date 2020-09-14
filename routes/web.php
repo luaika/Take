@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('layouts/inicio');
 });
 
-Route::get('/login', 'LoginController@index');
+Route::resource('/login', 'LoginController');
 
 //inicio de administrador
 Route::get('/inicio', function () {
