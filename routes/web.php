@@ -32,7 +32,10 @@ Route::view('/crearHorario', 'Home');
 //Terceros
 Route::view('/registrarTercero','Home');
 Route::post('/setTercero', 'TerceroController@store');
+
+//Vehículoa
 Route::view('/registrarVehiculo','Home');
+Route::post('/setVehiculo','VehiculoController@store');
 
 //Ruta
 Route::view('/registrarRutas','Home');
