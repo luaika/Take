@@ -28,8 +28,6 @@ class Tercero extends Model
         'idMunicipio',
         'foto',
         'estado',
-        'fechaCrea',
-        'fechaModifica',
         'idUsuarioCrea',
         'idUsuarioModifica',
     ];

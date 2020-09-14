@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('layouts/inicio');
 });
 
-Route::get('/login', 'LoginController@index');
+Route::resource('/login', 'LoginController');
 
 //inicio de administrador
 Route::get('/inicio', function () {
@@ -28,7 +28,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('my-notification/{type}', 'HomeController@myNotification');
 
 Route::view('/crearHorario', 'Home');
+
+//Terceros
 Route::view('/registrarTercero','Home');
+Route::post('/setTercero', 'TerceroController@store');
 Route::view('/registrarVehiculo','Home');
 
 //Ruta
@@ -44,6 +47,7 @@ Route::resource('/vehiculo-resource', 'VehiculoController');
 
 //Horario
 Route::post('/setHorario', 'HorarioController@store');
+
 
 Route::view('/consultarRutasVehiculos','Home');
 Route::view('/despacho','Home');

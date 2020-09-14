@@ -42,6 +42,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+  <script src=" https://unpkg.com/vue-bootstrap4-table@1.1.10/dist/vue-bootstrap4-table.min.js " crossorigin = " anonymous " > </script>    
+
 </head>
 
 <body>
@@ -134,7 +136,6 @@
   <script src="{{asset('plugins/owl.carousel/owl.carousel.min.js')}}"></script>
   <script src="{{asset('plugins/typed.js/typed.min.js')}}"></script>
   <script src="{{asset('plugins/aos/aos.js')}}"></script>
-
   <!-- Template Main JS File -->
   <script src="{{asset ('js/main.js')}}"></script>
   @yield('js')
