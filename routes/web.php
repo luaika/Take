@@ -22,7 +22,7 @@ Route::resource('/login', 'LoginController');
 //inicio de administrador
 Route::get('/inicio', function () {
     return view('layouts/inicio');
-}); 
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('my-notification/{type}', 'HomeController@myNotification');
@@ -32,7 +32,10 @@ Route::view('/crearHorario', 'Home');
 //Terceros
 Route::view('/registrarTercero','Home');
 Route::post('/setTercero', 'TerceroController@store');
+
+//Vehículoa
 Route::view('/registrarVehiculo','Home');
+Route::post('/setVehiculo','VehiculoController@store');
 
 //Ruta
 Route::view('/registrarRutas','Home');
@@ -42,10 +45,18 @@ Route::post('/setRuta', 'RutaController@store');
 //Barrio
 Route::resource('/barrio-resource', 'BarrioController');
 
+//Tercero
+Route::resource('/tercero-resource', 'TerceroController');
+
+//Usuario
+Route::post('/setUsuario', 'UsuarioController@store');
+
 
 Route::view('/consultarRutasVehiculos','Home');
 Route::view('/despacho','Home');
 Route::view('/cantidadPasajeros','Home');
 Route::view('/registrarUsuarios','Home');
+
+
 
 

@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Tercero;
+use App\Vehiculo;
 use Illuminate\Http\Request;
 
-class TerceroController extends Controller
+class VehiculoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +13,7 @@ class TerceroController extends Controller
      */
     public function index()
     {
-
-        $query = Tercero::where([
-            ['estado', 1],
-        ])->orderBy('nombres')->get();
-        return response()->json($query);
+        return response()->json(Vehiculo::all()) ;
     }
 
     /**
@@ -30,6 +25,7 @@ class TerceroController extends Controller
     {
         //
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -39,28 +35,29 @@ class TerceroController extends Controller
      */
     public function store(Request $request)
     {
-        $tercero = Tercero::create([
-
-            'numeroIdentificacion' => $request->numeroIdentificacion,
-            'tipoIdentificacion' => $request->tipoIdentificacion,
-            'nombres' => $request->nombres,
-            'apellidos' => $request->apellidos,
-            'razonSocial' => $request->razonSocial,
-            'nombreComercial' => $request->nombreComercial,
-            'genero' => $request->genero,
-            'fechaNacimiento' => $request->fechaNacimiento,
-            'telefono' => $request->telefono,
-            'celular' => $request->celular,
-            'email' => $request->email,
-            'direccion' => $request->direccion,
-            'idMunicipio' => $request->idMunicipio,
-            'foto' => $request->foto,
-            'estado' => $request->estado,
-            'idUsuarioCrea' => $request->idUsuarioCrea,
-            'idUsuarioModifica' => $request->idUsuarioModifica,
-            ]);
-
-         return response()->json($tercero);
+        $vehiculo = Vehiculo::create([
+            'placa'=>$request->placa,
+            'numeroInterno'=>$request->numeroInterno,
+            'idVehiculoMatricula'=>$request->idVehiculoMatricula,
+            'idServicio'=>$request->idServicio,
+            'idClase'=>$request->idClase,
+            'idMarca'=>$request->idMarca,
+            'idColor'=>$request->idColor,
+            'idCarroceria'=>$request->idCarroceria,
+            'idCombustible'=>$request->idCombustible,
+            'linea'=>$request->linea,
+            'modelo'=>$request->modelo,
+            'numeroSerie'=>$request->numeroSerie,
+            'numeroChasis'=>$request->numeroChasis,
+            'numeroMotor'=>$request->numeroMotor,
+            'numeroPuertas'=>$request->numeroPuertas,
+            'numeroPasajeros'=>$request->numeroPasajeros,
+            'observaciones'=>$request->observaciones,
+            'estado'=>$request->estado,
+            'idUsuarioCrea'=>$request->idUsuarioCrea,
+            'idUsuarioModifica'=>$request->idUsuarioModifica,
+        ]);
+        return response()->json($vehiculo);
     }
 
     /**
@@ -71,7 +68,6 @@ class TerceroController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
