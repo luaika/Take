@@ -74,7 +74,7 @@
         </div>
         <br>
         <div class="container-fluid">
-            <vue-bootstrap4-table :rows="rutas" :columns="columns"  :config = "config">
+            <vue-bootstrap4-table :rows="rutas" :columns="columns"  :config = "config" thead-class="green-bg bg-dark text-white">
                 <templete slot="edit">
                     <button type="button" class="btn btn-warning"><i class="icofont-pencil-alt-1"></i></button>
                 </templete>
@@ -156,6 +156,7 @@ export default {
                     num_of_visibile_pagination_buttons: 7, // default 5
                     per_page: 5, // default 10
                     per_page_options:  [5,  10,  20,  30],
+                //highlight_row_hover_color:"blue", over del listado
                 filas_seleccionables: true,
                 card_title: "RUTAS",
                 show_refresh_button: false,
@@ -170,7 +171,7 @@ export default {
     components:{
         VueBootstrap4Table
     },
-    mounted() {
+    mounted(){
             this.getListBarrios();
             this.getRutas();
             this.getBarrioTermina();
@@ -224,6 +225,18 @@ export default {
                 this.barrio = response.data;
             }).catch((error) => {
                     console.log(error.response);
+            });
+        },
+        getRutaTermina: function(){
+             axios.get('/rutas-resource').then( (response)  => {
+                if (response.data.length > 0) {
+                    this.barrioTermina = response.data ;
+                    console.log(this.rutas);
+                } else {
+                    this.message = 'No hay registro de cupones!!!';
+                }
+            }).catch((error) => {
+                console.log(error.response);
             });
         },
     //Listar Rutas    

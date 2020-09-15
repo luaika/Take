@@ -83,7 +83,7 @@
                 </div>
             </div>
     </div>
-
+    <hr>
       <div>
         <div class="form-group">
             <div class="row">
@@ -148,17 +148,14 @@
                     <i class="fas fa-palette iconos"></i>
                     <input type="text" class="form-control inputTeceros" id="numeroInterno" v-model="numeroInterno">       
                 </div>
-              </div>
             </div>
-
-
-
-            <div class="form-group">
-                <div  class="btn-width row">
+            </div>  
+            <br>
+                <div  class="btn-width">
                     <button type="button" class="btn botonCancelar botones">Cancelar</button>
                     <button type="submit" class="btn botonAgregar botones" :disabled="buttons.create.state">{{ buttons.create.name }}</button>
                 </div>
-            </div>     
+            
     </form>
     </div>
             <div class="form-goup listado">
