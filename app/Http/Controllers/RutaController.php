@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Ruta;
 use App\Barrio;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Auth;
 
 class RutaController extends Controller
 {
@@ -16,11 +16,32 @@ class RutaController extends Controller
      */
     public function index()
     {
+
+    switch($_GET['Q']){
+
+        case 0:
+            $lista = Ruta::join('barrio', 'barrio.idBarrio', 'ruta.idBarrioInicia')
+            ->select('ruta.*' , 'barrio.nombreBarrio as barrio_inicia')
+            ->get();
+            return response()->json($lista);
+            
+        case 1:
+            $query = Ruta::where([
+            ['estado', 1],
+            ])->orderBy('descripcion')->get();
+            return response()->json($query);
+            
+        case 2:
+            $btermina = Barrio::join('ruta', 'ruta.idBarrioTermina', 'barrio.idBarrio')
+            ->select('barrio.nombreBarrio' , 'barrio.nombreBarrio as barrio_termina')
+            ->get();
+            return response()->json($btermina);
+        break;
+    }
+
+
       //return response()->json(Ruta::all()) ;
-      $lista = Ruta::join('barrio', 'barrio.idBarrio', 'ruta.idBarrioInicia')
-                    ->select('ruta.*' , 'barrio.descripcion as barrio_inicia')
-                ->get();
-                return response()->json($lista);
+
     }
 
     /* public function rutaFinal()
@@ -50,7 +71,7 @@ class RutaController extends Controller
     public function store(Request $request)
     {
         $ruta = Ruta::create([
-            
+
             'codigo' => $request->codigo,
             'descripcion' => $request->descripcion,
             'idBarrioInicia' => $request->idBarrioInicia,
@@ -59,7 +80,7 @@ class RutaController extends Controller
             'idUsuarioModifica' => $request->idUsuarioModifica,
             'idUsuarioCrea' => $request->idUsuarioCrea
             ]);
- 
+
          return response()->json($ruta);
     }
 

@@ -4,9 +4,9 @@
         <div class="modal-header encabezadoFormulario" >
             <h5 class="text-center text-white" id="exampleModalLabel">Registrar Rutas</h5>
         </div>
-    <div class="card cardRutas"> 
+    <div class="card cardRutas">
        <form method="POST" id="form-ruta"  v-on:submit.prevent="setRuta" >
-           
+
             <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ show_alert.create.messaje }}
             </div>
@@ -75,6 +75,7 @@
         <br>
         <div class="container-fluid">
             <vue-bootstrap4-table :rows="rutas" :columns="columns"  :config = "config" thead-class="green-bg bg-dark text-white">
+                
                 <templete slot="edit">
                     <button type="button" class="btn btn-warning"><i class="icofont-pencil-alt-1"></i></button>
                 </templete>
@@ -103,6 +104,7 @@ export default {
                 estado : -1,
                 idUsuarioModifica: '',
                 idUsuarioCrea:'',
+                barrioTermina:[],
                 show_barrios:true,
                 barrio:[],
                 rutas:[],
@@ -136,7 +138,7 @@ export default {
                 },
                 {
                     label: "Destino",
-                    name: "idBarrioTermina",
+                    name: "barrio_termina",
                     sort: true,
                 },
                 {
@@ -154,8 +156,8 @@ export default {
                  pagination: true, // default true
                     pagination_info: true, // default true
                     num_of_visibile_pagination_buttons: 7, // default 5
-                    per_page: 5, // default 10
-                    per_page_options:  [5,  10,  20,  30],
+                    per_page: 6, // default 10
+                    per_page_options:  [6,  10,  20,  30],
                 //highlight_row_hover_color:"blue", over del listado
                 filas_seleccionables: true,
                 card_title: "RUTAS",
@@ -165,16 +167,18 @@ export default {
                         placeholder: "Buscar ",
                 },
             },
-            
+
             }
+
         },
     components:{
         VueBootstrap4Table
     },
     mounted(){
             this.getListBarrios();
+            this.getRutaTermina();
             this.getRutas();
-            this.getBarrioTermina();
+            
     },
     methods:{
     //insertar ruta
@@ -183,7 +187,7 @@ export default {
                 this.show_alert.create.state = true;
                 this.show_alert.create.messaje = 'Debe seleccionar origen, destino y estado ';
                 setTimeout(() => this.show_alert.create.state = false, 2000);
-            } 
+            }
             else {
                 this.buttons.create.name = 'Agregando ...';
                 this.buttons.create.state = true;
@@ -196,7 +200,6 @@ export default {
                     'idUsuarioModifica': this.idUsuarioModifica,
                     'idUsuarioCrea': this.idUsuarioModifica
                 }
-                 
             axios.post('/setRuta', formData).then((response) =>{
                 this.codigo = '';
                 this.descripcion = '';
@@ -205,35 +208,42 @@ export default {
                 this.estado = '';
                 this.idUsuarioModifica = '';
                 this.idUsuarioCrea = '';
-                    swal("OK!", "Ruta creada exitosamente!", "success"); 
+                    swal("OK!", "Ruta creada exitosamente!", "success");
                     this.buttons.create.name = 'Agregar' ;
-                    this.buttons.create.state = false ;  
+
+                    this.buttons.create.state = false ;
 
                     this.getRutas();
-                    this.getBarrioTermina();
-                    $("#Ruta").modal('hide'); 
+                    
+                    $("#Ruta").modal('hide');
+
                 }).catch((error) => {
                     swal("Lo sentimos!", "Parece que algo salio mal!", "error");
                     console.log(error.response);
-                });          
+                });
             };
-       }, 
+
+       },
     // Lista Barrios
         getListBarrios: function () {
             axios.get('/barrio-resource').then((response) => {
-                console.log('response_ '+JSON.stringify(response.data));
+               // console.log('response_ '+JSON.stringify(response.data));
                 this.barrio = response.data;
             }).catch((error) => {
                     console.log(error.response);
             });
         },
+
         getRutaTermina: function(){
-             axios.get('/rutas-resource').then( (response)  => {
+             axios.get('/rutas-resource?Q=2').then((response) => {
                 if (response.data.length > 0) {
-                    this.barrioTermina = response.data ;
-                    console.log(this.rutas);
+                    this.barrioTermina = response.data;
+                    console.log ("prioridad");
+                    console.log(this.barrioTermina);
+                    //this.getRutas();
                 } else {
                     this.message = 'No hay registro de cupones!!!';
+                    
                 }
             }).catch((error) => {
                 console.log(error.response);
@@ -241,10 +251,35 @@ export default {
         },
     //Listar Rutas    
         getRutas: function () {
-            axios.get('/rutas-resource').then( (response)  => {
+            axios.get('/rutas-resource?Q=0').then( (response)  => {
                 if (response.data.length > 0) {
-                    this.rutas = response.data ;
+                    const rutasTotal = response.data;
+                    const des = this.barrioTermina;
+
+                    this.rut = rutasTotal.concat(des);
+                    
+                    for (var i=0; i<des.length;i++){
+                        console.log(i);
+                        const b = Object.assign(des[i],this.rut[i]);
+                        console.log(b);
+                        
+                    } 
+                    const b1 = Object.assign(des[0],this.rut[0]);
+                    const b2 = Object.assign(des[1],this.rut[1]);
+                    const b3 = Object.assign(des[2],this.rut[2]);
+                    //this.rutas = Object.assign(des[0],this.rut[0]);
+                    this.rutas = [b1,b2,b3];
+                    console.log('rutas');
+                    console.log(rutasTotal);
+                     console.log('destino');
+                    console.log(des);
+                    console.log('quizas bien');
+                    console.log(todos);
+                    console.log('todos final final');
+                    console.log(this.rut);
+                    console.log('union objeto');
                     console.log(this.rutas);
+                   
                 } else {
                     this.message = 'No hay registro de cupones!!!';
                 }
