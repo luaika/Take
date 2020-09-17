@@ -30,14 +30,14 @@
                      <label>Barrio de origen: <span class="text-danger">*</span></label>
                     <select class="custom-select" v-model="idBarrioInicia" required>
                         <option value="0">Seleccionar Barrio</option>
-                         <option v-for="idBarrioInicia in barrio" :value="idBarrioInicia.idBarrio" v-text="idBarrioInicia.descripcion" v-bind:key="idBarrioInicia" style="color:black;"></option>
+                         <option v-for="idBarrioInicia in barrio" :value="idBarrioInicia.idBarrio" v-text="idBarrioInicia.nombreBarrio" v-bind:key="idBarrioInicia" ></option>
                     </select>
                 </div>
                 <div class="form-group col-md-6">
                      <label>Barrio de Destino: <span class="text-danger">*</span></label>
                     <select class="custom-select" v-model="idBarrioTermina" required>
                         <option value="0">Seleccionar Barrio</option>
-                         <option v-for="idBarrioTermina in barrio" :value="idBarrioTermina.idBarrio" v-text="idBarrioTermina.descripcion" v-bind:key="idBarrioTermina"></option>
+                         <option v-for="idBarrioTermina in barrio" :value="idBarrioTermina.idBarrio" v-text="idBarrioTermina.nombreBarrio" v-bind:key="idBarrioTermina"></option>
                     </select>
                 </div>
             </div>
@@ -79,9 +79,33 @@
                 <templete slot="edit">
                     <button type="button" class="btn btn-warning"><i class="icofont-pencil-alt-1"></i></button>
                 </templete>
+                <templete slot="estado" >
+                    <toggle-button @change="stateCupon"/>
+
+                        <toggle-button v-model="myDataVariable"/>
+
+                        <toggle-button :value="false"
+                                    color="#82C7EB"
+                                    :sync="true"
+                                    :labels="true"/>
+
+                        <toggle-button :value="true"
+                                    :labels="{checked: 'Foo', unchecked: 'Bar'}"/>
+                    <!--<div v-if="props.row.estado === 1">
+                        
+                        <toggle-button :value="true" :width="72" @change="stateCupon(props.row.idRuta, 0)" :labels="{checked: 'Activo', unchecked: 'Inactive'}"/>
+                    </div>
+
+                    <div v-else-if="props.row.estado === 0 ">
+                        <p>chao</p>
+                        <toggle-button :value="false" :width="72" @change="stateCupon(props.row.idRuta, 1)" :labels="{checked: 'Activo', unchecked: 'Inactive'}"/>
+                    </div>-->
+                </templete>
+                
+                <!--
                 <templete slot="state" slot-scope="props">
                     <button type="button" class="btn btn-warning">{{props.row.estado}}</button>
-                </templete>
+                </templete> -->
             </vue-bootstrap4-table>
         </div>
     </div>
@@ -90,9 +114,11 @@
 
 </template>
 <script>
+import Vue from 'vue' 
 import axios from 'axios';
 import router from '../../routes';
 import VueBootstrap4Table from 'vue-bootstrap4-table';
+import ToggleButton from 'vue-js-toggle-button';
 export default {
     name: "registrarRutas",
      data(){
@@ -148,7 +174,7 @@ export default {
                 },
                 {
                     label: "Estado",
-                    name: "state",
+                    name: "estado",
                     sort: false,
                 },
             ],
@@ -172,7 +198,8 @@ export default {
 
         },
     components:{
-        VueBootstrap4Table
+        VueBootstrap4Table,
+        ToggleButton
     },
     mounted(){
             this.getListBarrios();
@@ -230,7 +257,7 @@ export default {
                     console.log(error.response);
             });
         },
-
+        //listar destino
         getRutaTermina: function(){
              axios.get('/rutas-resource?Q=2').then((response) => {
                 if (response.data.length > 0) {
@@ -268,6 +295,35 @@ export default {
                 console.log(error.response);
             });
         },
+        
+            stateCupon: function (id, state) {
+            let formData = {
+                id: id,
+                state: state
+            };
+            swal({
+                title: "Estas seguro ?",
+                text: "Este cupón quedara " + state + " en tus registros!",
+                icon: "warning",
+                buttons: ["Cancelar","Ok"],
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    axios.post('/stateCupon', formData).then((response) => {
+                        //Success
+                        this.getCupons();
+                        swal("OK!", "Estado actualizado", "success");
+
+                    }).catch((error) => {
+                        swal("Oops!", "Parece que algo salio mal!", "error");
+                        console.log(error.response);
+                    });
+                }
+            });
+
+        },
+
+  
     }
 }
 </script>

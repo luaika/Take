@@ -41,6 +41,7 @@ Route::post('/setVehiculo','VehiculoController@store');
 Route::view('/registrarRutas','Home');
 Route::resource('/rutas-resource', 'RutaController');
 Route::post('/setRuta', 'RutaController@store');
+//Route::get('changeStatus', 'UserController@ChangeRutaStatus');
 
 //Barrio
 Route::resource('/barrio-resource', 'BarrioController');

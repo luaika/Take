@@ -44,6 +44,14 @@ class RutaController extends Controller
 
     }
 
+    /* public function changeUserStatus(Request $request)
+    {
+        $ruta = Ruta::find($request->idRuta);
+        $user->status = $request->status;
+        $user->save();
+  
+        return response()->json(['success'=>'Estado cambiado exitosamente.']);
+    } */
     /* public function rutaFinal()
     {
         $destino = Ruta::join('barrio', 'barrio.idBarrio', 'ruta.idBarrioTermina')
