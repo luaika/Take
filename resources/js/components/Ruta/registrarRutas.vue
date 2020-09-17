@@ -30,7 +30,7 @@
                      <label>Barrio de origen: <span class="text-danger">*</span></label>
                     <select class="custom-select" v-model="idBarrioInicia" required>
                         <option value="0">Seleccionar Barrio</option>
-                         <option v-for="idBarrioInicia in barrio" :value="idBarrioInicia.idBarrio" v-text="idBarrioInicia.descripcion" v-bind:key="idBarrioInicia"></option>
+                         <option v-for="idBarrioInicia in barrio" :value="idBarrioInicia.idBarrio" v-text="idBarrioInicia.descripcion" v-bind:key="idBarrioInicia" style="color:black;"></option>
                     </select>
                 </div>
                 <div class="form-group col-md-6">
@@ -208,13 +208,10 @@ export default {
                 this.estado = '';
                 this.idUsuarioModifica = '';
                 this.idUsuarioCrea = '';
-                    swal("OK!", "Ruta creada exitosamente!", "success");
-                    this.buttons.create.name = 'Agregar' ;
-
-                    this.buttons.create.state = false ;
-
-                    this.getRutas();
-                    
+                swal("OK!", "Ruta creada exitosamente!", "success");
+                this.buttons.create.name = 'Agregar' ;
+                this.buttons.create.state = false ;
+                     this.getRutaTermina();                    
                     $("#Ruta").modal('hide');
 
                 }).catch((error) => {
@@ -238,9 +235,7 @@ export default {
              axios.get('/rutas-resource?Q=2').then((response) => {
                 if (response.data.length > 0) {
                     this.barrioTermina = response.data;
-                    console.log ("prioridad");
-                    console.log(this.barrioTermina);
-                    //this.getRutas();
+                    this.getRutas();
                 } else {
                     this.message = 'No hay registro de cupones!!!';
                     
@@ -257,28 +252,14 @@ export default {
                     const des = this.barrioTermina;
 
                     this.rut = rutasTotal.concat(des);
-                    
+                    let rutasAndDestino = [];
                     for (var i=0; i<des.length;i++){
-                        console.log(i);
-                        const b = Object.assign(des[i],this.rut[i]);
-                        console.log(b);
-                        
+                        rutasAndDestino[i] = Object.assign(des[i],this.rut[i]);
                     } 
-                    const b1 = Object.assign(des[0],this.rut[0]);
-                    const b2 = Object.assign(des[1],this.rut[1]);
-                    const b3 = Object.assign(des[2],this.rut[2]);
+                    
                     //this.rutas = Object.assign(des[0],this.rut[0]);
-                    this.rutas = [b1,b2,b3];
-                    console.log('rutas');
-                    console.log(rutasTotal);
-                     console.log('destino');
-                    console.log(des);
-                    console.log('quizas bien');
-                    console.log(todos);
-                    console.log('todos final final');
-                    console.log(this.rut);
-                    console.log('union objeto');
-                    console.log(this.rutas);
+                    this.rutas = rutasAndDestino;
+                    
                    
                 } else {
                     this.message = 'No hay registro de cupones!!!';

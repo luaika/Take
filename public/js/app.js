@@ -2440,7 +2440,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.buttons.create.name = 'Agregar';
           _this.buttons.create.state = false;
 
-          _this.getRutas();
+          _this.getRutaTermina();
 
           $("#Ruta").modal('hide');
         })["catch"](function (error) {
@@ -2468,8 +2468,8 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/rutas-resource?Q=2').then(function (response) {
         if (response.data.length > 0) {
           _this3.barrioTermina = response.data;
-          console.log("prioridad");
-          console.log(_this3.barrioTermina); //this.getRutas();
+
+          _this3.getRutas();
         } else {
           _this3.message = 'No hay registro de cupones!!!';
         }
@@ -2486,28 +2486,14 @@ __webpack_require__.r(__webpack_exports__);
           var rutasTotal = response.data;
           var des = _this4.barrioTermina;
           _this4.rut = rutasTotal.concat(des);
+          var rutasAndDestino = [];
 
           for (var i = 0; i < des.length; i++) {
-            console.log(i);
-            var b = Object.assign(des[i], _this4.rut[i]);
-            console.log(b);
-          }
+            rutasAndDestino[i] = Object.assign(des[i], _this4.rut[i]);
+          } //this.rutas = Object.assign(des[0],this.rut[0]);
 
-          var b1 = Object.assign(des[0], _this4.rut[0]);
-          var b2 = Object.assign(des[1], _this4.rut[1]);
-          var b3 = Object.assign(des[2], _this4.rut[2]); //this.rutas = Object.assign(des[0],this.rut[0]);
 
-          _this4.rutas = [b1, b2, b3];
-          console.log('rutas');
-          console.log(rutasTotal);
-          console.log('destino');
-          console.log(des);
-          console.log('quizas bien');
-          console.log(todos);
-          console.log('todos final final');
-          console.log(_this4.rut);
-          console.log('union objeto');
-          console.log(_this4.rutas);
+          _this4.rutas = rutasAndDestino;
         } else {
           _this4.message = 'No hay registro de cupones!!!';
         }
@@ -5296,6 +5282,7 @@ var render = function() {
                     _vm._l(_vm.barrio, function(idBarrioInicia) {
                       return _c("option", {
                         key: idBarrioInicia,
+                        staticStyle: { color: "black" },
                         domProps: {
                           value: idBarrioInicia.idBarrio,
                           textContent: _vm._s(idBarrioInicia.descripcion)
