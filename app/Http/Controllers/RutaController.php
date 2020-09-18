@@ -133,6 +133,6 @@ class RutaController extends Controller
      */
     public function destroy($idRuta)
     {
-        //
+        Ruta::destroy($idRuta);
     }
 }

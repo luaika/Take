@@ -106,7 +106,6 @@
                 <div class="form-group col-md-6">
                 <label>Estado</label>
                 <select class="custom-select" v-model="estado">
-                    <option value="-1">Seleccionar Estado</option>
                     <option value="1">Activo</option>
                     <option value="0">Inactivo</option>
                 </select>
@@ -191,7 +190,7 @@ export default {
                 descripcion : '',
                 idBarrioInicia : 0,
                 idBarrioTermina : 0,
-                estado : -1,
+                estado :1,
                 idUsuarioModifica: '',
                 idUsuarioCrea:'',
                 barrioTermina:[],
@@ -293,7 +292,7 @@ export default {
     methods:{
     //insertar ruta
        setRuta:function() {
-            if (this.idBarrioInicia == 0 || this.idBarrioTermina == 0 || this.estado == -1) {
+            if (this.idBarrioInicia == 0 || this.idBarrioTermina == 0 ) {
                 this.show_alert.create.state = true;
                 this.show_alert.create.messaje = 'Debe seleccionar origen, destino y estado ';
                 setTimeout(() => this.show_alert.create.state = false, 2000);
@@ -394,9 +393,23 @@ export default {
         },
 
         deleteRuta: function(idRuta){
-             this.data_edit.idRuta = idRuta ;
-             swal("La ruta se eliminará de sus registros", "¿Desea eliminar esta ruta?", "warning");
-             console.log('holis');
+             swal({
+                title: "Estas seguro ?",
+                text: "Esta ruta quedará eliminada de tus registros!",
+                icon: "warning",
+                buttons: ["Cancelar","Confirmar"],
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    this.data_edit.idRuta = idRuta;
+                    axios.delete('/rutas-delete/' + this.data_edit.idRuta).then((response) => {
+                        swal("OK!", "La ruta se elimino exitosamente", "success");
+                        this.getRutaTermina();
+                    }).catch((error)=>{
+                        swal("Lo sentimos", "Parece que algo salio mal!", "error");
+                    });
+                }
+            });
         },
 
 

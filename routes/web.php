@@ -42,6 +42,7 @@ Route::view('/registrarRutas','Home');
 Route::resource('/rutas-resource', 'RutaController');
 Route::post('/setRuta', 'RutaController@store');
 Route::put('/updateRuta/{idRuta}', 'RutaController@update');
+Route::delete('/rutas-delete/{idRuta}', 'RutaController@destroy');
 //Route::get('changeStatus', 'UserController@ChangeRutaStatus');
 
 //Barrio
