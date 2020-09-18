@@ -14,7 +14,7 @@ class Barrio extends Model
 
         'idBarrio',
         'idMunicipio',
-        'descripcion',
+        'nombreBarrio',
         'estado',
         'fechaCrea',
         'fechaModifica',

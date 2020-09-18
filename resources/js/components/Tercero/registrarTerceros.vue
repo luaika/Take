@@ -4,9 +4,9 @@
             <h5 class="text-center text-white" id="exampleModalLabel">Registrar Tercero</h5>
         </div>
     <div class="card cardRutas">
-
     <form method="POST" v-on:submit.prevent="setTercero">
-      <div class="card primerContenedor">
+      <div class=" primerContenedor">
+              
                <div class="row">
                 <div class="form-group col-md-4">
                      <label for="numeroIdentificacion" >Identificación</label>
@@ -91,8 +91,8 @@
                     </div>
                     </div>
       </div>
-
-      <div class="card segundoContenedor">
+      <hr>
+      <div class="segundoContenedor">
       <div class="row">
           <div class="form-group col-md-6">
             <label for="razonSocial">Razon social</label>
@@ -133,7 +133,7 @@
         </select>
       </div>
     </div>
-     
+     <br>
      <div class="btn-width ">
      <button class="btn  botonCancelar botones" >Cancelar</button>
      <button class="btn botonAgregar botones"  :disabled="buttons.create.state">{{ buttons.create.name }}</button>

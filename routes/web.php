@@ -32,12 +32,17 @@ Route::view('/crearHorario', 'Home');
 //Terceros
 Route::view('/registrarTercero','Home');
 Route::post('/setTercero', 'TerceroController@store');
+
+//Vehículoa
 Route::view('/registrarVehiculo','Home');
+Route::post('/setVehiculo','VehiculoController@store');
 
 //Ruta
 Route::view('/registrarRutas','Home');
 Route::resource('/rutas-resource', 'RutaController');
 Route::post('/setRuta', 'RutaController@store');
+Route::put('/updateRuta/{idRuta}', 'RutaController@update');
+//Route::get('changeStatus', 'UserController@ChangeRutaStatus');
 
 //Barrio
 Route::resource('/barrio-resource', 'BarrioController');
@@ -47,13 +52,21 @@ Route::resource('/vehiculo-resource', 'VehiculoController');
 
 //Horario
 Route::post('/setHorario', 'HorarioController@store');
+
 Route::resource('/horario-resource', 'HorarioController');
 
+//Tercero
+Route::resource('/tercero-resource', 'TerceroController');
+
+//Usuario
+Route::post('/setUsuario', 'UsuarioController@store');
 
 
 Route::view('/consultarRutasVehiculos','Home');
 Route::view('/despacho','Home');
 Route::view('/cantidadPasajeros','Home');
 Route::view('/registrarUsuarios','Home');
+
+
 
 

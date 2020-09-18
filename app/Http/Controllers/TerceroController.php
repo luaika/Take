@@ -14,7 +14,11 @@ class TerceroController extends Controller
      */
     public function index()
     {
-        //
+
+        $query = Tercero::where([
+            ['estado', 1],
+        ])->orderBy('nombres')->get();
+        return response()->json($query);
     }
 
     /**
@@ -55,7 +59,7 @@ class TerceroController extends Controller
             'idUsuarioCrea' => $request->idUsuarioCrea,
             'idUsuarioModifica' => $request->idUsuarioModifica,
             ]);
- 
+
          return response()->json($tercero);
     }
 
