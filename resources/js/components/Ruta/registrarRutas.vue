@@ -1,10 +1,70 @@
 <template>
 
-    <div class="container contaRuta" id="Ruta">
-        <div class="modal-header encabezadoFormulario" >
-            <h5 class="text-center text-white" id="exampleModalLabel">Registrar Rutas</h5>
+<div class="container contaRuta" id="Ruta">
+<!-- Modal Editar -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Ruta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="form-edit_product" v-on:submit.prevent="putRuta" >
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label >Codigo</label>
+                                    <i class="fas fa-asterisk iconosRutas"></i>
+                                    <input type="text" class="form-control inputRutas"  v-model="data_edit.codigo" required>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label >Nombre:</label>
+                                    <i class="icofont-location-pin iconosRutas"></i>
+                                    <input type="text" class="form-control inputRutas"  v-model="data_edit.descripcion" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                <label>Estado</label>
+                                <select class="custom-select" v-model="data_edit.estado" required>
+                                    <option value="1">Activo</option>
+                                    <option value="0">Inactivo</option>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="show_alert.edit.state" class="alert alert-danger alert-dismissible fade show"
+                                role="alert">
+                            {{ show_alert.edit.messaje }}
+                        </div>
+
+                        <div class="row  m-t-25">
+                            <div class="col">
+                                <div class="form-group">
+
+                                    <button class="btn btn-success" :disabled="buttons.edit.state">
+                                        {{ buttons.edit.name }}
+                                        <i v-if="buttons.edit.state" class="fa fa-spinner fa-spin"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    <div class="card cardRutas">
+    </div>
+
+   <div>
+    <!-- Crear Ruta -->
+        <div class="modal-header encabezadoFormulario" >
+            <h5 class="text-center text-white" >Registrar Rutas</h5>
+        </div>
+        <div class="card cardRutas">
        <form method="POST" id="form-ruta"  v-on:submit.prevent="setRuta" >
 
             <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -19,8 +79,8 @@
             </div>
 
             <div class="form-group col-md-6">
-                <label for="descripcion">Descripción</label>
-                <i class="far fa-edit iconosRutas"></i>
+                <label for="descripcion">Nombre:</label>
+               <i class="icofont-location-pin iconosRutas"></i>
                 <input type="text" class="form-control inputRutas" id="descripcion" v-model="descripcion" required>
             </div>
             </div>
@@ -41,7 +101,7 @@
                     </select>
                 </div>
             </div>
-
+            <br>
             <div class="row">
                 <div class="form-group col-md-6">
                 <label>Estado</label>
@@ -72,30 +132,32 @@
             </div>
         </form>
         </div>
+    <!-- End crear ruta -->
         <br>
         <div class="container-fluid">
             <vue-bootstrap4-table :rows="rutas" :columns="columns"  :config = "config" thead-class="green-bg bg-dark text-white">
                 
-                <templete slot="edit">
-                    <button type="button" class="btn btn-warning"><i class="icofont-pencil-alt-1"></i></button>
+                <templete slot="edit" slot-scope="props">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"  v-on:click="editRuta(props.row.idRuta)" v-bind:idRuta="props.row.idRuta">
+                        <i class="icofont-edit"></i>
+                    </button>
+                    <!--<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#ModalEditRuta"  >
+                        <i class="icofont-pencil-alt-1"></i>
+                    </button>-->
                 </templete>
-                <templete slot="estado" >
-                    <toggle-button @change="stateCupon"/>
+                <templete slot="delete" slot-scope="props">
+                    <button type="button" class="btn btn-danger"   v-on:click="deleteRuta(props.row.idRuta)" v-bind:idRuta="props.row.idRuta">
+                       <i class="icofont-ui-delete"></i>
+                    </button>
+                    <!--<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#ModalEditRuta"  >
+                        <i class="icofont-pencil-alt-1"></i>
+                    </button>-->
+                </templete>
 
-                        <toggle-button v-model="myDataVariable"/>
-
-                        <toggle-button :value="false"
-                                    color="#82C7EB"
-                                    :sync="true"
-                                    :labels="true"/>
-
-                        <toggle-button :value="true"
-                                    :labels="{checked: 'Foo', unchecked: 'Bar'}"/>
+                <templete slot="estado">
                     <!--<div v-if="props.row.estado === 1">
-                        
                         <toggle-button :value="true" :width="72" @change="stateCupon(props.row.idRuta, 0)" :labels="{checked: 'Activo', unchecked: 'Inactive'}"/>
                     </div>
-
                     <div v-else-if="props.row.estado === 0 ">
                         <p>chao</p>
                         <toggle-button :value="false" :width="72" @change="stateCupon(props.row.idRuta, 1)" :labels="{checked: 'Activo', unchecked: 'Inactive'}"/>
@@ -110,6 +172,7 @@
         </div>
     </div>
 
+    </div>
 
 
 </template>
@@ -119,6 +182,7 @@ import axios from 'axios';
 import router from '../../routes';
 import VueBootstrap4Table from 'vue-bootstrap4-table';
 import ToggleButton from 'vue-js-toggle-button';
+
 export default {
     name: "registrarRutas",
      data(){
@@ -139,11 +203,19 @@ export default {
                         state: false ,
                         messaje: ''
                     } ,
+                    edit: {
+                    state: false ,
+                    messaje: ''
+                    }
                 },
                 buttons: {
                     create: {
                         name: 'Agregar',
                         state: false,
+                    },
+                    edit: {
+                    name: 'Actualizar',
+                    state: false
                     },
                 },
                 columns: [
@@ -153,7 +225,7 @@ export default {
                     sort: false,
                 },
                 {
-                    label: "Descripción",
+                    label: "Nombre",
                     name: "descripcion",
                     sort: true,
                 },
@@ -170,6 +242,11 @@ export default {
                 {
                     label: "Editar",
                     name: "edit",
+                    sort: false,
+                },
+                {
+                    label: "Eliminar",
+                    name: "delete",
                     sort: false,
                 },
                 {
@@ -193,7 +270,13 @@ export default {
                         placeholder: "Buscar ",
                 },
             },
-
+            data_edit:{
+                show: true,
+                contenedor: false ,
+                codigo: '',
+                descripcion: '',
+                estado: '',
+            },
             }
 
         },
@@ -228,11 +311,12 @@ export default {
                     'idUsuarioCrea': this.idUsuarioModifica
                 }
             axios.post('/setRuta', formData).then((response) =>{
+                
                 this.codigo = '';
                 this.descripcion = '';
                 this.idBarrioInicia = 0;
                 this.idBarrioTermina = 0;
-                this.estado = '';
+                this.estado = -1;
                 this.idUsuarioModifica = '';
                 this.idUsuarioCrea = '';
                 swal("OK!", "Ruta creada exitosamente!", "success");
@@ -285,17 +369,78 @@ export default {
                     } 
                     
                     //this.rutas = Object.assign(des[0],this.rut[0]);
-                    this.rutas = rutasAndDestino;
-                    
-                   
+                    this.rutas = rutasAndDestino;                             
                 } else {
-                    this.message = 'No hay registro de cupones!!!';
+                    this.message = 'No hay registro de tutas!!!';
                 }
             }).catch((error) => {
                 console.log(error.response);
             });
         },
+        //traer rutas
+         editRuta: function (idRuta) {
+            this.data_edit.idRuta = idRuta ;
+            axios.get('/rutas-resource/'+idRuta+'/edit').then((response) => {
+                this.data_edit.contenedor= true;
+                this.data_edit.show= false;
+                let data = response.data;
+                this.data_edit.codigo = data['codigo'];
+                this.data_edit.descripcion = data['descripcion'];
+                this.data_edit.estado = data['estado'];
+ 
+            }).catch((error) => {
+                console.log(error);
+            });
+        },
+
+        deleteRuta: function(idRuta){
+             this.data_edit.idRuta = idRuta ;
+             swal("La ruta se eliminará de sus registros", "¿Desea eliminar esta ruta?", "warning");
+             console.log('holis');
+        },
+
+
+        //put ruta
+           putRuta: function() {
+            this.buttons.edit.name = 'Actualizando...';
+            this.buttons.edit.state = true;
+
+            let formData = {
+                'codigo': this.data_edit.codigo,
+                'descripcion': this.data_edit.descripcion,
+                'estado': this.data_edit.estado,
+            };
+
+
+            axios.put('/updateRuta/' + this.data_edit.idRuta, formData).then((response) => {
+                console.log('entro a actualizar');
+                this.buttons.edit.name = 'Actualizar';
+                this.buttons.edit.state = false;
+                swal("OK!", "Ruta actualizado exitosamente!", "success");
+                $("#ModalEditRuta").modal('hide');
+                this.getRutaTermina();
+
+            }).catch((error) => {
+                console.log(error.response);
+                let errors = '';
+                let aux = error.response.data.errors;
+                for (let i in aux) {
+                    let sci = aux[i];
+                    for (let j in sci) {
+                        errors += '\n' + sci[j];
+                    }
+                }
+                this.buttons.edit.name = 'Actualizar';
+                this.buttons.edit.state = false;
+                this.show_alert.edit.state = true;
+                this.show_alert.edit.messaje = errors;
+                setTimeout(() => this.show_alert.edit.state = false, 5000);
+            });
+
+        },
+
         
+        //estado 
             stateCupon: function (id, state) {
             let formData = {
                 id: id,

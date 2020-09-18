@@ -28,38 +28,21 @@ class RutaController extends Controller
         case 1:
             $query = Ruta::where([
             ['estado', 1],
-            ])->orderBy('descripcion')->get();
+            ])->get();
             return response()->json($query);
             
         case 2:
             $btermina = Barrio::join('ruta', 'ruta.idBarrioTermina', 'barrio.idBarrio')
-            ->select('barrio.nombreBarrio' , 'barrio.nombreBarrio as barrio_termina')
+            ->select('barrio.nombreBarrio' , 'ruta.descripcion','barrio.nombreBarrio as barrio_termina')
             ->get();
             return response()->json($btermina);
-        break;
     }
 
 
-      //return response()->json(Ruta::all()) ;
+      //orderBy('descripcion')
 
     }
 
-    /* public function changeUserStatus(Request $request)
-    {
-        $ruta = Ruta::find($request->idRuta);
-        $user->status = $request->status;
-        $user->save();
-  
-        return response()->json(['success'=>'Estado cambiado exitosamente.']);
-    } */
-    /* public function rutaFinal()
-    {
-        $destino = Ruta::join('barrio', 'barrio.idBarrio', 'ruta.idBarrioTermina')
-                    ->select('ruta.idBarrioTermina' , 'barrio.descripcion as barrio_termina')
-                ->get();
-                return response()->json($destino);
-    }
- */
     /**
      * Show the form for creating a new resource.
      *
@@ -109,9 +92,10 @@ class RutaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($idRuta)
     {
-        //
+        $query= Ruta::find($idRuta);
+        return response()->json($query);
     }
 
     /**
@@ -121,9 +105,24 @@ class RutaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idRuta)
     {
-        //
+
+        $attributes = [
+            'codigo' => 'Código',
+            'descripcion' => 'Nombre',
+            'estado' => 'Estado',
+        ];
+
+        $ruta = Ruta::find($idRuta);
+
+        $ruta->update([
+            'codigo' => $request->codigo,
+            'descripcion' =>$request->descripcion,
+            'estado' =>  $request->estado,
+           
+        ]);
+        return response()->json($ruta);
     }
 
     /**
@@ -132,7 +131,7 @@ class RutaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($idRuta)
     {
         //
     }
