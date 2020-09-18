@@ -47,6 +47,8 @@ Route::resource('/vehiculo-resource', 'VehiculoController');
 
 //Horario
 Route::post('/setHorario', 'HorarioController@store');
+Route::resource('/horario-resource', 'HorarioController');
+
 
 
 Route::view('/consultarRutasVehiculos','Home');

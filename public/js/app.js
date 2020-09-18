@@ -1930,6 +1930,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
+/* harmony import */ var vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-bootstrap4-table */ "./node_modules/vue-bootstrap4-table/dist/vue-bootstrap4-table.esm.js");
 //
 //
 //
@@ -1969,15 +1973,173 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "crearHorario",
-  created: function created() {},
-  mounted: function mounted() {},
-  destroyed: function destroyed() {},
   data: function data() {
-    return {};
+    return {
+      hora: '',
+      fecha: '',
+      idRuta: 0,
+      idVehiculo: 0,
+      show_ruta: true,
+      show_vehiculo: true,
+      vehiculo: [],
+      horario: [],
+      ruta: [],
+      show_alert: {
+        create: {
+          state: false,
+          messaje: ''
+        }
+      },
+      buttons: {
+        create: {
+          name: 'Agregar',
+          state: false
+        }
+      },
+      columns: [{
+        label: "Hora",
+        name: "hora",
+        sort: false
+      }, {
+        label: "Fecha",
+        name: "fecha",
+        sort: true
+      }, {
+        label: "Ruta",
+        name: "ruta",
+        sort: false
+      }, {
+        label: "Vehiculo",
+        name: "vehiculo",
+        sort: true
+      }, {
+        label: "Editar",
+        name: "edit",
+        sort: false
+      }],
+      config: {
+        pagination: true,
+        // default true
+        pagination_info: true,
+        // default true
+        num_of_visibile_pagination_buttons: 7,
+        // default 5
+        per_page: 5,
+        // default 10
+        per_page_options: [5, 10, 20, 30],
+        filas_seleccionables: true,
+        card_title: "HORARIOS",
+        show_refresh_button: false,
+        show_reset_button: false,
+        global_search: {
+          placeholder: "Buscar "
+        }
+      }
+    };
   },
-  methods: {}
+  components: {
+    VueBootstrap4Table: vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  mounted: function mounted() {
+    this.getListVehiculo();
+    this.getListHorario();
+    this.getListRuta();
+  },
+  methods: {
+    setHorario: function setHorario() {
+      var _this = this;
+
+      if (this.idRuta == 0 || this.idVehiculo == 0) {
+        this.show_alert.create.state = true;
+        this.show_alert.create.messaje = 'Debe seleccionar Ruta y Vehiculo';
+        setTimeout(function () {
+          return _this.show_alert.create.state = false;
+        }, 2000);
+      } else {
+        this.buttons.create.name = 'Agregando ...';
+        this.buttons.create.state = true;
+        var formData = {
+          'fecha': this.fecha,
+          'hora': this.hora,
+          'idRuta': this.idRuta,
+          'idVehiculo': this.idVehiculo
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/setHorario', formData).then(function (response) {
+          _this.fecha = '';
+          _this.hora = '';
+          _this.idRuta = 0;
+          _this.idVehiculo = 0;
+          swal("OK!", "Horario creado exitosamente!", "success");
+          _this.buttons.create.name = 'Agregar';
+          _this.buttons.create.state = false;
+          $("#Horario").modal('hide');
+        })["catch"](function (error) {
+          swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+          console.log(error.response);
+        });
+      }
+
+      ;
+    },
+    // Lista Categorias
+    getListVehiculo: function getListVehiculo() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/vehiculo-resource').then(function (response) {
+        console.log('response_ ' + JSON.stringify(response.data));
+        _this2.vehiculo = response.data;
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
+    },
+    // Lista Categorias
+    getListRuta: function getListRuta() {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/rutas-resource?Q=1').then(function (response) {
+        console.log('response_ ' + JSON.stringify(response.data));
+        _this3.ruta = response.data;
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
+    },
+    getListHorario: function getListHorario() {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/horario-resource').then(function (response) {
+        if (response.data.length > 0) {
+          _this4.horario = response.data;
+          console.log(_this4.horario);
+        } else {
+          _this4.message = 'No hay registro de horarios!!!';
+        }
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -2227,17 +2389,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2254,10 +2405,7 @@ __webpack_require__.r(__webpack_exports__);
       idUsuarioCrea: '',
       show_barrios: true,
       barrio: [],
-<<<<<<< HEAD
-=======
       rutas: [],
->>>>>>> develop
       show_alert: {
         create: {
           state: false,
@@ -2269,13 +2417,6 @@ __webpack_require__.r(__webpack_exports__);
           name: 'Agregar',
           state: false
         }
-<<<<<<< HEAD
-      }
-    };
-  },
-  mounted: function mounted() {
-    this.getListBarrios();
-=======
       },
       columns: [{
         label: "Código",
@@ -2329,7 +2470,6 @@ __webpack_require__.r(__webpack_exports__);
     this.getListBarrios();
     this.getRutas();
     this.getBarrioTermina();
->>>>>>> develop
   },
   methods: {
     //insertar ruta
@@ -2365,14 +2505,11 @@ __webpack_require__.r(__webpack_exports__);
           swal("OK!", "Ruta creada exitosamente!", "success");
           _this.buttons.create.name = 'Agregar';
           _this.buttons.create.state = false;
-<<<<<<< HEAD
-=======
 
           _this.getRutas();
 
           _this.getBarrioTermina();
 
->>>>>>> develop
           $("#Ruta").modal('hide');
         })["catch"](function (error) {
           swal("Lo sentimos!", "Parece que algo salio mal!", "error");
@@ -2382,35 +2519,28 @@ __webpack_require__.r(__webpack_exports__);
 
       ;
     },
-<<<<<<< HEAD
-    // Lista Categorias
-=======
     // Lista Barrios
->>>>>>> develop
     getListBarrios: function getListBarrios() {
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/barrio-resource').then(function (response) {
         console.log('response_ ' + JSON.stringify(response.data));
         _this2.barrio = response.data;
-<<<<<<< HEAD
-=======
       })["catch"](function (error) {
         console.log(error.response);
       });
     },
-    //Listar Rutas    
+    //Listar Rutas
     getRutas: function getRutas() {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/rutas-resource').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/rutas-resource?Q=0').then(function (response) {
         if (response.data.length > 0) {
           _this3.rutas = response.data;
           console.log(_this3.rutas);
         } else {
           _this3.message = 'No hay registro de cupones!!!';
         }
->>>>>>> develop
       })["catch"](function (error) {
         console.log(error.response);
       });
@@ -4410,167 +4540,262 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container contaRuta" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "card cardRutas" }, [
-      _c("div", { staticClass: "form-group col-md-12" }, [
-        _c("label", [_vm._v("Hora")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.hora,
-              expression: "hora"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "time" },
-          domProps: { value: _vm.hora },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.hora = $event.target.value
-            }
-          }
-        })
-      ]),
+  return _c(
+    "div",
+    { staticClass: "container contaRuta", attrs: { id: "Ruta" } },
+    [
+      _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group col-md-12" }, [
-        _c("label", [_vm._v("Fecha")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.fecha,
-              expression: "fecha"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "date" },
-          domProps: { value: _vm.fecha },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.fecha = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col-md-12" }, [
-        _vm._m(1),
-        _vm._v(" "),
+      _c("div", { staticClass: "card cardRutas" }, [
         _c(
-          "select",
+          "form",
           {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.ruta,
-                expression: "ruta"
-              }
-            ],
-            staticClass: "custom-select",
-            attrs: { required: "" },
+            attrs: { method: "POST", id: "form-ruta" },
             on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.ruta = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.setRuta($event)
               }
             }
           },
           [
-            _c("option", { attrs: { value: "0" } }, [
-              _vm._v("Seleccionar Ruta")
-            ]),
+            _vm.show_alert.create.state
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "alert alert-danger alert-dismissible fade show",
+                    attrs: { role: "alert" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.show_alert.create.messaje) +
+                        "\n            "
+                    )
+                  ]
+                )
+              : _vm._e(),
             _vm._v(" "),
-            _vm._l(_vm.ruta, function(ruta) {
-              return _c("option", {
-                key: ruta,
-                domProps: {
-                  value: ruta.idRuta,
-                  textContent: _vm._s(ruta.descripcion)
+            _c("div", { staticClass: "form-group col-md-12" }, [
+              _c("label", [_vm._v("Hora")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.hora,
+                    expression: "hora"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "time" },
+                domProps: { value: _vm.hora },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.hora = $event.target.value
+                  }
                 }
               })
-            })
-          ],
-          2
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-12" }, [
+              _c("label", [_vm._v("Fecha")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.fecha,
+                    expression: "fecha"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "date" },
+                domProps: { value: _vm.fecha },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.fecha = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-12" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.idRuta,
+                      expression: "idRuta"
+                    }
+                  ],
+                  staticClass: "custom-select",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.idRuta = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "0" } }, [
+                    _vm._v("Seleccionar Ruta")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.ruta, function(idRuta) {
+                    return _c("option", {
+                      key: idRuta,
+                      domProps: {
+                        value: idRuta.idRuta,
+                        textContent: _vm._s(idRuta.descripcion)
+                      }
+                    })
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-12" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.idVehiculo,
+                      expression: "idVehiculo"
+                    }
+                  ],
+                  staticClass: "custom-select",
+                  attrs: { required: "" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.idVehiculo = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "0" } }, [
+                    _vm._v("Seleccionar Vehiculo")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.vehiculo, function(idVehiculo) {
+                    return _c("option", {
+                      key: idVehiculo,
+                      domProps: {
+                        value: idVehiculo.idVehiculo,
+                        textContent: _vm._s(idVehiculo.placa)
+                      }
+                    })
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "btn-width" }, [
+              _c("button", { staticClass: "btn  botonCancelar botones" }, [
+                _vm._v("Cancelar")
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn botonAgregar botones",
+                  attrs: { disabled: _vm.buttons.create.state }
+                },
+                [_vm._v(_vm._s(_vm.buttons.create.name))]
+              )
+            ])
+          ]
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group col-md-12" }, [
-        _c("label", [_vm._v("Vehiculo")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.vehiculo,
-                expression: "vehiculo"
-              }
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "container-fluid" },
+        [
+          _c(
+            "vue-bootstrap4-table",
+            {
+              attrs: {
+                rows: _vm.horario,
+                columns: _vm.columns,
+                config: _vm.config
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "state",
+                  fn: function(props) {
+                    return _c("templete", {}, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-warning",
+                          attrs: { type: "button" }
+                        },
+                        [_vm._v(_vm._s(props.row.estado))]
+                      )
+                    ])
+                  }
+                }
+              ])
+            },
+            [
+              _c("templete", { attrs: { slot: "edit" }, slot: "edit" }, [
+                _c(
+                  "button",
+                  { staticClass: "btn btn-warning", attrs: { type: "button" } },
+                  [_c("i", { staticClass: "icofont-pencil-alt-1" })]
+                )
+              ])
             ],
-            staticClass: "custom-select",
-            attrs: { required: "" },
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.vehiculo = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              }
-            }
-          },
-          [
-            _c("option", { attrs: { value: "0" } }, [
-              _vm._v("Seleccionar Vehiculo")
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.vehiculo, function(vehiculo) {
-              return _c("option", {
-                key: vehiculo,
-                domProps: {
-                  value: vehiculo.idVehiculo,
-                  textContent: _vm._s(vehiculo.placa)
-                }
-              })
-            })
-          ],
-          2
-        )
-      ]),
-      _vm._v(" "),
-      _vm._m(2)
-    ])
-  ])
+            1
+          )
+        ],
+        1
+      )
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -4593,7 +4818,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("label", [
-      _vm._v("Ruta "),
+      _vm._v("Ruta"),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },
@@ -4601,21 +4826,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "btn-width" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn  botonCancelar botones",
-          attrs: { type: "submit" }
-        },
-        [_vm._v("Cancelar")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn botonAgregar botones", attrs: { type: "submit" } },
-        [_vm._v("Agregar")]
-      )
+    return _c("label", [
+      _vm._v("Vehiculo "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   }
 ]
@@ -5153,27 +5366,6 @@ var render = function() {
                           ? $$selectedVal
                           : $$selectedVal[0]
                       }
-<<<<<<< HEAD
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "-1" } }, [
-                      _vm._v("Seleccionar Estado")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "1" } }, [_vm._v("Activo")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "0" } }, [
-                      _vm._v("Inactivo")
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group col-md-6" }, [
-                _c("label", { attrs: { for: "idUsuarioModifica" } }, [
-                  _vm._v("idUsuarioModifica")
-=======
                     }
                   },
                   [
@@ -5229,58 +5421,6 @@ var render = function() {
               _c("div", { staticClass: "form-group col-md-4" }, [
                 _c("label", { attrs: { for: "idUsuarioCrea" } }, [
                   _vm._v("idUsuarioCrea")
->>>>>>> develop
-                ]),
-                _vm._v(" "),
-                _c("i", { staticClass: "fas fa-map-marked-alt iconosRutas" }),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-<<<<<<< HEAD
-                      value: _vm.idUsuarioModifica,
-                      expression: "idUsuarioModifica"
-                    }
-                  ],
-                  staticClass: "form-control inputRutas",
-                  attrs: {
-                    type: "text",
-                    id: "idUsuarioModifica",
-                    required: ""
-                  },
-                  domProps: { value: _vm.idUsuarioModifica },
-=======
-                      value: _vm.idUsuarioCrea,
-                      expression: "idUsuarioCrea"
-                    }
-                  ],
-                  staticClass: "form-control inputRutas",
-                  attrs: { type: "text", id: "idUsuarioCrea", required: "" },
-                  domProps: { value: _vm.idUsuarioCrea },
->>>>>>> develop
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-<<<<<<< HEAD
-                      _vm.idUsuarioModifica = $event.target.value
-=======
-                      _vm.idUsuarioCrea = $event.target.value
->>>>>>> develop
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-<<<<<<< HEAD
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "form-group col-md-4" }, [
-                _c("label", { attrs: { for: "idUsuarioCrea" } }, [
-                  _vm._v("idUsuarioCrea")
                 ]),
                 _vm._v(" "),
                 _c("i", { staticClass: "fas fa-map-marked-alt iconosRutas" }),
@@ -5309,8 +5449,6 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-=======
->>>>>>> develop
             _c("div", { staticClass: "btn-width" }, [
               _c("button", { staticClass: "btn  botonCancelar botones" }, [
                 _vm._v("Cancelar")
@@ -5327,9 +5465,6 @@ var render = function() {
             ])
           ]
         )
-<<<<<<< HEAD
-      ])
-=======
       ]),
       _vm._v(" "),
       _c("br"),
@@ -5378,7 +5513,6 @@ var render = function() {
         ],
         1
       )
->>>>>>> develop
     ]
   )
 }
@@ -23211,8 +23345,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Estefania\Documents\TAKEVA\TakevaProject5\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Estefania\Documents\TAKEVA\TakevaProject5\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Estefania\Documents\TAKEVA P5\TakevaProject5\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Estefania\Documents\TAKEVA P5\TakevaProject5\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

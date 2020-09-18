@@ -15,7 +15,15 @@ class HorarioController extends Controller
      */
     public function index()
     {
-        return response()->json(Horario::all()) ;
+        //return response()->json(Horario::all()) ;
+
+       $lista = Horario::join('ruta', 'ruta.idRuta', 'horario.idRuta')
+        ->select('horario.*' , 'ruta.descripcion as ruta')
+        ->get();
+        return response()->json($lista);
+
+        //('vehiculo', 'vehiculo.idvehiculo', 'horario.idVehiculo')
+        //('horario.*' , 'vehiculo.placa as vehiculo')
     }
 
     /**

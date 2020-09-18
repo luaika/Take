@@ -73,6 +73,7 @@
         </form>
         </div>
         <br>
+
         <div class="container-fluid">
             <vue-bootstrap4-table :rows="rutas" :columns="columns"  :config = "config">
                 <templete slot="edit">
@@ -84,10 +85,8 @@
             </vue-bootstrap4-table>
         </div>
     </div>
-
-
-
 </template>
+
 <script>
 import axios from 'axios';
 import router from '../../routes';
@@ -162,12 +161,11 @@ export default {
                 show_refresh_button: false,
                 show_reset_button: false,
                 global_search: {
-                        placeholder: "Buscar ",
+                placeholder: "Buscar ",
                 },
             },
 
             }
->>>>>>> develop
         },
     components:{
         VueBootstrap4Table
@@ -233,7 +231,7 @@ export default {
         },
     //Listar Rutas
         getRutas: function () {
-            axios.get('/rutas-resource').then( (response)  => {
+            axios.get('/rutas-resource?Q=0').then( (response)  => {
                 if (response.data.length > 0) {
                     this.rutas = response.data ;
                     console.log(this.rutas);

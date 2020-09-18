@@ -1,13 +1,12 @@
 <template>
-    <div class="container contaRuta">
+
+    <div class="container contaRuta" id="Ruta">
         <div class="modal-header encabezadoFormulario" >
-            <h5 class="text-center text-white" id="exampleModalLabel">Habilitar Horario</h5>
+             <h5 class="text-center text-white" id="exampleModalLabel">Habilitar Horario</h5>
         </div>
     <div class="card cardRutas">
-
-                 <form method="POST" id="form-ruta"  v-on:submit.prevent="setHorario" >
-
-            <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
+       <form method="POST" id="form-ruta"  v-on:submit.prevent="setRuta" >
+<div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ show_alert.create.messaje }}
             </div>
 
@@ -39,7 +38,18 @@
                 <button class="btn  botonCancelar botones" >Cancelar</button>
                 <button class="btn botonAgregar botones"  :disabled="buttons.create.state">{{ buttons.create.name }}</button>
             </div>
-            </form>
+        </form>
+        </div>
+        <br>
+        <div class="container-fluid">
+            <vue-bootstrap4-table :rows="horario" :columns="columns"  :config = "config">
+                <templete slot="edit">
+                    <button type="button" class="btn btn-warning"><i class="icofont-pencil-alt-1"></i></button>
+                </templete>
+                <templete slot="state" slot-scope="props">
+                    <button type="button" class="btn btn-warning">{{props.row.estado}}</button>
+                </templete>
+            </vue-bootstrap4-table>
         </div>
     </div>
 </template>
@@ -47,8 +57,9 @@
 <script>
 import axios from 'axios';
 import router from '../../routes';
+import VueBootstrap4Table from 'vue-bootstrap4-table';
 export default {
-        name: "crearHorario",
+            name: "crearHorario",
         data(){
             return {
                 hora : '',
@@ -58,6 +69,7 @@ export default {
                 show_ruta:true,
                 show_vehiculo:true,
                 vehiculo:[],
+                horario:[],
                 ruta:[],
                 show_alert: {
                     create: {
@@ -71,11 +83,57 @@ export default {
                         state: false,
                     },
                 },
-            }
+                 columns: [
+                {
+                    label: "Hora",
+                    name: "hora",
+                    sort: false,
+                },
+                {
+                    label: "Fecha",
+                    name: "fecha",
+                    sort: true,
+                },
+                {
+                    label: "Ruta",
+                    name: "ruta",
+                    sort: false,
+                },
+                {
+                    label: "Vehiculo",
+                    name: "vehiculo",
+                    sort: true,
+                },
+                 {
+                    label: "Editar",
+                    name: "edit",
+                    sort: false,
+                },
+            ],
+            config: {
+                 pagination: true, // default true
+                    pagination_info: true, // default true
+                    num_of_visibile_pagination_buttons: 7, // default 5
+                    per_page: 5, // default 10
+                    per_page_options:  [5,  10,  20,  30],
+                filas_seleccionables: true,
+                card_title: "HORARIOS",
+                show_refresh_button: false,
+                show_reset_button: false,
+                global_search: {
+                placeholder: "Buscar ",
+                },
+            },
 
+            }
         },
+    components:{
+        VueBootstrap4Table
+    },
+
     mounted() {
             this.getListVehiculo();
+            this.getListHorario()
             this.getListRuta();
     },
 
@@ -130,6 +188,20 @@ export default {
                     console.log(error.response);
                 });
             },
+
+             getListHorario: function () {
+            axios.get('/horario-resource').then( (response)  => {
+                if (response.data.length > 0) {
+                    this.horario = response.data ;
+                    console.log(this.horario);
+                } else {
+                    this.message = 'No hay registro de horarios!!!';
+                }
+            }).catch((error) => {
+                console.log(error.response);
+            });
+        },
     }
 }
 </script>
+
