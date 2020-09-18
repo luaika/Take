@@ -2,7 +2,11 @@ import Vue from 'vue';
 import axios from 'axios';
 import router from './routes.js';
 import App from './components/App';
+import ToggleButton from 'vue-js-toggle-button';
+import swal from 'sweetalert';
+//import swal from 'sweetalert';
 
+Vue.use(ToggleButton);
 
 window.axios = axios;
 

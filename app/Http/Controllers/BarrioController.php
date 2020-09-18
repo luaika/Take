@@ -16,7 +16,7 @@ class BarrioController extends Controller
     {
         $query = Barrio::where([
             ['estado', 1],
-        ])->orderBy('descripcion')->get();
+        ])->orderBy('nombreBarrio')->get();
         return response()->json($query);
     }
 
