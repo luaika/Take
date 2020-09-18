@@ -44,7 +44,7 @@ class RutaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource.s
      *
      * @return \Illuminate\Http\Response
      */
@@ -134,5 +134,13 @@ class RutaController extends Controller
     public function destroy($idRuta)
     {
         Ruta::destroy($idRuta);
+    }
+
+    //cambiar estado
+    public function stateRuta(Request $request){
+        $ruta = Ruta::find($request->idRuta);
+        $ruta->estado = $request->estado;
+        $ruta->save();
+        return response()->json($ruta);
     }
 }
