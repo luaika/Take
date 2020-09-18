@@ -1,13 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-<<<<<<< HEAD
-use App\Vehiculo;
-=======
-
 use App\Vehiculo;
 use App\Http\Controllers\Controller;
->>>>>>> pb/master
 use Illuminate\Http\Request;
 
 class VehiculoController extends Controller
@@ -19,14 +14,12 @@ class VehiculoController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        return response()->json(Vehiculo::all()) ;
-=======
+
         $query = Vehiculo::where([
             ['estado', 1],
         ])->orderBy('placa')->get();
         return response()->json($query);
->>>>>>> pb/master
+
     }
 
     /**
@@ -38,10 +31,6 @@ class VehiculoController extends Controller
     {
         //
     }
-<<<<<<< HEAD
-    
-=======
->>>>>>> pb/master
 
     /**
      * Store a newly created resource in storage.
@@ -51,7 +40,7 @@ class VehiculoController extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD
+
         $vehiculo = Vehiculo::create([
             'placa'=>$request->placa,
             'numeroInterno'=>$request->numeroInterno,
@@ -75,9 +64,7 @@ class VehiculoController extends Controller
             'idUsuarioModifica'=>$request->idUsuarioModifica,
         ]);
         return response()->json($vehiculo);
-=======
-        //
->>>>>>> pb/master
+
     }
 
     /**
@@ -88,10 +75,7 @@ class VehiculoController extends Controller
      */
     public function show($id)
     {
-<<<<<<< HEAD
-=======
-        //
->>>>>>> pb/master
+
     }
 
     /**

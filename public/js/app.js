@@ -2232,8 +2232,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
 /* harmony import */ var vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-bootstrap4-table */ "./node_modules/vue-bootstrap4-table/dist/vue-bootstrap4-table.esm.js");
-/* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-js-toggle-button */ "./node_modules/vue-js-toggle-button/dist/index.js");
-/* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_4__);
 //
 //
 //
@@ -2401,17 +2399,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 
 
 
@@ -2509,8 +2496,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   components: {
-    VueBootstrap4Table: vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_3__["default"],
-    ToggleButton: vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_4___default.a
+    VueBootstrap4Table: vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   mounted: function mounted() {
     this.getListBarrios();
@@ -2630,6 +2616,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
+    //eliminar Ruta
     deleteRuta: function deleteRuta(idRuta) {
       var _this6 = this;
 
@@ -2693,27 +2680,33 @@ __webpack_require__.r(__webpack_exports__);
         }, 5000);
       });
     },
-    //estado 
-    stateCupon: function stateCupon(id, state) {
+    // cambiar estado 
+    stateRuta: function stateRuta(idRuta, estado) {
       var _this8 = this;
 
       var formData = {
-        id: id,
-        state: state
+        idRuta: idRuta,
+        estado: estado
       };
+
+      if (estado == 1) {
+        var nomState = "Activo";
+      } else {
+        var nomState = "Inactivo";
+      }
+
       swal({
-        title: "Estas seguro ?",
-        text: "Este cupón quedara " + state + " en tus registros!",
-        icon: "warning",
-        buttons: ["Cancelar", "Ok"],
+        title: "Estado de ruta",
+        text: "Esta ruta quedará " + nomState + " en tus registros!",
+        icon: "success",
         dangerMode: true
       }).then(function (willDelete) {
         if (willDelete) {
-          axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/stateCupon', formData).then(function (response) {
+          axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/stateRuta', formData).then(function (response) {
             //Success
-            _this8.getCupons();
+            _this8.getRutaTermina();
 
-            swal("OK!", "Estado actualizado", "success");
+            swal("OK!", "Estado actualizado exitosamente", "success");
           })["catch"](function (error) {
             swal("Oops!", "Parece que algo salio mal!", "error");
             console.log(error.response);
@@ -6415,7 +6408,7 @@ var render = function() {
                           _c(
                             "button",
                             {
-                              staticClass: "btn btn-success",
+                              staticClass: "btn botonAgregar",
                               attrs: { disabled: _vm.buttons.edit.state }
                             },
                             [
@@ -6777,70 +6770,113 @@ var render = function() {
           "div",
           { staticClass: "container-fluid" },
           [
-            _c(
-              "vue-bootstrap4-table",
-              {
-                attrs: {
-                  rows: _vm.rutas,
-                  columns: _vm.columns,
-                  config: _vm.config,
-                  "thead-class": "green-bg bg-dark text-white"
-                },
-                scopedSlots: _vm._u([
-                  {
-                    key: "edit",
-                    fn: function(props) {
-                      return _c("templete", {}, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            attrs: {
-                              type: "button",
-                              "data-toggle": "modal",
-                              "data-target": "#exampleModal",
-                              idRuta: props.row.idRuta
-                            },
-                            on: {
-                              click: function($event) {
-                                return _vm.editRuta(props.row.idRuta)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "icofont-edit" })]
-                        )
-                      ])
-                    }
-                  },
-                  {
-                    key: "delete",
-                    fn: function(props) {
-                      return _c("templete", {}, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-danger",
-                            attrs: { type: "button", idRuta: props.row.idRuta },
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteRuta(props.row.idRuta)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "icofont-ui-delete" })]
-                        )
-                      ])
-                    }
-                  }
-                ])
+            _c("vue-bootstrap4-table", {
+              attrs: {
+                rows: _vm.rutas,
+                columns: _vm.columns,
+                config: _vm.config,
+                "thead-class": "green-bg bg-dark text-white"
               },
-              [
-                _vm._v(" "),
-                _vm._v(" "),
-                _c("templete", { attrs: { slot: "estado" }, slot: "estado" })
-              ],
-              1
-            )
+              scopedSlots: _vm._u([
+                {
+                  key: "edit",
+                  fn: function(props) {
+                    return _c("templete", {}, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-warning",
+                          attrs: {
+                            type: "button",
+                            "data-toggle": "modal",
+                            "data-target": "#exampleModal",
+                            idRuta: props.row.idRuta
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.editRuta(props.row.idRuta)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "icofont-edit" })]
+                      )
+                    ])
+                  }
+                },
+                {
+                  key: "delete",
+                  fn: function(props) {
+                    return _c("templete", {}, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          attrs: { type: "button", idRuta: props.row.idRuta },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteRuta(props.row.idRuta)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "icofont-ui-delete" })]
+                      )
+                    ])
+                  }
+                },
+                {
+                  key: "estado",
+                  fn: function(props) {
+                    return _c("templete", {}, [
+                      props.row.estado === 1
+                        ? _c(
+                            "div",
+                            [
+                              _c("toggle-button", {
+                                attrs: {
+                                  value: true,
+                                  width: 72,
+                                  labels: {
+                                    checked: "Activo",
+                                    unchecked: "Inactive"
+                                  }
+                                },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.stateRuta(props.row.idRuta, 0)
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : props.row.estado === 0
+                        ? _c(
+                            "div",
+                            [
+                              _c("toggle-button", {
+                                attrs: {
+                                  value: false,
+                                  width: 72,
+                                  labels: {
+                                    checked: "Activo",
+                                    unchecked: "Inactive"
+                                  }
+                                },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.stateRuta(props.row.idRuta, 1)
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ])
+                  }
+                }
+              ])
+            })
           ],
           1
         )
@@ -24257,18 +24293,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _routes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes.js */ "./resources/js/routes.js");
 /* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.vue");
-/* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-js-toggle-button */ "./node_modules/vue-js-toggle-button/dist/index.js");
-/* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_5__);
-
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-js-toggle-button */ "./node_modules/vue-js-toggle-button/dist/index.js");
+/* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
 
  //import swal from 'sweetalert';
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_4___default.a);
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_5___default.a);
 window.axios = axios__WEBPACK_IMPORTED_MODULE_1___default.a;
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
