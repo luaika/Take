@@ -7,14 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Vehiculo extends Model
 {
     protected $table = 'vehiculo';
-<<<<<<< HEAD
-    protected $primeryKey= 'idVehiculo';
-    
-=======
-
     protected $primaryKey = 'idVehiculo';
 
->>>>>>> pb/master
     protected $fillable = [
 
         'idVehiculo',
