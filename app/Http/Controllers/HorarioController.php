@@ -108,8 +108,17 @@ class HorarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($idHorario)
     {
-        //
+        Horario::destroy($idHorario);
+    }
+
+    //cambiar estado
+    public function stateRuta(Request $request){
+        $horario = Horario::find($request->idHorario);
+        $horario->estado = $request->estado;
+        $horario->save();
+        return response()->json($horario);
+
     }
 }

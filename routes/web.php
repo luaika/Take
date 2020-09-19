@@ -55,6 +55,7 @@ Route::resource('/vehiculo-resource', 'VehiculoController');
 //Horario
 Route::post('/setHorario', 'HorarioController@store');
 Route::put('/updateHorario/{idHorario}', 'HorarioController@update');
+Route::delete('/horario-delete/{idHorario}', 'HorarioController@destroy');
 
 Route::resource('/horario-resource', 'HorarioController');
 

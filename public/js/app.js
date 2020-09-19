@@ -2043,11 +2043,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -2149,6 +2144,9 @@ __webpack_require__.r(__webpack_exports__);
     setHorario: function setHorario() {
       var _this = this;
 
+      console.log(this.idRuta);
+      console.log(this.idVehiculo);
+
       if (this.idRuta == 0 || this.idVehiculo == 0) {
         this.show_alert.create.state = true;
         this.show_alert.create.messaje = 'Debe seleccionar Ruta y Vehiculo';
@@ -2157,7 +2155,7 @@ __webpack_require__.r(__webpack_exports__);
         }, 2000);
       } else {
         this.buttons.create.name = 'Agregando ...';
-        this.buttons.create.state = true;
+        this.buttons.create.state = false;
         var formData = {
           'fecha': this.fecha,
           'hora': this.hora,
@@ -2172,6 +2170,9 @@ __webpack_require__.r(__webpack_exports__);
           swal("OK!", "Horario creado exitosamente!", "success");
           _this.buttons.create.name = 'Agregar';
           _this.buttons.create.state = false;
+
+          _this.getListHorario();
+
           $("#Horario").modal('hide');
         })["catch"](function (error) {
           swal("Lo sentimos!", "Parece que algo salio mal!", "error");
@@ -2181,7 +2182,7 @@ __webpack_require__.r(__webpack_exports__);
 
       ;
     },
-    // Lista Categorias
+    // Lista Vehiculo
     getListVehiculo: function getListVehiculo() {
       var _this2 = this;
 
@@ -2192,7 +2193,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error.response);
       });
     },
-    // Lista Categorias
+    // Listar Ruta
     getListRuta: function getListRuta() {
       var _this3 = this;
 
@@ -2233,13 +2234,38 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     deleteHorario: function deleteHorario(idHorario) {
-      this.data_edit.idHorario = idHorario;
-      swal("El Horario se eliminará de sus registros", "¿Desea eliminar este horario?", "warning");
-      console.log('holis');
+      var _this6 = this;
+
+      swal({
+        title: "Estas seguro ?",
+        text: "Este horario quedará eliminado de tus registros!",
+        icon: "warning",
+        buttons: ["Cancelar", "Confirmar"],
+        dangerMode: true
+      }).then(function (willDelete) {
+        if (willDelete) {
+          _this6.data_edit.idHorario = idHorario;
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/horario-delete/' + _this6.data_edit.idHorario).then(function (response) {
+            swal("OK!", "El horario se elimino exitosamente", "success");
+
+            _this6.getListHorario();
+          })["catch"](function (error) {
+            swal("Lo sentimos", "Parece que algo salio mal!", "error");
+          });
+        }
+      });
+    },
+    //cancelar registro
+    cancelarRegistro: function cancelarRegistro() {
+      this.show_alert.create.state = false;
+      this.hora = '';
+      this.fecha = '';
+      this.idRuta = 0;
+      this.idVehiculo = 0;
     },
     //put horario
     putHorario: function putHorario() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.buttons.edit.name = 'Actualizando...';
       this.buttons.edit.state = true;
@@ -2248,13 +2274,12 @@ __webpack_require__.r(__webpack_exports__);
         'fecha': this.data_edit.fecha
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/updateHorario/' + this.data_edit.idHorario, formData).then(function (response) {
-        console.log('entro a actualizar');
-        _this6.buttons.edit.name = 'Actualizar';
-        _this6.buttons.edit.state = false;
-        swal("OK!", "Ruta actualizado exitosamente!", "success");
+        _this7.buttons.edit.name = 'Actualizar';
+        _this7.buttons.edit.state = false;
+        swal("OK!", "Horario actualizado exitosamente!", "success");
         $("#ModalEditHorario").modal('hide');
 
-        _this6.getRutaTermina();
+        _this7.getListHorario();
       })["catch"](function (error) {
         console.log(error.response);
         var errors = '';
@@ -2268,12 +2293,12 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
 
-        _this6.buttons.edit.name = 'Actualizar';
-        _this6.buttons.edit.state = false;
-        _this6.show_alert.edit.state = true;
-        _this6.show_alert.edit.messaje = errors;
+        _this7.buttons.edit.name = 'Actualizar';
+        _this7.buttons.edit.state = false;
+        _this7.show_alert.edit.state = true;
+        _this7.show_alert.edit.messaje = errors;
         setTimeout(function () {
-          return _this6.show_alert.edit.state = false;
+          return _this7.show_alert.edit.state = false;
         }, 5000);
       });
     }
@@ -2430,9 +2455,513 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Ruta/registrarRutas.vue?vue&type=script&lang=js& ***!
   \******************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\resources\\js\\components\\Ruta\\registrarRutas.vue: In strict mode code, functions can only be declared at top level or inside a block (484:23)\n\n\u001b[0m \u001b[90m 482 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 483 | \u001b[39m       \u001b[90m// cambiar estado\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 484 | \u001b[39m            stateRuta\u001b[33m:\u001b[39m \u001b[36mfunction\u001b[39m (idRuta\u001b[33m,\u001b[39m estado) {\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 485 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 486 | \u001b[39m                let formData \u001b[33m=\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 487 | \u001b[39m                idRuta\u001b[33m:\u001b[39m idRuta\u001b[33m,\u001b[39m\u001b[0m\n    at Parser._raise (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:766:17)\n    at Parser.raiseWithData (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:759:17)\n    at Parser.raise (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:753:17)\n    at Parser.parseStatementContent (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:11463:18)\n    at Parser.parseStatement (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:11431:17)\n    at Parser.parseLabeledStatement (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:11963:22)\n    at Parser.parseStatementContent (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:11565:19)\n    at Parser.parseStatement (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:11431:17)\n    at Parser.parseBlockOrModuleBlockBody (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:12013:25)\n    at Parser.parseBlockBody (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:11999:10)\n    at Parser.parseBlock (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:11983:10)\n    at Parser.parseFunctionBody (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:10963:24)\n    at Parser.parseFunctionBodyAndFinish (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:10946:10)\n    at C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:12153:12\n    at Parser.withTopicForbiddingContext (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:11272:14)\n    at Parser.parseFunction (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:12152:10)\n    at Parser.parseFunctionOrFunctionSent (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:10377:17)\n    at Parser.parseExprAtom (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:10202:21)\n    at Parser.parseExprSubscripts (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:9844:23)\n    at Parser.parseUpdate (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:9824:21)\n    at Parser.parseMaybeUnary (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:9813:17)\n    at Parser.parseExprOps (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:9683:23)\n    at Parser.parseMaybeConditional (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:9657:23)\n    at Parser.parseMaybeAssign (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:9620:21)\n    at C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:9586:39\n    at Parser.allowInAnd (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:11303:12)\n    at Parser.parseMaybeAssignAllowIn (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:9586:17)\n    at Parser.parseObjectProperty (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:10816:101)\n    at Parser.parseObjPropValue (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:10841:100)\n    at Parser.parsePropertyDefinition (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:10772:10)\n    at Parser.parseObjectLike (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:10664:25)\n    at Parser.parseExprAtom (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:10198:23)\n    at Parser.parseExprSubscripts (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:9844:23)\n    at Parser.parseUpdate (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:9824:21)\n    at Parser.parseMaybeUnary (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:9813:17)\n    at Parser.parseExprOps (C:\\Users\\Estefania\\Documents\\TAKEVA P5\\TakevaProject5\\node_modules\\@babel\\parser\\lib\\index.js:9683:23)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
+/* harmony import */ var vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-bootstrap4-table */ "./node_modules/vue-bootstrap4-table/dist/vue-bootstrap4-table.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "registrarRutas",
+  data: function data() {
+    return {
+      codigo: '',
+      descripcion: '',
+      idBarrioInicia: 0,
+      idBarrioTermina: 0,
+      estado: 1,
+      idUsuarioModifica: '',
+      idUsuarioCrea: '',
+      barrioTermina: [],
+      show_barrios: true,
+      barrio: [],
+      rutas: [],
+      show_alert: {
+        create: {
+          state: false,
+          messaje: ''
+        },
+        edit: {
+          state: false,
+          messaje: ''
+        }
+      },
+      buttons: {
+        create: {
+          name: 'Agregar',
+          state: false
+        },
+        edit: {
+          name: 'Actualizar',
+          state: false
+        }
+      },
+      columns: [{
+        label: "Código",
+        name: "codigo",
+        sort: false
+      }, {
+        label: "Nombre",
+        name: "descripcion",
+        sort: true
+      }, {
+        label: "Inicio",
+        name: "barrio_inicia",
+        sort: false
+      }, {
+        label: "Destino",
+        name: "barrio_termina",
+        sort: true
+      }, {
+        label: "Editar",
+        name: "edit",
+        sort: false
+      }, {
+        label: "Eliminar",
+        name: "delete",
+        sort: false
+      }, {
+        label: "Estado",
+        name: "estado",
+        sort: false
+      }],
+      config: {
+        pagination: true,
+        // default true
+        pagination_info: true,
+        // default true
+        num_of_visibile_pagination_buttons: 7,
+        // default 5
+        per_page: 6,
+        // default 10
+        per_page_options: [6, 10, 20, 30],
+        //highlight_row_hover_color:"blue", over del listado
+        filas_seleccionables: true,
+        card_title: "RUTAS",
+        show_refresh_button: false,
+        show_reset_button: false,
+        global_search: {
+          placeholder: "Buscar "
+        }
+      },
+      data_edit: {
+        show: true,
+        contenedor: false,
+        codigo: '',
+        descripcion: '',
+        estado: ''
+      }
+    };
+  },
+  components: {
+    VueBootstrap4Table: vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  mounted: function mounted() {
+    this.getListBarrios();
+    this.getRutaTermina();
+    this.getRutas();
+  },
+  methods: {
+    //insertar ruta
+    setRuta: function setRuta() {
+      var _this = this;
+
+      if (this.idBarrioInicia == 0 || this.idBarrioTermina == 0) {
+        this.show_alert.create.state = true;
+        this.show_alert.create.messaje = 'Debe seleccionar origen, destino y estado ';
+        setTimeout(function () {
+          return _this.show_alert.create.state = false;
+        }, 2000);
+      } else {
+        this.buttons.create.name = 'Agregando ...';
+        this.buttons.create.state = true;
+        var formData = {
+          'codigo': this.codigo,
+          'descripcion': this.descripcion,
+          'idBarrioInicia': this.idBarrioInicia,
+          'idBarrioTermina': this.idBarrioTermina,
+          'estado': this.estado,
+          'idUsuarioModifica': this.idUsuarioModifica,
+          'idUsuarioCrea': this.idUsuarioModifica
+        };
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/setRuta', formData).then(function (response) {
+          _this.codigo = '';
+          _this.descripcion = '';
+          _this.idBarrioInicia = 0;
+          _this.idBarrioTermina = 0;
+          _this.estado = 1;
+          _this.idUsuarioModifica = '';
+          _this.idUsuarioCrea = '';
+          swal("OK!", "Ruta creada exitosamente!", "success");
+          _this.buttons.create.name = 'Agregar';
+          _this.buttons.create.state = false;
+
+          _this.getRutas();
+
+          _this.getBarrioTermina();
+
+          $("#Ruta").modal('hide');
+          swal("OK!", "Ruta creada exitosamente!", "success");
+          _this.buttons.create.name = 'Agregar';
+          _this.buttons.create.state = false;
+
+          _this.getRutaTermina();
+
+          $("#Ruta").modal('hide');
+        })["catch"](function (error) {
+          swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+          console.log(error.response);
+        });
+      }
+
+      ;
+    },
+    //cancelar registro
+    cancelarRegistro: function cancelarRegistro() {
+      this.codigo = '';
+      this.descripcion = '';
+      this.idBarrioInicia = 0;
+      this.idBarrioTermina = 0;
+      this.estado = 1;
+      this.idUsuarioModifica = '';
+      this.idUsuarioCrea = '';
+    },
+    // Lista Barrios
+    getListBarrios: function getListBarrios() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/barrio-resource').then(function (response) {
+        // console.log('response_ '+JSON.stringify(response.data));
+        _this2.barrio = response.data;
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
+    },
+    //listar destino
+    getRutaTermina: function getRutaTermina() {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/rutas-resource?Q=2').then(function (response) {
+        if (response.data.length > 0) {
+          _this3.barrioTermina = response.data;
+
+          _this3.getRutas();
+        } else {
+          _this3.message = 'No hay registro de cupones!!!';
+        }
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
+    },
+    //Listar Rutas
+    getRutas: function getRutas() {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/rutas-resource?Q=0').then(function (response) {
+        if (response.data.length > 0) {
+          var rutasTotal = response.data;
+          var des = _this4.barrioTermina;
+          _this4.rut = rutasTotal.concat(des);
+          var rutasAndDestino = [];
+
+          for (var i = 0; i < des.length; i++) {
+            rutasAndDestino[i] = Object.assign(des[i], _this4.rut[i]);
+          } //this.rutas = Object.assign(des[0],this.rut[0]);
+
+
+          _this4.rutas = rutasAndDestino;
+        } else {
+          _this4.message = 'No hay registro de tutas!!!';
+        }
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
+    },
+    //traer rutas
+    editRuta: function editRuta(idRuta) {
+      var _this5 = this;
+
+      this.data_edit.idRuta = idRuta;
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/rutas-resource/' + idRuta + '/edit').then(function (response) {
+        _this5.data_edit.contenedor = true;
+        _this5.data_edit.show = false;
+        var data = response.data;
+        _this5.data_edit.codigo = data['codigo'];
+        _this5.data_edit.descripcion = data['descripcion'];
+        _this5.data_edit.estado = data['estado'];
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    //eliminar Ruta
+    deleteRuta: function deleteRuta(idRuta) {
+      var _this6 = this;
+
+      swal({
+        title: "Estas seguro ?",
+        text: "Esta ruta quedará eliminada de tus registros!",
+        icon: "warning",
+        buttons: ["Cancelar", "Confirmar"],
+        dangerMode: true
+      }).then(function (willDelete) {
+        if (willDelete) {
+          _this6.data_edit.idRuta = idRuta;
+          axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/rutas-delete/' + _this6.data_edit.idRuta).then(function (response) {
+            swal("OK!", "La ruta se elimino exitosamente", "success");
+
+            _this6.getRutaTermina();
+          })["catch"](function (error) {
+            swal("Lo sentimos", "Parece que algo salio mal!", "error");
+          });
+        }
+      });
+    },
+    //put ruta
+    putRuta: function putRuta() {
+      var _this7 = this;
+
+      this.buttons.edit.name = 'Actualizando...';
+      this.buttons.edit.state = true;
+      var formData = {
+        'codigo': this.data_edit.codigo,
+        'descripcion': this.data_edit.descripcion,
+        'estado': this.data_edit.estado
+      };
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.put('/updateRuta/' + this.data_edit.idRuta, formData).then(function (response) {
+        console.log('entro a actualizar');
+        _this7.buttons.edit.name = 'Actualizar';
+        _this7.buttons.edit.state = false;
+        swal("OK!", "Ruta actualizado exitosamente!", "success");
+        $("#ModalEditRuta").modal('hide');
+
+        _this7.getRutaTermina();
+      })["catch"](function (error) {
+        console.log(error.response);
+        var errors = '';
+        var aux = error.response.data.errors;
+
+        for (var i in aux) {
+          var sci = aux[i];
+
+          for (var j in sci) {
+            errors += '\n' + sci[j];
+          }
+        }
+
+        _this7.buttons.edit.name = 'Actualizar';
+        _this7.buttons.edit.state = false;
+        _this7.show_alert.edit.state = true;
+        _this7.show_alert.edit.messaje = errors;
+        setTimeout(function () {
+          return _this7.show_alert.edit.state = false;
+        }, 5000);
+      });
+    },
+    // cambiar estado
+    stateRuta: function stateRuta(idRuta, estado) {
+      var _this8 = this;
+
+      var formData = {
+        idRuta: idRuta,
+        estado: estado
+      };
+
+      if (estado == 1) {
+        var nomState = "Activo";
+      } else {
+        var nomState = "Inactivo";
+      }
+
+      swal({
+        title: "Estado de ruta",
+        text: "Esta ruta quedará " + nomState + " en tus registros!",
+        icon: "success",
+        dangerMode: true
+      }).then(function (willDelete) {
+        if (willDelete) {
+          axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/stateRuta', formData).then(function (response) {
+            //Success
+            _this8.getRutaTermina();
+
+            swal("OK!", "Estado actualizado exitosamente", "success");
+          })["catch"](function (error) {
+            swal("Oops!", "Parece que algo salio mal!", "error");
+            console.log(error.response);
+          });
+        }
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -5517,30 +6046,24 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _c("div", { staticClass: "row  m-t-25" }, [
-                      _c("div", { staticClass: "col" }, [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-success",
-                              attrs: { disabled: _vm.buttons.edit.state }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                        " +
-                                  _vm._s(_vm.buttons.edit.name) +
-                                  "\n                                        "
-                              ),
-                              _vm.buttons.edit.state
-                                ? _c("i", {
-                                    staticClass: "fa fa-spinner fa-spin"
-                                  })
-                                : _vm._e()
-                            ]
-                          )
-                        ])
-                      ])
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-warning botonAsctualizar",
+                          attrs: { disabled: _vm.buttons.edit.state }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.buttons.edit.name) +
+                              "\n                                "
+                          ),
+                          _vm.buttons.edit.state
+                            ? _c("i", { staticClass: "fa fa-spinner fa-spin" })
+                            : _vm._e()
+                        ]
+                      )
                     ])
                   ]
                 )
@@ -5596,7 +6119,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "time" },
+                attrs: { type: "time", required: "" },
                 domProps: { value: _vm.hora },
                 on: {
                   input: function($event) {
@@ -5622,7 +6145,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "date" },
+                attrs: { type: "date", required: "" },
                 domProps: { value: _vm.fecha },
                 on: {
                   input: function($event) {
@@ -5737,9 +6260,18 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "btn-width" }, [
-              _c("button", { staticClass: "btn  botonCancelar botones" }, [
-                _vm._v("Cancelar")
-              ]),
+              _c(
+                "button",
+                {
+                  staticClass: "btn  botonCancelar botones",
+                  on: {
+                    click: function($event) {
+                      return _vm.cancelarRegistro()
+                    }
+                  }
+                },
+                [_vm._v("Cancelar")]
+              ),
               _vm._v(" "),
               _c(
                 "button",
@@ -5775,7 +6307,7 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-primary",
+                        staticClass: "btn btn-warning",
                         attrs: {
                           type: "button",
                           "data-toggle": "modal",
@@ -6358,30 +6890,24 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _c("div", { staticClass: "row  m-t-25" }, [
-                      _c("div", { staticClass: "col" }, [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn botonAgregar",
-                              attrs: { disabled: _vm.buttons.edit.state }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                        " +
-                                  _vm._s(_vm.buttons.edit.name) +
-                                  "\n                                        "
-                              ),
-                              _vm.buttons.edit.state
-                                ? _c("i", {
-                                    staticClass: "fa fa-spinner fa-spin"
-                                  })
-                                : _vm._e()
-                            ]
-                          )
-                        ])
-                      ])
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-warning botonAsctualizar",
+                          attrs: { disabled: _vm.buttons.edit.state }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.buttons.edit.name) +
+                              "\n                                "
+                          ),
+                          _vm.buttons.edit.state
+                            ? _c("i", { staticClass: "fa fa-spinner fa-spin" })
+                            : _vm._e()
+                        ]
+                      )
                     ])
                   ]
                 )
@@ -6703,9 +7229,18 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "btn-width" }, [
-                _c("button", { staticClass: "btn  botonCancelar botones" }, [
-                  _vm._v("Cancelar")
-                ]),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn  botonCancelar botones",
+                    on: {
+                      click: function($event) {
+                        return _vm.cancelarRegistro()
+                      }
+                    }
+                  },
+                  [_vm._v("Cancelar")]
+                ),
                 _vm._v(" "),
                 _c(
                   "button",

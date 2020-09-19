@@ -20,7 +20,6 @@ class VehiculoController extends Controller
             ])->orderBy('placa')->get();
             return response()->json($query);
 
-
 }
     /**
      * Show the form for creating a new resource.

@@ -30,18 +30,12 @@
                                 role="alert">
                             {{ show_alert.edit.messaje }}
                         </div>
-
-                        <div class="row  m-t-25">
-                            <div class="col">
-                                <div class="form-group">
-
-                                    <button class="btn btn-success" :disabled="buttons.edit.state">
-                                        {{ buttons.edit.name }}
-                                        <i v-if="buttons.edit.state" class="fa fa-spinner fa-spin"></i>
-                                    </button>
-                                </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-warning botonAsctualizar" :disabled="buttons.edit.state">
+                                {{ buttons.edit.name }}
+                                <i v-if="buttons.edit.state" class="fa fa-spinner fa-spin"></i>
+                            </button>
                             </div>
-                        </div>
                     </form>
                 </div>
             </div>
@@ -52,21 +46,22 @@
         <div class="modal-header encabezadoFormulario" >
              <h5 class="text-center text-white" id="exampleModalLabel">Habilitar Horario</h5>
         </div>
-    <div class="card cardRutas">
-       <form method="POST" id="form-ruta"  v-on:submit.prevent="setHorario" >
-<div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="card cardRutas">
+         <form method="POST" id="form-ruta"  v-on:submit.prevent="setHorario" >
+
+            <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ show_alert.create.messaje }}
             </div>
 
               <div class="form-group col-md-12">
                             <label >Hora</label>
                             <!--<i class="fas fa-clock iconos"></i>-->
-                            <input type="time" v-model="hora" class="form-control" >
+                            <input type="time" v-model="hora" class="form-control" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label >Fecha</label>
                             <!--<i class="far fa-calendar-alt iconos"></i>-->
-                            <input type="date"  v-model="fecha"  class="form-control" >
+                            <input type="date"  v-model="fecha"  class="form-control" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label >Ruta<span class="text-danger">*</span></label>
@@ -83,7 +78,7 @@
                             </select>
                         </div>
             <div class="btn-width">
-                <button class="btn  botonCancelar botones" >Cancelar</button>
+                <button class="btn  botonCancelar botones" v-on:click="cancelarRegistro()" >Cancelar</button>
                 <button class="btn botonAgregar botones"  :disabled="buttons.create.state">{{ buttons.create.name }}</button>
             </div>
         </form>
@@ -95,12 +90,12 @@
             <vue-bootstrap4-table :rows="horario" :columns="columns"  :config = "config" thead-class="green-bg bg-dark text-white">
 
                 <templete slot="edit" slot-scope="props">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"  v-on:click="editHorario(props.row.idHorario)" v-bind:idHorario="props.row.idHorario">
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal"  v-on:click="editHorario(props.row.idHorario)" v-bind:idHorario="props.row.idHorario">
                         <i class="icofont-edit"></i>
                     </button>
                 </templete>
                 <templete slot="delete" slot-scope="props">
-                    <button type="button" class="btn btn-danger"   v-on:click="deleteHorario(props.row.idRuta)" v-bind:idRuta="props.row.idHorario">
+                    <button type="button" class="btn btn-danger"  v-on:click="deleteHorario(props.row.idRuta)" v-bind:idRuta="props.row.idHorario">
                        <i class="icofont-ui-delete"></i>
                     </button>
                 </templete>
@@ -130,7 +125,7 @@ export default {
                 ruta:[],
                 show_alert: {
                     create: {
-                        state: false ,
+                        state: false,
                         messaje: ''
                     } ,
                     edit: {
@@ -218,6 +213,8 @@ export default {
 
     methods:{
        setHorario:function() {
+           console.log(this.idRuta);
+            console.log(this.idVehiculo);
             if (this.idRuta == 0 || this.idVehiculo == 0) {
                 this.show_alert.create.state = true;
                 this.show_alert.create.messaje = 'Debe seleccionar Ruta y Vehiculo';
@@ -225,7 +222,7 @@ export default {
             }
             else {
                 this.buttons.create.name = 'Agregando ...';
-                this.buttons.create.state = true;
+                this.buttons.create.state = false;
                 let formData = {
                     'fecha': this.fecha,
                     'hora': this.hora,
@@ -241,14 +238,18 @@ export default {
                     swal("OK!", "Horario creado exitosamente!", "success");
                     this.buttons.create.name = 'Agregar' ;
                     this.buttons.create.state = false ;
+                    this.getListHorario();
                     $("#Horario").modal('hide');
                 }).catch((error) => {
                     swal("Lo sentimos!", "Parece que algo salio mal!", "error");
                     console.log(error.response);
                 });
             };
+
        },
-             // Lista Categorias
+
+
+             // Lista Vehiculo
             getListVehiculo: function () {
                 axios.get('/vehiculo-resource').then((response) => {
                     console.log('response_ '+JSON.stringify(response.data));
@@ -258,7 +259,7 @@ export default {
                 });
             },
 
-             // Lista Categorias
+             // Listar Ruta
                 getListRuta: function () {
                 axios.get('/rutas-resource?Q=1').then((response) => {
                     console.log('response_ '+JSON.stringify(response.data));
@@ -297,9 +298,33 @@ export default {
         },
 
         deleteHorario: function(idHorario){
-             this.data_edit.idHorario = idHorario ;
-             swal("El Horario se eliminará de sus registros", "¿Desea eliminar este horario?", "warning");
-             console.log('holis');
+            swal({
+                title: "Estas seguro ?",
+                text: "Este horario quedará eliminado de tus registros!",
+                icon: "warning",
+                buttons: ["Cancelar","Confirmar"],
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    this.data_edit.idHorario= idHorario;
+                    axios.delete('/horario-delete/' + this.data_edit.idHorario).then((response) => {
+                        swal("OK!", "El horario se elimino exitosamente", "success");
+                        this.getListHorario();
+                    }).catch((error)=>{
+                        swal("Lo sentimos", "Parece que algo salio mal!", "error");
+                    });
+                }
+            });
+        },
+
+
+         //cancelar registro
+        cancelarRegistro:function (){
+            this.show_alert.create.state = false;
+            this.hora = '';
+            this.fecha = '';
+            this.idRuta = 0;
+            this.idVehiculo = 0;
         },
 
         //put horario
@@ -312,12 +337,11 @@ export default {
                 'fecha': this.data_edit.fecha,
             };
             axios.put('/updateHorario/' + this.data_edit.idHorario, formData).then((response) => {
-                console.log('entro a actualizar');
                 this.buttons.edit.name = 'Actualizar';
                 this.buttons.edit.state = false;
-                swal("OK!", "Ruta actualizado exitosamente!", "success");
+                swal("OK!", "Horario actualizado exitosamente!", "success");
                 $("#ModalEditHorario").modal('hide');
-                this.getRutaTermina();
+                this.getListHorario();
 
             }).catch((error) => {
                 console.log(error.response);
