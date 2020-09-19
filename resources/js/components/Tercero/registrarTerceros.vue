@@ -9,9 +9,9 @@
               
                <div class="row">
                 <div class="form-group col-md-4">
-                     <label for="numeroIdentificacion" >Identificación</label>
-                        <i class="far fa-address-card iconos"></i>
-                        <input type="text" class="form-control inputTeceros" id="numeroIdentificacion" v-model="numeroIdentificacion" required>
+                  <label for="numeroIdentificacion" >Identificación</label>
+                  <i class="far fa-address-card iconos"></i>
+                  <input type="text" class="form-control inputTeceros" id="numeroIdentificacion" v-model="numeroIdentificacion" required>
                 </div>
                 <!-- <div class="form-group col-md-1">
                     <label for="tipoIdentificacion">D.V</label>
@@ -34,12 +34,12 @@
                 <div class="row" >                
                  <div class="form-group col-md-4">
                      <label for="nombres">Nombres</label>
-                     <i class="far fa-edit iconos"></i>
+                     <i class="icofont-ui-user iconos"></i>
                      <input type="text" class="form-control inputTeceros" id="nombres" v-model="nombres" >
                 </div>
                 <div class="form-group col-md-3">
                     <label for="apellidos" >Apellidos</label>
-                    <i class="far fa-edit iconos"></i>
+                    <i class="icofont-ui-user iconos"></i>
                     <input type="text" class="form-control inputTeceros" id="apellidos" v-model="apellidos" >
                 </div>
                 <div class="form-group col-md-5 examinar ">
@@ -54,7 +54,7 @@
               </div>
                     <div class="form-group col-md-6">
                         <label for="genero" >Genero</label>
-                          <select class="custom-select" id="genero" v-model="genero" >
+                         <select class="custom-select" id="genero" v-model="genero" >
                             <option value="0">Seleccione una opción</option>
                             <option value="1">Masculino</option>
                             <option value="2">Femenino</option>
@@ -65,7 +65,7 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                       <label for="telefono">Teléfono</label>
-                      <i class="fas fa-mobile-alt iconos"></i>
+                      <i class="icofont-telephone iconos"></i>
                       <input type="text" class="form-control inputTeceros" id="telefono" v-model="telefono" >
                     </div>
                    <div class="form-group col-md-4">
@@ -96,27 +96,16 @@
       <div class="row">
           <div class="form-group col-md-6">
             <label for="razonSocial">Razon social</label>
-            <i class="fas fa-users iconos"></i>
+            <i class="fas fa-city iconos"></i>
             <input type="text" class="form-control inputTeceros"  id="razonSocial" v-model="razonSocial" >
           </div>
           <div class="form-group col-md-6">
             <label for="nombreComercial">Nombre comercial</label>
-            <i class="fas fa-hotel iconos"></i>
+           <i class="fas fa-city iconos"></i>
             <input type="text" class="form-control inputTeceros" id="nombreComercial" v-model="nombreComercial" >
           </div>
         </div>
-           <div class="row">
-          <div class="form-group col-md-6">
-            <label for="idUsuarioCrea">Usuario crea</label>
-            <i class="fas fa-users iconos"></i>
-            <input type="text" class="form-control inputTeceros"  id="idUsuarioCrea" v-model="idUsuarioCrea" >
-          </div>
-          <div class="form-group col-md-6">
-            <label for="idUsuarioModifica">usuario modifica</label>
-            <i class="fas fa-hotel iconos"></i>
-            <input type="text" class="form-control inputTeceros" id="idUsuarioModifica" v-model="idUsuarioModifica" >
-          </div>
-        </div>
+          
     <!-- <div class="row">
       <div class="form-group col-md-6">
         <label>Tipo Tercero</label>
@@ -164,8 +153,8 @@ export default {
       idMunicipio:'',
       foto:'',
       estado:0,
-      idUsuarioCrea:'',
-      idUsuarioModifica:'',
+      idUsuarioCrea:1,
+      idUsuarioModifica:1,
       buttons: {
         create: {
           name: 'Agregar',
