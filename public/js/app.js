@@ -2659,7 +2659,7 @@ __webpack_require__.r(__webpack_exports__);
         _this7.buttons.edit.name = 'Actualizar';
         _this7.buttons.edit.state = false;
         swal("OK!", "Ruta actualizado exitosamente!", "success");
-        $("#ModalEditRuta").modal('hide');
+        $("#exampleModal").modal('hide');
 
         _this7.getRutaTermina();
       })["catch"](function (error) {

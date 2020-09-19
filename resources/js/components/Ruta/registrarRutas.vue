@@ -323,7 +323,6 @@ export default {
                 this.idUsuarioModifica = '';
                 this.idUsuarioCrea = '';
         },
-        
         // Lista Barrios
         getListBarrios: function () {
             axios.get('/barrio-resource').then((response) => {
@@ -379,7 +378,7 @@ export default {
                 this.data_edit.codigo = data['codigo'];
                 this.data_edit.descripcion = data['descripcion'];
                 this.data_edit.estado = data['estado'];
- 
+               
             }).catch((error) => {
                 console.log(error);
             });
@@ -421,7 +420,7 @@ export default {
                 this.buttons.edit.name = 'Actualizar';
                 this.buttons.edit.state = false;
                 swal("OK!", "Ruta actualizado exitosamente!", "success");
-                $("#ModalEditRuta").modal('hide');
+                $("#exampleModal").modal('hide');
                 this.getRutaTermina();
 
             }).catch((error) => {
