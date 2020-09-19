@@ -46,7 +46,7 @@
                             <div class="col">
                                 <div class="form-group">
 
-                                    <button class="btn btn-success" :disabled="buttons.edit.state">
+                                    <button class="btn botonAgregar" :disabled="buttons.edit.state">
                                         {{ buttons.edit.name }}
                                         <i v-if="buttons.edit.state" class="fa fa-spinner fa-spin"></i>
                                     </button>
@@ -106,7 +106,6 @@
                 <div class="form-group col-md-6">
                 <label>Estado</label>
                 <select class="custom-select" v-model="estado">
-                    <option value="-1">Seleccionar Estado</option>
                     <option value="1">Activo</option>
                     <option value="0">Inactivo</option>
                 </select>
@@ -139,36 +138,25 @@
             <vue-bootstrap4-table :rows="rutas" :columns="columns"  :config = "config" thead-class="green-bg bg-dark text-white">
 
                 <templete slot="edit" slot-scope="props">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"  v-on:click="editRuta(props.row.idRuta)" v-bind:idRuta="props.row.idRuta">
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal"  v-on:click="editRuta(props.row.idRuta)" v-bind:idRuta="props.row.idRuta">
                         <i class="icofont-edit"></i>
                     </button>
-                    <!--<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#ModalEditRuta"  >
-                        <i class="icofont-pencil-alt-1"></i>
-                    </button>-->
                 </templete>
                 <templete slot="delete" slot-scope="props">
                     <button type="button" class="btn btn-danger"   v-on:click="deleteRuta(props.row.idRuta)" v-bind:idRuta="props.row.idRuta">
                        <i class="icofont-ui-delete"></i>
                     </button>
-                    <!--<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#ModalEditRuta"  >
-                        <i class="icofont-pencil-alt-1"></i>
-                    </button>-->
                 </templete>
 
-                <templete slot="estado">
-                    <!--<div v-if="props.row.estado === 1">
-                        <toggle-button :value="true" :width="72" @change="stateCupon(props.row.idRuta, 0)" :labels="{checked: 'Activo', unchecked: 'Inactive'}"/>
+                <templete slot="estado" slot-scope="props">
+
+                    <div v-if="props.row.estado === 1">
+                        <toggle-button :value="true" :width="72" @change="stateRuta(props.row.idRuta, 0)" :labels="{checked: 'Activo', unchecked: 'Inactive'}"/>
                     </div>
                     <div v-else-if="props.row.estado === 0 ">
-                        <p>chao</p>
-                        <toggle-button :value="false" :width="72" @change="stateCupon(props.row.idRuta, 1)" :labels="{checked: 'Activo', unchecked: 'Inactive'}"/>
-                    </div>-->
+                        <toggle-button :value="false" :width="72" @change="stateRuta(props.row.idRuta, 1)" :labels="{checked: 'Activo', unchecked: 'Inactive'}"/>
+                    </div>
                 </templete>
-
-                <!--
-                <templete slot="state" slot-scope="props">
-                    <button type="button" class="btn btn-warning">{{props.row.estado}}</button>
-                </templete> -->
             </vue-bootstrap4-table>
         </div>
     </div>
@@ -182,7 +170,6 @@ import Vue from 'vue'
 import axios from 'axios';
 import router from '../../routes';
 import VueBootstrap4Table from 'vue-bootstrap4-table';
-import ToggleButton from 'vue-js-toggle-button';
 
 export default {
     name: "registrarRutas",
@@ -192,7 +179,7 @@ export default {
                 descripcion : '',
                 idBarrioInicia : 0,
                 idBarrioTermina : 0,
-                estado : -1,
+                estado :1,
                 idUsuarioModifica: '',
                 idUsuarioCrea:'',
                 barrioTermina:[],
@@ -284,8 +271,7 @@ export default {
 
         },
     components:{
-        VueBootstrap4Table,
-        ToggleButton
+        VueBootstrap4Table
     },
     mounted(){
             this.getListBarrios();
@@ -296,7 +282,7 @@ export default {
     methods:{
     //insertar ruta
        setRuta:function() {
-            if (this.idBarrioInicia == 0 || this.idBarrioTermina == 0 || this.estado == -1) {
+            if (this.idBarrioInicia == 0 || this.idBarrioTermina == 0 ) {
                 this.show_alert.create.state = true;
                 this.show_alert.create.messaje = 'Debe seleccionar origen, destino y estado ';
                 setTimeout(() => this.show_alert.create.state = false, 2000);
@@ -347,7 +333,7 @@ export default {
             };
 
        },
-    // Lista Barrios
+        // Lista Barrios
         getListBarrios: function () {
             axios.get('/barrio-resource').then((response) => {
                // console.log('response_ '+JSON.stringify(response.data));
@@ -371,8 +357,8 @@ export default {
                 console.log(error.response);
             });
         },
-    //Listar Rutas
 
+        //Listar Rutas
         getRutas: function () {
             axios.get('/rutas-resource?Q=0').then( (response)  => {
                 if (response.data.length > 0) {
@@ -409,16 +395,28 @@ export default {
                 console.log(error);
             });
         },
-
+        //eliminar Ruta
         deleteRuta: function(idRuta){
-             this.data_edit.idRuta = idRuta ;
-             swal("La ruta se eliminará de sus registros", "¿Desea eliminar esta ruta?", "warning");
-             console.log('holis');
+             swal({
+                title: "Estas seguro ?",
+                text: "Esta ruta quedará eliminada de tus registros!",
+                icon: "warning",
+                buttons: ["Cancelar","Confirmar"],
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    this.data_edit.idRuta = idRuta;
+                    axios.delete('/rutas-delete/' + this.data_edit.idRuta).then((response) => {
+                        swal("OK!", "La ruta se elimino exitosamente", "success");
+                        this.getRutaTermina();
+                    }).catch((error)=>{
+                        swal("Lo sentimos", "Parece que algo salio mal!", "error");
+                    });
+                }
+            });
         },
-
-
-        //put ruta
-           putRuta: function() {
+          //put ruta
+        putRuta: function() {
             this.buttons.edit.name = 'Actualizando...';
             this.buttons.edit.state = true;
 
@@ -456,7 +454,6 @@ export default {
 
         },
 
-
         //estado
             stateCupon: function (id, state) {
             let formData = {
@@ -483,6 +480,37 @@ export default {
                 }
             });
 
+       // cambiar estado
+            stateRuta: function (idRuta, estado) {
+
+                let formData = {
+                idRuta: idRuta,
+                estado: estado
+                 };
+
+                 if(estado == 1 ){
+                     var nomState = "Activo";
+                 }else{
+                     var nomState = "Inactivo";
+                 }
+                swal({
+                    title: "Estado de ruta",
+                    text: "Esta ruta quedará " + nomState + " en tus registros!",
+                    icon: "success",
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        axios.post('/stateRuta', formData).then((response) => {
+                            //Success
+                            this.getRutaTermina();
+                            swal("OK!", "Estado actualizado exitosamente", "success");
+
+                        }).catch((error) => {
+                            swal("Oops!", "Parece que algo salio mal!", "error");
+                            console.log(error.response);
+                        });
+                    }
+                });
         },
 
 

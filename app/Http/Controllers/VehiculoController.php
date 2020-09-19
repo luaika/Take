@@ -17,10 +17,11 @@ class VehiculoController extends Controller
     {
         $query = Vehiculo::where([
             ['estado', 1],
-        ])->orderBy('placa')->get();
-        return response()->json($query);
+            ])->orderBy('placa')->get();
+            return response()->json($query);
 
-    }
+
+}
     /**
      * Show the form for creating a new resource.
      *
@@ -63,8 +64,6 @@ class VehiculoController extends Controller
             'idUsuarioModifica'=>$request->idUsuarioModifica,
         ]);
         return response()->json($vehiculo);
-
-
 
     }
 
