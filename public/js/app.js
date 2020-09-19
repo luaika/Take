@@ -1933,16 +1933,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
-<<<<<<< HEAD
 /* harmony import */ var vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-bootstrap4-table */ "./node_modules/vue-bootstrap4-table/dist/vue-bootstrap4-table.esm.js");
-//
-//
-//
-//
-//
-=======
->>>>>>> develop
-//
+/* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-js-toggle-button */ "./node_modules/vue-js-toggle-button/dist/index.js");
+/* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -1988,15 +1981,75 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-<<<<<<< HEAD
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
 //
 //
 
-=======
->>>>>>> develop
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2010,13 +2063,14 @@ __webpack_require__.r(__webpack_exports__);
       show_ruta: true,
       show_vehiculo: true,
       vehiculo: [],
-<<<<<<< HEAD
       horario: [],
-=======
->>>>>>> develop
       ruta: [],
       show_alert: {
         create: {
+          state: false,
+          messaje: ''
+        },
+        edit: {
           state: false,
           messaje: ''
         }
@@ -2025,8 +2079,11 @@ __webpack_require__.r(__webpack_exports__);
         create: {
           name: 'Agregar',
           state: false
+        },
+        edit: {
+          name: 'Actualizar',
+          state: false
         }
-<<<<<<< HEAD
       },
       columns: [{
         label: "Hora",
@@ -2048,6 +2105,10 @@ __webpack_require__.r(__webpack_exports__);
         label: "Editar",
         name: "edit",
         sort: false
+      }, {
+        label: "Eliminar",
+        name: "delete",
+        sort: false
       }],
       config: {
         pagination: true,
@@ -2066,22 +2127,22 @@ __webpack_require__.r(__webpack_exports__);
         global_search: {
           placeholder: "Buscar "
         }
+      },
+      data_edit: {
+        show: true,
+        contenedor: false,
+        hora: '',
+        fecha: ''
       }
     };
   },
   components: {
-    VueBootstrap4Table: vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_2__["default"]
+    VueBootstrap4Table: vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_2__["default"],
+    ToggleButton: vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_3___default.a
   },
   mounted: function mounted() {
     this.getListVehiculo();
     this.getListHorario();
-=======
-      }
-    };
-  },
-  mounted: function mounted() {
-    this.getListVehiculo();
->>>>>>> develop
     this.getListRuta();
   },
   methods: {
@@ -2141,7 +2202,6 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error.response);
       });
-<<<<<<< HEAD
     },
     getListHorario: function getListHorario() {
       var _this4 = this;
@@ -2156,8 +2216,66 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error.response);
       });
-=======
->>>>>>> develop
+    },
+    //traer Horario
+    editHorario: function editHorario(idHorario) {
+      var _this5 = this;
+
+      this.data_edit.idHorario = idHorario;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/horario-resource/' + idHorario + '/edit').then(function (response) {
+        _this5.data_edit.contenedor = true;
+        _this5.data_edit.show = false;
+        var data = response.data;
+        _this5.data_edit.hora = data['hora'];
+        _this5.data_edit.fecha = data['fecha'];
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    deleteHorario: function deleteHorario(idHorario) {
+      this.data_edit.idHorario = idHorario;
+      swal("El Horario se eliminará de sus registros", "¿Desea eliminar este horario?", "warning");
+      console.log('holis');
+    },
+    //put horario
+    putHorario: function putHorario() {
+      var _this6 = this;
+
+      this.buttons.edit.name = 'Actualizando...';
+      this.buttons.edit.state = true;
+      var formData = {
+        'hora': this.data_edit.hora,
+        'fecha': this.data_edit.fecha
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/updateHorario/' + this.data_edit.idHorario, formData).then(function (response) {
+        console.log('entro a actualizar');
+        _this6.buttons.edit.name = 'Actualizar';
+        _this6.buttons.edit.state = false;
+        swal("OK!", "Ruta actualizado exitosamente!", "success");
+        $("#ModalEditHorario").modal('hide');
+
+        _this6.getRutaTermina();
+      })["catch"](function (error) {
+        console.log(error.response);
+        var errors = '';
+        var aux = error.response.data.errors;
+
+        for (var i in aux) {
+          var sci = aux[i];
+
+          for (var j in sci) {
+            errors += '\n' + sci[j];
+          }
+        }
+
+        _this6.buttons.edit.name = 'Actualizar';
+        _this6.buttons.edit.state = false;
+        _this6.show_alert.edit.state = true;
+        _this6.show_alert.edit.messaje = errors;
+        setTimeout(function () {
+          return _this6.show_alert.edit.state = false;
+        }, 5000);
+      });
     }
   }
 });
@@ -2466,8 +2584,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-<<<<<<< HEAD
-=======
+//
 //
 //
 //
@@ -2506,7 +2623,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
->>>>>>> develop
 
 
 
@@ -2610,10 +2726,6 @@ __webpack_require__.r(__webpack_exports__);
     this.getListBarrios();
     this.getRutaTermina();
     this.getRutas();
-<<<<<<< HEAD
-    this.getBarrioTermina();
-=======
->>>>>>> develop
   },
   methods: {
     //insertar ruta
@@ -2649,11 +2761,15 @@ __webpack_require__.r(__webpack_exports__);
           swal("OK!", "Ruta creada exitosamente!", "success");
           _this.buttons.create.name = 'Agregar';
           _this.buttons.create.state = false;
-<<<<<<< HEAD
 
           _this.getRutas();
-=======
->>>>>>> develop
+
+          _this.getBarrioTermina();
+
+          $("#Ruta").modal('hide');
+          swal("OK!", "Ruta creada exitosamente!", "success");
+          _this.buttons.create.name = 'Agregar';
+          _this.buttons.create.state = false;
 
           _this.getRutaTermina();
 
@@ -2677,19 +2793,11 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error.response);
       });
     },
-<<<<<<< HEAD
-    //Listar Rutas
-    getRutas: function getRutas() {
-      var _this3 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/rutas-resource?Q=0').then(function (response) {
-=======
     //listar destino
     getRutaTermina: function getRutaTermina() {
       var _this3 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/rutas-resource?Q=2').then(function (response) {
->>>>>>> develop
         if (response.data.length > 0) {
           _this3.barrioTermina = response.data;
 
@@ -2701,7 +2809,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error.response);
       });
     },
-    //Listar Rutas    
+    //Listar Rutas
     getRutas: function getRutas() {
       var _this4 = this;
 
@@ -2787,7 +2895,7 @@ __webpack_require__.r(__webpack_exports__);
         }, 5000);
       });
     },
-    //estado 
+    //estado
     stateCupon: function stateCupon(id, state) {
       var _this7 = this;
 
@@ -4983,308 +5091,6 @@ module.exports = Component.exports
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-<<<<<<< HEAD
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container contaRuta", attrs: { id: "Ruta" } },
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "card cardRutas" }, [
-        _c(
-          "form",
-          {
-            attrs: { method: "POST", id: "form-ruta" },
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.setRuta($event)
-              }
-            }
-          },
-          [
-            _vm.show_alert.create.state
-              ? _c(
-                  "div",
-                  {
-                    staticClass:
-                      "alert alert-danger alert-dismissible fade show",
-                    attrs: { role: "alert" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(_vm.show_alert.create.messaje) +
-                        "\n            "
-                    )
-                  ]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group col-md-12" }, [
-              _c("label", [_vm._v("Hora")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.hora,
-                    expression: "hora"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "time" },
-                domProps: { value: _vm.hora },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.hora = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group col-md-12" }, [
-              _c("label", [_vm._v("Fecha")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.fecha,
-                    expression: "fecha"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "date" },
-                domProps: { value: _vm.fecha },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.fecha = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group col-md-12" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.idRuta,
-                      expression: "idRuta"
-                    }
-                  ],
-                  staticClass: "custom-select",
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.idRuta = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "0" } }, [
-                    _vm._v("Seleccionar Ruta")
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.ruta, function(idRuta) {
-                    return _c("option", {
-                      key: idRuta,
-                      domProps: {
-                        value: idRuta.idRuta,
-                        textContent: _vm._s(idRuta.descripcion)
-                      }
-                    })
-                  })
-                ],
-                2
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group col-md-12" }, [
-              _vm._m(2),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.idVehiculo,
-                      expression: "idVehiculo"
-                    }
-                  ],
-                  staticClass: "custom-select",
-                  attrs: { required: "" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.idVehiculo = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "0" } }, [
-                    _vm._v("Seleccionar Vehiculo")
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.vehiculo, function(idVehiculo) {
-                    return _c("option", {
-                      key: idVehiculo,
-                      domProps: {
-                        value: idVehiculo.idVehiculo,
-                        textContent: _vm._s(idVehiculo.placa)
-                      }
-                    })
-                  })
-                ],
-                2
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "btn-width" }, [
-              _c("button", { staticClass: "btn  botonCancelar botones" }, [
-                _vm._v("Cancelar")
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn botonAgregar botones",
-                  attrs: { disabled: _vm.buttons.create.state }
-                },
-                [_vm._v(_vm._s(_vm.buttons.create.name))]
-              )
-            ])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "container-fluid" },
-        [
-          _c(
-            "vue-bootstrap4-table",
-            {
-              attrs: {
-                rows: _vm.horario,
-                columns: _vm.columns,
-                config: _vm.config
-              },
-              scopedSlots: _vm._u([
-                {
-                  key: "state",
-                  fn: function(props) {
-                    return _c("templete", {}, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-warning",
-                          attrs: { type: "button" }
-                        },
-                        [_vm._v(_vm._s(props.row.estado))]
-                      )
-                    ])
-                  }
-                }
-              ])
-            },
-            [
-              _c("templete", { attrs: { slot: "edit" }, slot: "edit" }, [
-                _c(
-                  "button",
-                  { staticClass: "btn btn-warning", attrs: { type: "button" } },
-                  [_c("i", { staticClass: "icofont-pencil-alt-1" })]
-                )
-              ])
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header encabezadoFormulario" }, [
-      _c(
-        "h5",
-        {
-          staticClass: "text-center text-white",
-          attrs: { id: "exampleModalLabel" }
-        },
-        [_vm._v("Habilitar Horario")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", [
-      _vm._v("Ruta"),
-      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", [
-      _vm._v("Vehiculo "),
-      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
-    ])
-  }
-]
-render._withStripped = true
-=======
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(3);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -5509,7 +5315,6 @@ var DEFAULT_SWITCH_COLOR = '#fff';
   methods: {
     toggle: function toggle(event) {
       var toggled = !this.toggled;
->>>>>>> develop
 
       if (!this.sync) {
         this.toggled = toggled;
@@ -6077,212 +5882,451 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container contaRuta" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "card cardRutas" }, [
+  return _c(
+    "div",
+    { staticClass: "container contaRuta", attrs: { id: "Ruta" } },
+    [
       _c(
-        "form",
+        "div",
         {
-          attrs: { method: "POST", id: "form-ruta" },
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.setHorario($event)
-            }
+          staticClass: "modal fade",
+          attrs: {
+            id: "exampleModal",
+            tabindex: "-1",
+            "aria-labelledby": "exampleModalLabel",
+            "aria-hidden": "true"
           }
         },
         [
-          _vm.show_alert.create.state
-            ? _c(
-                "div",
-                {
-                  staticClass: "alert alert-danger alert-dismissible fade show",
-                  attrs: { role: "alert" }
-                },
-                [
-                  _vm._v(
-                    "\n            " +
-                      _vm._s(_vm.show_alert.create.messaje) +
-                      "\n        "
-                  )
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group col-md-12" }, [
-            _c("label", [_vm._v("Hora")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.hora,
-                  expression: "hora"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "time" },
-              domProps: { value: _vm.hora },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.hora = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group col-md-12" }, [
-            _c("label", [_vm._v("Fecha")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.fecha,
-                  expression: "fecha"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "date" },
-              domProps: { value: _vm.fecha },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.fecha = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group col-md-12" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
+          _c("div", { staticClass: "modal-dialog" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.idRuta,
-                    expression: "idRuta"
-                  }
-                ],
-                staticClass: "custom-select",
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.idRuta = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "0" } }, [
-                  _vm._v("Seleccionar Ruta")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.ruta, function(idRuta) {
-                  return _c("option", {
-                    key: idRuta,
-                    domProps: {
-                      value: idRuta.idRuta,
-                      textContent: _vm._s(idRuta.descripcion)
+                    attrs: { method: "POST", id: "form-edit_product" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.putHorario($event)
+                      }
                     }
-                  })
-                })
-              ],
-              2
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group col-md-12" }, [
-            _vm._m(2),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.idVehiculo,
-                    expression: "idVehiculo"
-                  }
-                ],
-                staticClass: "custom-select",
-                attrs: { required: "" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.idVehiculo = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "0" } }, [
-                  _vm._v("Seleccionar Vehiculo")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.vehiculo, function(idVehiculo) {
-                  return _c("option", {
-                    key: idVehiculo,
-                    domProps: {
-                      value: idVehiculo.idVehiculo,
-                      textContent: _vm._s(idVehiculo.placa)
-                    }
-                  })
-                })
-              ],
-              2
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "btn-width" }, [
-            _c("button", { staticClass: "btn  botonCancelar botones" }, [
-              _vm._v("Cancelar")
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn botonAgregar botones",
-                attrs: { disabled: _vm.buttons.create.state }
-              },
-              [_vm._v(_vm._s(_vm.buttons.create.name))]
-            )
+                  },
+                  [
+                    _c("div", { staticClass: "container-fluid" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "form-group col-md-12" }, [
+                          _c("label", [_vm._v("Hora")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.data_edit.hora,
+                                expression: "data_edit.hora"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "time" },
+                            domProps: { value: _vm.data_edit.hora },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.data_edit,
+                                  "hora",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group col-md-12" }, [
+                          _c("label", [_vm._v("Fecha")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.data_edit.fecha,
+                                expression: "data_edit.fecha"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "date", required: "" },
+                            domProps: { value: _vm.data_edit.fecha },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.data_edit,
+                                  "fecha",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm.show_alert.edit.state
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "alert alert-danger alert-dismissible fade show",
+                            attrs: { role: "alert" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.show_alert.edit.messaje) +
+                                "\n                        "
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row  m-t-25" }, [
+                      _c("div", { staticClass: "col" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-success",
+                              attrs: { disabled: _vm.buttons.edit.state }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                        " +
+                                  _vm._s(_vm.buttons.edit.name) +
+                                  "\n                                        "
+                              ),
+                              _vm.buttons.edit.state
+                                ? _c("i", {
+                                    staticClass: "fa fa-spinner fa-spin"
+                                  })
+                                : _vm._e()
+                            ]
+                          )
+                        ])
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
           ])
         ]
+      ),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _c("div", { staticClass: "card cardRutas" }, [
+        _c(
+          "form",
+          {
+            attrs: { method: "POST", id: "form-ruta" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.setHorario($event)
+              }
+            }
+          },
+          [
+            _vm.show_alert.create.state
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "alert alert-danger alert-dismissible fade show",
+                    attrs: { role: "alert" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.show_alert.create.messaje) +
+                        "\n            "
+                    )
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-12" }, [
+              _c("label", [_vm._v("Hora")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.hora,
+                    expression: "hora"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "time" },
+                domProps: { value: _vm.hora },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.hora = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-12" }, [
+              _c("label", [_vm._v("Fecha")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.fecha,
+                    expression: "fecha"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "date" },
+                domProps: { value: _vm.fecha },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.fecha = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-12" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.idRuta,
+                      expression: "idRuta"
+                    }
+                  ],
+                  staticClass: "custom-select",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.idRuta = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "0" } }, [
+                    _vm._v("Seleccionar Ruta")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.ruta, function(idRuta) {
+                    return _c("option", {
+                      key: idRuta,
+                      domProps: {
+                        value: idRuta.idRuta,
+                        textContent: _vm._s(idRuta.descripcion)
+                      }
+                    })
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-12" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.idVehiculo,
+                      expression: "idVehiculo"
+                    }
+                  ],
+                  staticClass: "custom-select",
+                  attrs: { required: "" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.idVehiculo = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "0" } }, [
+                    _vm._v("Seleccionar Vehiculo")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.vehiculo, function(idVehiculo) {
+                    return _c("option", {
+                      key: idVehiculo,
+                      domProps: {
+                        value: idVehiculo.idVehiculo,
+                        textContent: _vm._s(idVehiculo.placa)
+                      }
+                    })
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "btn-width" }, [
+              _c("button", { staticClass: "btn  botonCancelar botones" }, [
+                _vm._v("Cancelar")
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn botonAgregar botones",
+                  attrs: { disabled: _vm.buttons.create.state }
+                },
+                [_vm._v(_vm._s(_vm.buttons.create.name))]
+              )
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "container-fluid" },
+        [
+          _c("vue-bootstrap4-table", {
+            attrs: {
+              rows: _vm.horario,
+              columns: _vm.columns,
+              config: _vm.config,
+              "thead-class": "green-bg bg-dark text-white"
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "edit",
+                fn: function(props) {
+                  return _c("templete", {}, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: {
+                          type: "button",
+                          "data-toggle": "modal",
+                          "data-target": "#exampleModal",
+                          idHorario: props.row.idHorario
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.editHorario(props.row.idHorario)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "icofont-edit" })]
+                    )
+                  ])
+                }
+              },
+              {
+                key: "delete",
+                fn: function(props) {
+                  return _c("templete", {}, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        attrs: { type: "button", idRuta: props.row.idHorario },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteHorario(props.row.idRuta)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "icofont-ui-delete" })]
+                    )
+                  ])
+                }
+              }
+            ])
+          })
+        ],
+        1
       )
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Editar Horario")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -6786,9 +6830,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\r\n                            " +
+                              "\n                            " +
                                 _vm._s(_vm.show_alert.edit.messaje) +
-                                "\r\n                        "
+                                "\n                        "
                             )
                           ]
                         )
@@ -6805,9 +6849,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\r\n                                        " +
+                                "\n                                        " +
                                   _vm._s(_vm.buttons.edit.name) +
-                                  "\r\n                                        "
+                                  "\n                                        "
                               ),
                               _vm.buttons.edit.state
                                 ? _c("i", {
@@ -6853,9 +6897,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\r\n                " +
+                        "\n                " +
                           _vm._s(_vm.show_alert.create.messaje) +
-                          "\r\n            "
+                          "\n            "
                       )
                     ]
                   )
@@ -7138,37 +7182,6 @@ var render = function() {
                         _vm.idUsuarioCrea = $event.target.value
                       }
                     }
-<<<<<<< HEAD
-                  },
-                  [
-                    _c("option", { attrs: { value: "-1" } }, [
-                      _vm._v("Seleccionar Estado")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "1" } }, [_vm._v("Activo")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "0" } }, [
-                      _vm._v("Inactivo")
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group col-md-6" }, [
-                _c("label", { attrs: { for: "idUsuarioModifica" } }, [
-                  _vm._v("idUsuarioModifica")
-                ]),
-                _vm._v(" "),
-                _c("i", { staticClass: "fas fa-map-marked-alt iconosRutas" }),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.idUsuarioModifica,
-                      expression: "idUsuarioModifica"
-=======
                   })
                 ])
               ]),
@@ -7230,29 +7243,8 @@ var render = function() {
                           [_c("i", { staticClass: "icofont-edit" })]
                         )
                       ])
->>>>>>> develop
                     }
                   },
-<<<<<<< HEAD
-                  domProps: { value: _vm.idUsuarioModifica },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.idUsuarioModifica = $event.target.value
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "form-group col-md-4" }, [
-                _c("label", { attrs: { for: "idUsuarioCrea" } }, [
-                  _vm._v("idUsuarioCrea")
-                ]),
-=======
                   {
                     key: "delete",
                     fn: function(props) {
@@ -7276,99 +7268,8 @@ var render = function() {
                 ])
               },
               [
->>>>>>> develop
                 _vm._v(" "),
                 _vm._v(" "),
-<<<<<<< HEAD
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.idUsuarioCrea,
-                      expression: "idUsuarioCrea"
-                    }
-                  ],
-                  staticClass: "form-control inputRutas",
-                  attrs: { type: "text", id: "idUsuarioCrea", required: "" },
-                  domProps: { value: _vm.idUsuarioCrea },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.idUsuarioCrea = $event.target.value
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "btn-width" }, [
-              _c("button", { staticClass: "btn  botonCancelar botones" }, [
-                _vm._v("Cancelar")
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn botonAgregar botones",
-                  attrs: { disabled: _vm.buttons.create.state }
-                },
-                [_vm._v(_vm._s(_vm.buttons.create.name))]
-              )
-            ])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "container-fluid" },
-        [
-          _c(
-            "vue-bootstrap4-table",
-            {
-              attrs: {
-                rows: _vm.rutas,
-                columns: _vm.columns,
-                config: _vm.config
-              },
-              scopedSlots: _vm._u([
-                {
-                  key: "state",
-                  fn: function(props) {
-                    return _c("templete", {}, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-warning",
-                          attrs: { type: "button" }
-                        },
-                        [_vm._v(_vm._s(props.row.estado))]
-                      )
-                    ])
-                  }
-                }
-              ])
-            },
-            [
-              _c("templete", { attrs: { slot: "edit" }, slot: "edit" }, [
-                _c(
-                  "button",
-                  { staticClass: "btn btn-warning", attrs: { type: "button" } },
-                  [_c("i", { staticClass: "icofont-pencil-alt-1" })]
-                )
-              ])
-            ],
-            1
-          )
-        ],
-        1
-      )
-=======
                 _c("templete", { attrs: { slot: "estado" }, slot: "estado" })
               ],
               1
@@ -7377,7 +7278,6 @@ var render = function() {
           1
         )
       ])
->>>>>>> develop
     ]
   )
 }
@@ -25557,13 +25457,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 __webpack_require__(/*! C:\Users\Estefania\Documents\TAKEVA P5\TakevaProject5\resources\js\app.js */"./resources/js/app.js");
 module.exports = __webpack_require__(/*! C:\Users\Estefania\Documents\TAKEVA P5\TakevaProject5\resources\sass\app.scss */"./resources/sass/app.scss");
-=======
-__webpack_require__(/*! C:\Users\ACER\Documents\proyecto_takeva\Takeva5\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\ACER\Documents\proyecto_takeva\Takeva5\resources\sass\app.scss */"./resources/sass/app.scss");
->>>>>>> develop
 
 
 /***/ })

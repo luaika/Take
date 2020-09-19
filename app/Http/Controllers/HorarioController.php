@@ -72,9 +72,10 @@ class HorarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($idHorario)
     {
-        //
+        $query= Horario::find($idHorario);
+        return response()->json($query);
     }
 
     /**
@@ -84,9 +85,21 @@ class HorarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idHorario)
     {
-        //
+        $attributes = [
+            'hora' => 'Hora',
+            'fecha' => 'Fecha',
+        ];
+
+        $horario = Horario::find($idHorario);
+
+        $horario->update([
+            'hora' => $request->hora,
+            'fecha' =>$request->fecha,
+
+        ]);
+        return response()->json($horario);
     }
 
     /**
