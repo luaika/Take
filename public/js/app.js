@@ -2393,12 +2393,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2531,7 +2525,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.descripcion = '';
           _this.idBarrioInicia = 0;
           _this.idBarrioTermina = 0;
-          _this.estado = -1;
+          _this.estado = 1;
           _this.idUsuarioModifica = '';
           _this.idUsuarioCrea = '';
           swal("OK!", "Ruta creada exitosamente!", "success");
@@ -2548,6 +2542,16 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       ;
+    },
+    //cancelar registro
+    cancelarRegistro: function cancelarRegistro() {
+      this.codigo = '';
+      this.descripcion = '';
+      this.idBarrioInicia = 0;
+      this.idBarrioTermina = 0;
+      this.estado = 1;
+      this.idUsuarioModifica = '';
+      this.idUsuarioCrea = '';
     },
     // Lista Barrios
     getListBarrios: function getListBarrios() {
@@ -6402,30 +6406,24 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _c("div", { staticClass: "row  m-t-25" }, [
-                      _c("div", { staticClass: "col" }, [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn botonAgregar",
-                              attrs: { disabled: _vm.buttons.edit.state }
-                            },
-                            [
-                              _vm._v(
-                                "\r\n                                        " +
-                                  _vm._s(_vm.buttons.edit.name) +
-                                  "\r\n                                        "
-                              ),
-                              _vm.buttons.edit.state
-                                ? _c("i", {
-                                    staticClass: "fa fa-spinner fa-spin"
-                                  })
-                                : _vm._e()
-                            ]
-                          )
-                        ])
-                      ])
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-warning botonAsctualizar",
+                          attrs: { disabled: _vm.buttons.edit.state }
+                        },
+                        [
+                          _vm._v(
+                            "\r\n                                " +
+                              _vm._s(_vm.buttons.edit.name) +
+                              "\r\n                                "
+                          ),
+                          _vm.buttons.edit.state
+                            ? _c("i", { staticClass: "fa fa-spinner fa-spin" })
+                            : _vm._e()
+                        ]
+                      )
                     ])
                   ]
                 )
@@ -6747,9 +6745,18 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "btn-width" }, [
-                _c("button", { staticClass: "btn  botonCancelar botones" }, [
-                  _vm._v("Cancelar")
-                ]),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn  botonCancelar botones",
+                    on: {
+                      click: function($event) {
+                        return _vm.cancelarRegistro()
+                      }
+                    }
+                  },
+                  [_vm._v("Cancelar")]
+                ),
                 _vm._v(" "),
                 _c(
                   "button",
