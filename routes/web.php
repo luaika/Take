@@ -64,6 +64,9 @@ Route::resource('/tercero-resource', 'TerceroController');
 
 //Usuario
 Route::post('/setUsuario', 'UsuarioController@store');
+Route::resource('/usuario-resource', 'UsuarioController');
+Route::put('/updateUsuario/{idUsuario}', 'UsuarioController@update');
+Route::delete('/usuario-delete/{idUsuario}', 'UsuarioController@destroy');
 
 
 Route::view('/consultarRutasVehiculos','Home');

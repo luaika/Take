@@ -1,12 +1,59 @@
 <template>
     <div class="container contaRuta">
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="">Editar Horario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="form-edit_product" v-on:submit.prevent="putUsuario" >
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label >Estado</label>
+                                    <select class="custom-select" v-model="data_edit.estado">
+                                     <option value="-1">Seleccionar Estado</option>
+                                     <option ="1">Activo</option>
+                                        <option value="0">Inactivo</option>
+                                     </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label >Codigo</label>
+                                    <input type="text" class="form-control"  v-model="data_edit.codigo" required>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Clave</label>
+                                    <input type="password" class="form-control"  v-model="data_edit.clave" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="show_alert.edit.state" class="alert alert-danger alert-dismissible fade show"
+                                role="alert">
+                            {{ show_alert.edit.messaje }}
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-warning botonAsctualizar" :disabled="buttons.edit.state">
+                                {{ buttons.edit.name }}
+                                <i v-if="buttons.edit.state" class="fa fa-spinner fa-spin"></i>
+                            </button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Crear Usuario-->
         <div class="modal-header encabezadoFormulario" >
-            <h5 class="text-center text-white" id="exampleModalLabel">Registrar Usuarios</h5>
+            <h5 class="text-center text-white" id="exampleModalUsuario">Registrar Usuarios</h5>
         </div>
     <div class="card cardRutas">
-
-
-        <form method="POST" id="form-usuario" v-on:submit.prevent="setUsuario" >
+        <form method="POST" id="form-ruta" v-on:submit.prevent="setUsuario" >
 
             <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ show_alert.create.messaje }}
@@ -52,18 +99,37 @@
                </div>
             </div>
             <div class="btn-width">
-                <button class="btn  botonCancelar botones" >Cancelar</button>
+                <button class="btn  botonCancelar botones" v-on:click="cancelarRegistro()" >Cancelar</button>
                 <button class="btn botonAgregar botones"  :disabled="buttons.create.state">{{ buttons.create.name }}</button>
             </div>
             </form>
         </div>
-    </div>
+        <br>
 
+        <!--Formulario-->
+        <div class="container-fluid">
+            <vue-bootstrap4-table :rows="usuario" :columns="columns"  :config = "config">
+                <templete slot="edit" slot-scope="props">
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal"  v-on:click="editUsuario(props.row.idUsuario)" v-bind:idUsuario="props.row.idUsuario">
+                        <i class="icofont-edit"></i>
+                    </button>
+                </templete>
+                <templete slot="delete" slot-scope="props">
+                    <button type="button" class="btn btn-danger" v-on:click="deleteUsuario(props.row.idUsuario)" v-bind:idUsuario="props.row.idUsuario">
+                       <i class="icofont-ui-delete"></i>
+                    </button>
+                </templete>
+            </vue-bootstrap4-table>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 import axios from 'axios';
 import router from '../../routes';
+import VueBootstrap4Table from 'vue-bootstrap4-table';
+
 export default {
     name:'Usuarios',
      data(){
@@ -74,23 +140,98 @@ export default {
                 clave:'',
                 show_tercero:true,
                 tercero:[],
+                usuario:[],
                 show_alert: {
                     create: {
                         state: false ,
                         messaje: ''
                     } ,
+                    edit: {
+                    state: false ,
+                    messaje: ''
+                    }
                 },
                 buttons: {
                     create: {
                         name: 'Agregar',
                         state: false,
                     },
-                },
-            }
 
+                    edit: {
+                    name: 'Actualizar',
+                    state: false
+                    },
+                },
+            columns: [
+                {
+                    label: "idTercero",
+                    name: "idTercero",
+                    sort: false,
+                },
+                {
+                    label: "Estado",
+                    name: "estado",
+                    sort: true,
+                },
+                {
+                    label: "Codigo",
+                    name: "codigo",
+                    sort: false,
+                },
+                {
+                    label: "Clave",
+                    name: "clave",
+                    sort: true,
+                },
+                 {
+                    label: "Editar",
+                    name: "edit",
+                    sort: false,
+                },
+                {
+                    label: "Eliminar",
+                    name: "delete",
+                    sort: false,
+                },
+                {
+                    label: "Estado",
+                    name: "estado",
+                    sort: false,
+                },
+
+            ],
+            config: {
+                 pagination: true, // default true
+                    pagination_info: true, // default true
+                    num_of_visibile_pagination_buttons: 7, // default 5
+                    per_page: 5, // default 10
+                    per_page_options:  [5,  10,  20,  30],
+                filas_seleccionables: true,
+                card_title: "USUARIOS",
+                show_refresh_button: false,
+                show_reset_button: false,
+                global_search: {
+                placeholder: "Buscar ",
+                },
+            },
+
+            data_edit:{
+                show: true,
+                contenedor: false ,
+                estado: '',
+                codigo: '',
+                clave: '',
+            },
+            }
         },
+      components:{
+        VueBootstrap4Table
+
+    },
+
     mounted() {
             this.getListTercero();
+            this.getListUsuario();
     },
     methods:{
        setUsuario:function() {
@@ -125,6 +266,35 @@ export default {
             };
        },
 
+       deleteUsuario: function(idUsuario){
+            swal({
+                title: "Estas seguro ?",
+                text: "Este horario quedará eliminado de tus registros!",
+                icon: "warning",
+                buttons: ["Cancelar","Confirmar"],
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    this.data_edit.idUsuario= idUsuario;
+                    axios.delete('/usuario-delete/' + this.data_edit.idUsuario).then((response) => {
+                        swal("OK!", "El horario se elimino exitosamente", "success");
+                        this.getListUsuario();
+                    }).catch((error)=>{
+                        swal("Lo sentimos", "Parece que algo salio mal!", "error");
+                    });
+                }
+            });
+        },
+
+
+         //cancelar registro
+        cancelarRegistro:function (){
+            this.show_alert.create.state = false;
+            this.idTercero = 0;
+            this.estado = '';
+            this.codigo ='' ;
+            this.clave = '';
+        },
             // Lista Categorias
             getListTercero: function () {
                 axios.get('/tercero-resource').then((response) => {
@@ -134,7 +304,55 @@ export default {
                     console.log(error.response);
                 });
             },
+            getListUsuario: function () {
+            axios.get('/usuario-resource').then( (response)  => {
+                if (response.data.length > 0) {
+                    this.usuario = response.data ;
+                    console.log(this.usuario);
+                } else {
+                    this.message = 'No hay registro de usuarios!!!';
+                }
+            }).catch((error) => {
+                console.log(error.response);
+            });
+        },
+        //put usuario
+           putUsuario: function() {
+            this.buttons.edit.name = 'Actualizando...';
+            this.buttons.edit.state = true;
+
+            let formData = {
+                'estado': this.data_edit.estado,
+                'codigo': this.data_edit.codigo,
+                'clave': this.data_edit.clave,
+            };
+            axios.put('/updateUsuario/' + this.data_edit.idUsuario, formData).then((response) => {
+                console.log('entro a actualizar');
+                this.buttons.edit.name = 'Actualizar';
+                this.buttons.edit.state = false;
+                swal("OK!", "Ruta actualizado exitosamente!", "success");
+                $("#ModalEditUsuario").modal('hide');
+                this.getListUsuario();
+
+            }).catch((error) => {
+                console.log(error.response);
+                let errors = '';
+                let aux = error.response.data.errors;
+                for (let i in aux) {
+                    let sci = aux[i];
+                    for (let j in sci) {
+                        errors += '\n' + sci[j];
+                    }
+                }
+                this.buttons.edit.name = 'Actualizar';
+                this.buttons.edit.state = false;
+                this.show_alert.edit.state = true;
+                this.show_alert.edit.messaje = errors;
+                setTimeout(() => this.show_alert.edit.state = false, 5000);
+            });
+        },
     }
 }
+
 </script>
 

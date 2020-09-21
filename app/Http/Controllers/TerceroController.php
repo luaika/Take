@@ -14,7 +14,6 @@ class TerceroController extends Controller
      */
     public function index()
     {
-
         $query = Tercero::where([
             ['estado', 1],
         ])->orderBy('nombres')->get();

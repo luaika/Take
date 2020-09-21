@@ -3203,6 +3203,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
+/* harmony import */ var vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-bootstrap4-table */ "./node_modules/vue-bootstrap4-table/dist/vue-bootstrap4-table.esm.js");
 //
 //
 //
@@ -3266,6 +3267,71 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3278,8 +3344,13 @@ __webpack_require__.r(__webpack_exports__);
       clave: '',
       show_tercero: true,
       tercero: [],
+      usuario: [],
       show_alert: {
         create: {
+          state: false,
+          messaje: ''
+        },
+        edit: {
           state: false,
           messaje: ''
         }
@@ -3288,12 +3359,74 @@ __webpack_require__.r(__webpack_exports__);
         create: {
           name: 'Agregar',
           state: false
+        },
+        edit: {
+          name: 'Actualizar',
+          state: false
         }
+      },
+      columns: [{
+        label: "idTercero",
+        name: "idTercero",
+        sort: false
+      }, {
+        label: "Estado",
+        name: "estado",
+        sort: true
+      }, {
+        label: "Codigo",
+        name: "codigo",
+        sort: false
+      }, {
+        label: "Clave",
+        name: "clave",
+        sort: true
+      }, {
+        label: "Editar",
+        name: "edit",
+        sort: false
+      }, {
+        label: "Eliminar",
+        name: "delete",
+        sort: false
+      }, {
+        label: "Estado",
+        name: "estado",
+        sort: false
+      }],
+      config: {
+        pagination: true,
+        // default true
+        pagination_info: true,
+        // default true
+        num_of_visibile_pagination_buttons: 7,
+        // default 5
+        per_page: 5,
+        // default 10
+        per_page_options: [5, 10, 20, 30],
+        filas_seleccionables: true,
+        card_title: "USUARIOS",
+        show_refresh_button: false,
+        show_reset_button: false,
+        global_search: {
+          placeholder: "Buscar "
+        }
+      },
+      data_edit: {
+        show: true,
+        contenedor: false,
+        estado: '',
+        codigo: '',
+        clave: ''
       }
     };
   },
+  components: {
+    VueBootstrap4Table: vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
   mounted: function mounted() {
     this.getListTercero();
+    this.getListUsuario();
   },
   methods: {
     setUsuario: function setUsuario() {
@@ -3331,15 +3464,100 @@ __webpack_require__.r(__webpack_exports__);
 
       ;
     },
+    deleteUsuario: function deleteUsuario(idUsuario) {
+      var _this2 = this;
+
+      swal({
+        title: "Estas seguro ?",
+        text: "Este horario quedará eliminado de tus registros!",
+        icon: "warning",
+        buttons: ["Cancelar", "Confirmar"],
+        dangerMode: true
+      }).then(function (willDelete) {
+        if (willDelete) {
+          _this2.data_edit.idUsuario = idUsuario;
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/usuario-delete/' + _this2.data_edit.idUsuario).then(function (response) {
+            swal("OK!", "El horario se elimino exitosamente", "success");
+
+            _this2.getListUsuario();
+          })["catch"](function (error) {
+            swal("Lo sentimos", "Parece que algo salio mal!", "error");
+          });
+        }
+      });
+    },
+    //cancelar registro
+    cancelarRegistro: function cancelarRegistro() {
+      this.show_alert.create.state = false;
+      this.idTercero = 0;
+      this.estado = '';
+      this.codigo = '';
+      this.clave = '';
+    },
     // Lista Categorias
     getListTercero: function getListTercero() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/tercero-resource').then(function (response) {
         console.log('response_ ' + JSON.stringify(response.data));
-        _this2.tercero = response.data;
+        _this3.tercero = response.data;
       })["catch"](function (error) {
         console.log(error.response);
+      });
+    },
+    getListUsuario: function getListUsuario() {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/usuario-resource').then(function (response) {
+        if (response.data.length > 0) {
+          _this4.usuario = response.data;
+          console.log(_this4.usuario);
+        } else {
+          _this4.message = 'No hay registro de usuarios!!!';
+        }
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
+    },
+    //put usuario
+    putUsuario: function putUsuario() {
+      var _this5 = this;
+
+      this.buttons.edit.name = 'Actualizando...';
+      this.buttons.edit.state = true;
+      var formData = {
+        'estado': this.data_edit.estado,
+        'codigo': this.data_edit.codigo,
+        'clave': this.data_edit.clave
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/updateUsuario/' + this.data_edit.idUsuario, formData).then(function (response) {
+        console.log('entro a actualizar');
+        _this5.buttons.edit.name = 'Actualizar';
+        _this5.buttons.edit.state = false;
+        swal("OK!", "Ruta actualizado exitosamente!", "success");
+        $("#ModalEditUsuario").modal('hide');
+
+        _this5.getListUsuario();
+      })["catch"](function (error) {
+        console.log(error.response);
+        var errors = '';
+        var aux = error.response.data.errors;
+
+        for (var i in aux) {
+          var sci = aux[i];
+
+          for (var j in sci) {
+            errors += '\n' + sci[j];
+          }
+        }
+
+        _this5.buttons.edit.name = 'Actualizar';
+        _this5.buttons.edit.state = false;
+        _this5.show_alert.edit.state = true;
+        _this5.show_alert.edit.messaje = errors;
+        setTimeout(function () {
+          return _this5.show_alert.edit.state = false;
+        }, 5000);
       });
     }
   }
@@ -6882,9 +7100,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                            " +
+                              "\r\n                            " +
                                 _vm._s(_vm.show_alert.edit.messaje) +
-                                "\n                        "
+                                "\r\n                        "
                             )
                           ]
                         )
@@ -6899,9 +7117,9 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                                " +
+                            "\r\n                                " +
                               _vm._s(_vm.buttons.edit.name) +
-                              "\n                                "
+                              "\r\n                                "
                           ),
                           _vm.buttons.edit.state
                             ? _c("i", { staticClass: "fa fa-spinner fa-spin" })
@@ -6943,9 +7161,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                " +
+                        "\r\n                " +
                           _vm._s(_vm.show_alert.create.messaje) +
-                          "\n            "
+                          "\r\n            "
                       )
                     ]
                   )
@@ -8116,13 +8334,200 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container contaRuta" }, [
-    _vm._m(0),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "exampleModal",
+          tabindex: "-1",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c(
+                "form",
+                {
+                  attrs: { method: "POST", id: "form-edit_product" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.putUsuario($event)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "container-fluid" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "form-group col-md-12" }, [
+                        _c("label", [_vm._v("Estado")]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.data_edit.estado,
+                                expression: "data_edit.estado"
+                              }
+                            ],
+                            staticClass: "custom-select",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.data_edit,
+                                  "estado",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "-1" } }, [
+                              _vm._v("Seleccionar Estado")
+                            ]),
+                            _vm._v(" "),
+                            _vm._v(' ="1">Activo'),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "0" } }, [
+                              _vm._v("Inactivo")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group col-md-12" }, [
+                        _c("label", [_vm._v("Codigo")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.data_edit.codigo,
+                              expression: "data_edit.codigo"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", required: "" },
+                          domProps: { value: _vm.data_edit.codigo },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.data_edit,
+                                "codigo",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group col-md-12" }, [
+                        _c("label", [_vm._v("Clave")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.data_edit.clave,
+                              expression: "data_edit.clave"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "password", required: "" },
+                          domProps: { value: _vm.data_edit.clave },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.data_edit,
+                                "clave",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm.show_alert.edit.state
+                    ? _c(
+                        "div",
+                        {
+                          staticClass:
+                            "alert alert-danger alert-dismissible fade show",
+                          attrs: { role: "alert" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                          " +
+                              _vm._s(_vm.show_alert.edit.messaje) +
+                              "\n                      "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-warning botonAsctualizar",
+                        attrs: { disabled: _vm.buttons.edit.state }
+                      },
+                      [
+                        _vm._v(
+                          "\n                              " +
+                            _vm._s(_vm.buttons.edit.name) +
+                            "\n                              "
+                        ),
+                        _vm.buttons.edit.state
+                          ? _c("i", { staticClass: "fa fa-spinner fa-spin" })
+                          : _vm._e()
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _vm._m(1),
     _vm._v(" "),
     _c("div", { staticClass: "card cardRutas" }, [
       _c(
         "form",
         {
-          attrs: { method: "POST", id: "form-usuario" },
+          attrs: { method: "POST", id: "form-ruta" },
           on: {
             submit: function($event) {
               $event.preventDefault()
@@ -8140,9 +8545,9 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n            " +
+                    "\n              " +
                       _vm._s(_vm.show_alert.create.messaje) +
-                      "\n        "
+                      "\n          "
                   )
                 ]
               )
@@ -8150,7 +8555,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "form-group col-md-6" }, [
-              _vm._m(1),
+              _vm._m(2),
               _vm._v(" "),
               _c(
                 "select",
@@ -8305,9 +8710,18 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "btn-width" }, [
-            _c("button", { staticClass: "btn  botonCancelar botones" }, [
-              _vm._v("Cancelar")
-            ]),
+            _c(
+              "button",
+              {
+                staticClass: "btn  botonCancelar botones",
+                on: {
+                  click: function($event) {
+                    return _vm.cancelarRegistro()
+                  }
+                }
+              },
+              [_vm._v("Cancelar")]
+            ),
             _vm._v(" "),
             _c(
               "button",
@@ -8320,10 +8734,97 @@ var render = function() {
           ])
         ]
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "container-fluid" },
+      [
+        _c("vue-bootstrap4-table", {
+          attrs: {
+            rows: _vm.usuario,
+            columns: _vm.columns,
+            config: _vm.config
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "edit",
+              fn: function(props) {
+                return _c("templete", {}, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "modal",
+                        "data-target": "#exampleModal",
+                        idUsuario: props.row.idUsuario
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.editUsuario(props.row.idUsuario)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "icofont-edit" })]
+                  )
+                ])
+              }
+            },
+            {
+              key: "delete",
+              fn: function(props) {
+                return _c("templete", {}, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button", idUsuario: props.row.idUsuario },
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteUsuario(props.row.idUsuario)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "icofont-ui-delete" })]
+                  )
+                ])
+              }
+            }
+          ])
+        })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title", attrs: { id: "" } }, [
+        _vm._v("Editar Horario")
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -8333,7 +8834,7 @@ var staticRenderFns = [
         "h5",
         {
           staticClass: "text-center text-white",
-          attrs: { id: "exampleModalLabel" }
+          attrs: { id: "exampleModalUsuario" }
         },
         [_vm._v("Registrar Usuarios")]
       )
