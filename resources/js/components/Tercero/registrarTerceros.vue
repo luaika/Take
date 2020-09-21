@@ -1,99 +1,99 @@
 <template>
 <div class="container contaRuta">
-        <div class="modal-header encabezadoFormulario" >
-            <h5 class="text-center text-white" id="exampleModalLabel">Registrar Tercero</h5>
-        </div>
-    <div class="card cardRutas">
-    <form method="POST" v-on:submit.prevent="setTercero">
+  <div class="modal-header encabezadoFormulario" >
+      <h5 class="text-center text-white" id="exampleModalLabel">Registrar Tercero</h5>
+  </div>
+  <div class="card cardRutas">
+    <form method="POST" v-on:submit.prevent="setTercero" enctype="multipart/form-data">
       <div class=" primerContenedor">
-              
-               <div class="row">
-                <div class="form-group col-md-4">
-                  <label for="numeroIdentificacion" >Identificación</label>
-                  <i class="far fa-address-card iconos"></i>
-                  <input type="text" class="form-control inputTeceros" id="numeroIdentificacion" v-model="numeroIdentificacion" required>
-                </div>
-                <!-- <div class="form-group col-md-1">
-                    <label for="tipoIdentificacion">D.V</label>
-                    <input type="text" class="form-control inputTeceros" id="tipoIdentificacion" v-model="tipoIdentificacion" required>
-               </div> -->
-                <div class="form-group col-md-4">
-                  <label for="tipoIdentificacion">Tipo Documento</label>
-                  <select class="custom-select" id="tipoIdentificacion" v-model="tipoIdentificacion" required>
-                    <option value="1">CC</option>
-                    <option value="2">TI</option>
-                    <option value="3">RC</option>
-                  </select>
-                </div>
-                
-                <div class="form-group col-md-3 divFoto">
-                    <input  placeholder="Foto" id="foto" class="form-control col-md-6" v-model="foto" required>
-                </div>
-               </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="numeroIdentificacion" >Identificación</label>
+            <i class="far fa-address-card iconos"></i>
+            <input type="text" class="form-control inputTeceros" id="numeroIdentificacion" v-model="numeroIdentificacion" required>
+          </div>
+                  <!-- <div class="form-group col-md-1">
+                      <label for="tipoIdentificacion">D.V</label>
+                      <input type="text" class="form-control inputTeceros" id="tipoIdentificacion" v-model="tipoIdentificacion" required>
+                </div> -->
+          <div class="form-group col-md-4">
+            <label for="tipoIdentificacion">Tipo Documento</label>
+            <select class="custom-select" id="tipoIdentificacion" v-model="tipoIdentificacion" required>
+              <option value="1">CC</option>
+              <option value="2">TI</option>
+              <option value="3">RC</option>
+            </select>
+          </div>
+          <!--examinar-->    
+          <div class="form-group col-md-3 " style="margin-top:2rem;">
+            <div class="custom-file ">
+              <input type="file" class="custom-file-input" id="validatedInputGroupCustomFile"  required>
+              <label class="custom-file-label" for="validatedInputGroupCustomFile"></label>
+            </div>       
+          </div>
+        </div>
+        
                
-                <div class="row" >                
-                 <div class="form-group col-md-4">
-                     <label for="nombres">Nombres</label>
-                     <i class="icofont-ui-user iconos"></i>
-                     <input type="text" class="form-control inputTeceros" id="nombres" v-model="nombres" >
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="apellidos" >Apellidos</label>
-                    <i class="icofont-ui-user iconos"></i>
-                    <input type="text" class="form-control inputTeceros" id="apellidos" v-model="apellidos" >
-                </div>
-                <div class="form-group col-md-5 examinar ">
-                  <button style="background:red; margin-left:8rem;" class="btn  botonAgregar botones" type="submit">Examinar</button>
-                  </div>
-                </div>
-            <div class="row">
-
-              <div class="form-group col-md-6">
-                <label for="fechaNacimiento">Fecha Nacimiento</label>
-                <input type="date" class="form-control" value="2020-01-01" id="fechaNacimiento" v-model="fechaNacimiento" >
-              </div>
-                    <div class="form-group col-md-6">
-                        <label for="genero" >Genero</label>
-                         <select class="custom-select" id="genero" v-model="genero" >
-                            <option value="0">Seleccione una opción</option>
-                            <option value="1">Masculino</option>
-                            <option value="2">Femenino</option>
-                            <option></option>
-                          </select>
-                      </div>
-                    </div>
-                <div class="row">
-                    <div class="form-group col-md-4">
-                      <label for="telefono">Teléfono</label>
-                      <i class="icofont-telephone iconos"></i>
-                      <input type="text" class="form-control inputTeceros" id="telefono" v-model="telefono" >
-                    </div>
-                   <div class="form-group col-md-4">
-                      <label for="celular">Celular</label>
-                      <i class="fas fa-mobile-alt iconos"></i>
-                      <input type="text" class="form-control inputTeceros" id="celular" v-model="celular" >
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="email">Correo</label>
-                         <i class="far fa-envelope iconos"></i>
-                         <input type="email" class="form-control inputTeceros" id="email" v-model="email" >
-                    </div>
-                </div>
-                    <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="direccion">Dirección</label>
-                         <i class="fas fa-map-marker-alt iconos"></i>
-                         <input type="text" class="form-control inputTeceros" id="direccion" v-model="direccion">
-                    </div><div class="form-group col-md-6">
-                        <label for="idMunicipio">Ciudad</label>
-                        <i class="fas fa-city iconos"></i>
-                         <input type="text" class="form-control inputTeceros" id="idMunicipio" v-model="idMunicipio" >
-                    </div>
-                    </div>
+        <div class="row" >                
+          <div class="form-group col-md-4">
+              <label for="nombres">Nombres</label>
+              <i class="icofont-ui-user iconos"></i>
+              <input type="text" class="form-control inputTeceros" id="nombres" v-model="nombres" >
+          </div>
+          <div class="form-group col-md-4">
+              <label for="apellidos" >Apellidos</label>
+            <i class="icofont-ui-user iconos"></i>
+            <input type="text" class="form-control inputTeceros" id="apellidos" v-model="apellidos" >
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="fechaNacimiento">Fecha Nacimiento</label>
+            <input type="date" class="form-control" value="2020-01-01" id="fechaNacimiento" v-model="fechaNacimiento" >
+          </div>
+          <div class="form-group col-md-6">
+            <label for="genero" >Genero</label>
+            <select class="custom-select" id="genero" v-model="genero" >
+              <option value="0">Seleccione una opción</option>
+              <option value="1">Masculino</option>
+              <option value="2">Femenino</option>
+                <option></option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+              <label for="telefono">Teléfono</label>
+              <i class="icofont-telephone iconos"></i>
+              <input type="text" class="form-control inputTeceros" id="telefono" v-model="telefono" >
+          </div>
+          <div class="form-group col-md-4">
+              <label for="celular">Celular</label>
+              <i class="fas fa-mobile-alt iconos"></i>
+              <input type="text" class="form-control inputTeceros" id="celular" v-model="celular" >
+          </div>
+          <div class="form-group col-md-4">
+              <label for="email">Correo</label>
+              <i class="far fa-envelope iconos"></i>
+              <input type="email" class="form-control inputTeceros" id="email" v-model="email" >
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="direccion">Dirección</label>
+            <i class="fas fa-map-marker-alt iconos"></i>
+            <input type="text" class="form-control inputTeceros" id="direccion" v-model="direccion">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="idMunicipio">Ciudad</label>
+            <i class="fas fa-city iconos"></i>
+            <input type="text" class="form-control inputTeceros" id="idMunicipio" v-model="idMunicipio" >
+          </div>
+        </div>
       </div>
       <hr>
       <div class="segundoContenedor">
-      <div class="row">
+        <div class="row">
           <div class="form-group col-md-6">
             <label for="razonSocial">Razon social</label>
             <i class="fas fa-city iconos"></i>
@@ -101,30 +101,30 @@
           </div>
           <div class="form-group col-md-6">
             <label for="nombreComercial">Nombre comercial</label>
-           <i class="fas fa-city iconos"></i>
+            <i class="fas fa-city iconos"></i>
             <input type="text" class="form-control inputTeceros" id="nombreComercial" v-model="nombreComercial" >
           </div>
         </div>
           
-    <!-- <div class="row">
-      <div class="form-group col-md-6">
+        <div class="row">
+      <!-- <div class="form-group col-md-6">
         <label>Tipo Tercero</label>
         <select class="custom-select" v-model="" required>
           <option></option>
         </select>
       </div> -->
-      <div class="form-group col-md-6">
-        <label for="estado" >Estado</label>
-        <select class="custom-select" id="estado" v-model="estado" required>
-          <option value="0">Seleccione una opción</option>
+          <div class="form-group col-md-4">
+            <label for="estado" >Estado</label>
+            <select class="custom-select" id="estado" v-model="estado" required>
           <option value="1">Activo</option>
-          <option value="2">Inactivo</option>
-        </select>
+          <option value="0">Inactivo</option>
+            </select>
+          </div>
+        </div>
       </div>
-    </div>
-     <br>
+    
      <div class="btn-width ">
-     <button class="btn  botonCancelar botones" >Cancelar</button>
+     <button class="btn  botonCancelar botones" v-on:click="cancelarRegistro()">Cancelar</button>
      <button class="btn botonAgregar botones"  :disabled="buttons.create.state">{{ buttons.create.name }}</button>
      </div>
   </form>  
@@ -136,6 +136,7 @@
 import axios from 'axios';
 import router from '../../routes';
 export default {
+
   data(){
     return {
       numeroIdentificacion:'',
@@ -149,12 +150,13 @@ export default {
       telefono:'',
       celular:'',
       email:'',
+      foto:'ninguna',
       direccion:'',
       idMunicipio:'',
-      foto:'',
       estado:0,
       idUsuarioCrea:1,
       idUsuarioModifica:1,
+      imagenMiniatura:'',
       buttons: {
         create: {
           name: 'Agregar',
@@ -165,6 +167,7 @@ export default {
     }
   },
   methods:{
+    //agregar tercero
     setTercero: function(){
        this.buttons.create.name = 'Agregando ...';
        this.buttons.create.state = true;
@@ -182,7 +185,7 @@ export default {
             'email': this.email,
             'direccion': this.direccion,
             'idMunicipio': this.idMunicipio,
-            'foto': this.foto,
+            'foto':  this.image_dish,
             'estado': this.estado,
             'idUsuarioCrea': this.idUsuarioCrea,
             'idUsuarioModifica': this.idUsuarioModifica,
@@ -201,7 +204,7 @@ export default {
             this.email='',
             this.direccion='',
             this.idMunicipio='',
-            this.foto='',
+            this.foto='ninguna',
             this.estado='',
             this.idUsuarioCrea='',
             this.idUsuarioModifica='',
@@ -212,8 +215,34 @@ export default {
                 swal("Lo sentimos!", "Parece que algo salio mal!", "error");
                 console.log(error.response);
             });
+    },
+
+    //cancelar registro
+    cancelarRegistro:function (){
+      this.numeroIdentificacion='',
+      this.tipoIdentificacion='',
+      this.nombres='',
+      this.apellidos='',
+      this.razonSocial='',
+      this.nombreComercial='',
+      this.genero=0,
+      this.fechaNacimiento='',
+      this.telefono='',
+      this.celular='',
+      this.email='',
+      this.direccion='',
+      this.idMunicipio='',
+      this.foto='',
+      this.estado=1,
+      this.idUsuarioCrea=1,
+      this.idUsuarioModifica=1
     }
-  }
+  },
+  computed:{
+    foto(){
+      return this.imagenMiniatura;
+    }
+  },
 }
 </script>
 

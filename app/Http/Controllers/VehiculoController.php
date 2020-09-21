@@ -1,10 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Vehiculo;
 use App\Http\Controllers\Controller;
->>>>>>> 3de7c37198069e048e532259cc2800bb8f4a0cc5
 use Illuminate\Http\Request;
 
 class VehiculoController extends Controller
@@ -32,7 +30,6 @@ class VehiculoController extends Controller
     {
         //
     }
-
 
     /**
      * Store a newly created resource in storage.

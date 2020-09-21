@@ -71,11 +71,11 @@
           <li><a href="/inicio"><i class="bx bx-home"></i> Inicio</a></li>
           <li><a href="#"><i class="icofont-address-book"></i><span>Parámetros</span> <i class="icofont-simple-down iconoSubMenu"></i></a>
             <ul>
-              <li><a href="/registrarTercero"><i class="icofont-users-alt-5"></i><span>Registrar terceros</span></a></li>
-              <li><a href="/registrarUsuarios"><i class="icofont-users-alt-5"></i><span>Registrar Usuarios</span></a></li>
-              <li><a href="/registrarVehiculo"><i class="icofont-bus"></i><span>Registrar vehículos</span></a></li>
-              <li><a href="/registrarRutas"><i class="icofont-location-pin"></i><span>Registrar rutas</span></a></li>
-              <li><a href="/crearHorario"><i class="icofont-calendar"></i><span>Registrar horarios</span></a></li>
+              <li><a href="/registrarTercero"><i class="icofont-users-alt-4"></i><span>Registrar tercero</span></a></li>
+              <li><a href="/registrarUsuarios"><i class="icofont-user-alt-4"></i><span>Registrar Usuario</span></a></li>
+              <li><a href="/registrarVehiculo"><i class="icofont-bus"></i><span>Registrar vehículo</span></a></li>
+              <li><a href="/registrarRutas"><i class="icofont-location-pin"></i><span>Registrar ruta</span></a></li>
+              <li><a href="/crearHorario"><i class="icofont-calendar"></i><span>Registrar horario</span></a></li>
 
             </ul>
           </li>
