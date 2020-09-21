@@ -41,17 +41,11 @@
                                 role="alert">
                             {{ show_alert.edit.messaje }}
                         </div>
-
-                        <div class="row  m-t-25">
-                            <div class="col">
-                                <div class="form-group">
-
-                                    <button class="btn botonAgregar" :disabled="buttons.edit.state">
-                                        {{ buttons.edit.name }}
-                                        <i v-if="buttons.edit.state" class="fa fa-spinner fa-spin"></i>
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-warning botonAsctualizar" :disabled="buttons.edit.state">
+                                {{ buttons.edit.name }}
+                                <i v-if="buttons.edit.state" class="fa fa-spinner fa-spin"></i>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -59,8 +53,8 @@
         </div>
     </div>
 
-   <div>
     <!-- Crear Ruta -->
+   <div>
         <div class="modal-header encabezadoFormulario" >
             <h5 class="text-center text-white" >Registrar Rutas</h5>
         </div>
@@ -110,26 +104,13 @@
                     <option value="0">Inactivo</option>
                 </select>
                 </div>
-
-                <div class="form-group col-md-6">
-                <label for="idUsuarioModifica">idUsuarioModifica</label>
-                <i class="fas fa-map-marked-alt iconosRutas"></i>
-                <input type="text" id="idUsuarioModifica" class="form-control inputRutas" v-model="idUsuarioModifica" required>
-                </div>
-
             </div>
-            <div class="row">
-                <div class="form-group col-md-4">
-                <label for="idUsuarioCrea">idUsuarioCrea</label>
-                <i class="fas fa-map-marked-alt iconosRutas"></i>
-                <input type="text" id="idUsuarioCrea" class="form-control inputRutas" v-model="idUsuarioCrea" required>
-                </div>
-            </div>
+            
             <div class="btn-width">
-                <button class="btn  botonCancelar botones" >Cancelar</button>
+                <button class="btn  botonCancelar botones" v-on:click="cancelarRegistro()" >Cancelar</button>
                 <button class="btn botonAgregar botones"  :disabled="buttons.create.state">{{ buttons.create.name }}</button>
             </div>
-        </form>
+       </form>
         </div>
     <!-- End crear ruta -->
         <br>
@@ -161,7 +142,7 @@
         </div>
     </div>
 
-    </div>
+</div>
 
 
 </template>
@@ -180,8 +161,8 @@ export default {
                 idBarrioInicia : 0,
                 idBarrioTermina : 0,
                 estado :1,
-                idUsuarioModifica: '',
-                idUsuarioCrea:'',
+                idUsuarioModifica: 1,
+                idUsuarioCrea:1,
                 barrioTermina:[],
                 show_barrios:true,
                 barrio:[],
@@ -287,7 +268,7 @@ export default {
             }
             else {
                 this.buttons.create.name = 'Agregando ...';
-                this.buttons.create.state = true;
+                this.buttons.create.state = false;
                 let formData = {
                     'codigo': this.codigo,
                     'descripcion': this.descripcion,
@@ -303,7 +284,7 @@ export default {
                 this.descripcion = '';
                 this.idBarrioInicia = 0;
                 this.idBarrioTermina = 0;
-                this.estado = -1;
+                this.estado = 1;
                 this.idUsuarioModifica = '';
                 this.idUsuarioCrea = '';
                 swal("OK!", "Ruta creada exitosamente!", "success");
@@ -319,6 +300,16 @@ export default {
             };
 
        },
+        //cancelar registro
+        cancelarRegistro:function (){
+                this.codigo = '';
+                this.descripcion = '';
+                this.idBarrioInicia = 0;
+                this.idBarrioTermina = 0;
+                this.estado = 1;
+                this.idUsuarioModifica = '';
+                this.idUsuarioCrea = '';
+        },
         // Lista Barrios
         getListBarrios: function () {
             axios.get('/barrio-resource').then((response) => {
@@ -374,7 +365,7 @@ export default {
                 this.data_edit.codigo = data['codigo'];
                 this.data_edit.descripcion = data['descripcion'];
                 this.data_edit.estado = data['estado'];
- 
+               
             }).catch((error) => {
                 console.log(error);
             });
@@ -416,7 +407,7 @@ export default {
                 this.buttons.edit.name = 'Actualizar';
                 this.buttons.edit.state = false;
                 swal("OK!", "Ruta actualizado exitosamente!", "success");
-                $("#ModalEditRuta").modal('hide');
+                $("#exampleModal").modal('hide');
                 this.getRutaTermina();
 
             }).catch((error) => {
@@ -438,7 +429,7 @@ export default {
 
         },
        // cambiar estado 
-            stateRuta: function (idRuta, estado) {
+         stateRuta: function (idRuta, estado) {
     
                 let formData = {
                 idRuta: idRuta,

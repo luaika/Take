@@ -19,7 +19,6 @@ class VehiculoController extends Controller
             ['estado', 1],
         ])->orderBy('placa')->get();
         return response()->json($query);
-
     }
 
     /**
@@ -40,7 +39,6 @@ class VehiculoController extends Controller
      */
     public function store(Request $request)
     {
-
         $vehiculo = Vehiculo::create([
             'placa'=>$request->placa,
             'numeroInterno'=>$request->numeroInterno,
@@ -64,7 +62,6 @@ class VehiculoController extends Controller
             'idUsuarioModifica'=>$request->idUsuarioModifica,
         ]);
         return response()->json($vehiculo);
-
     }
 
     /**
