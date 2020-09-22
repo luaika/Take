@@ -6882,9 +6882,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                            " +
+                              "\r\n                            " +
                                 _vm._s(_vm.show_alert.edit.messaje) +
-                                "\n                        "
+                                "\r\n                        "
                             )
                           ]
                         )
@@ -6899,9 +6899,9 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                                " +
+                            "\r\n                                " +
                               _vm._s(_vm.buttons.edit.name) +
-                              "\n                                "
+                              "\r\n                                "
                           ),
                           _vm.buttons.edit.state
                             ? _c("i", { staticClass: "fa fa-spinner fa-spin" })
@@ -6943,9 +6943,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                " +
+                        "\r\n                " +
                           _vm._s(_vm.show_alert.create.messaje) +
-                          "\n            "
+                          "\r\n            "
                       )
                     ]
                   )
