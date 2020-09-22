@@ -57,6 +57,8 @@ Route::post('/setHorario', 'HorarioController@store');
 
 //Tercero
 Route::resource('/tercero-resource', 'TerceroController');
+Route::post('/stateTerceros','TerceroController@stateTerceros');
+Route::delete('/tercero-delete/{idTercero}', 'TerceroController@destroy');
 
 //Usuario
 Route::post('/setUsuario', 'UsuarioController@store');

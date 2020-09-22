@@ -326,7 +326,7 @@ export default {
                     this.barrioTermina = response.data;
                     this.getRutas();
                 } else {
-                    this.message = 'No hay registro de cupones!!!';
+                    this.message = 'No hay registro de rutas!!!';
                     
                 }
             }).catch((error) => {
@@ -439,13 +439,13 @@ export default {
                  if(estado == 1 ){
                      var nomState = "Activo";
                  }else{
-                     var nomState = "Inactivo";
+                     var nomState = "Inactiva";
                  }
                 swal({
                     title: "Estado de ruta",
                     text: "Esta ruta quedará " + nomState + " en tus registros!",
                     icon: "success",
-                    dangerMode: true,
+                    dangerMode: false,
                 }).then((willDelete) => {
                     if (willDelete) {
                         axios.post('/stateRuta', formData).then((response) => {

@@ -15,10 +15,16 @@ class TerceroController extends Controller
     public function index()
     {
 
-        $query = Tercero::where([
+        $lista = \DB::table('tercero')
+        ->join('municipio', 'municipio.idMunicipio', '=','tercero.idMunicipio')
+        ->select('tercero.*' , 'municipio.descripcion as municipio')
+        ->get();
+        return response()->json($lista);
+
+       /*  $query = Tercero::where([
             ['estado', 1],
         ])->orderBy('nombres')->get();
-        return response()->json($query);
+        return response()->json($query); */
     }
 
     /**
@@ -80,9 +86,10 @@ class TerceroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($idTercero)
     {
-        //
+        $query= Tercero::find($idTercero);
+        return response()->json($query);
     }
 
     /**
@@ -103,8 +110,17 @@ class TerceroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($idTercero)
     {
-        //
+        Tercero::destroy($idTercero);
+    }
+
+
+    //cambiar estado
+    public function stateTerceros(Request $request){
+        $tercero = Tercero::find($request->idTercero);
+        $tercero->estado = $request->estado;
+        $tercero->save();
+        return response()->json($tercero);
     }
 }

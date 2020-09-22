@@ -1,5 +1,113 @@
 <template>
 <div class="container contaRuta">
+  <!-- Modal ver -->
+    <div class="modal encabezadoModals fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header  text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Tercero</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <div >
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label for="numeroIdentificacion" >Identificación</label>
+                        <i class="far fa-address-card iconos"></i>
+                        <input type="text" class="form-control inputTeceros" id="numeroIdentificacion" v-model="data_edit.numeroIdentificacion" required>
+                      </div>
+      
+                    <div class="form-group col-md-6">
+                      <label >Tipo de Identificación:</label>
+                      <input type="text" class="form-control inputRutas"  v-if="data_edit.tipoIdentificacion===1" placeholder="CC">
+                      <input type="text" class="form-control inputRutas"  v-if="data_edit.tipoIdentificacion===2" placeholder="TI">
+                      <input type="text" class="form-control inputRutas"  v-if="data_edit.tipoIdentificacion===3" placeholder="RC">
+                    </div> 
+                  </div>
+              
+                    
+              <div class="row" >                
+                <div class="form-group col-md-6">
+                    <label for="nombres">Nombres</label>
+                    <i class="icofont-ui-user iconos"></i>
+                    <input type="text" class="form-control inputTeceros" id="nombres" v-model="data_edit.nombres" >
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="apellidos" >Apellidos</label>
+                  <i class="icofont-ui-user iconos"></i>
+                  <input type="text" class="form-control inputTeceros" id="apellidos" v-model="data_edit.apellidos" >
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="fechaNacimiento">Fecha Nacimiento</label>
+                  <input type="date" class="form-control" value="2020-01-01" id="fechaNacimiento" v-model="data_edit.fechaNacimiento" >
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="genero" >Genero</label>
+                  <input type="text" class="form-control inputRutas"  v-if="data_edit.genero===1" placeholder="Masculino">
+                  <input type="text" class="form-control inputRutas"  v-if="data_edit.genero===2" placeholder="Femenino">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="telefono">Teléfono</label>
+                    <i class="icofont-telephone iconos"></i>
+                    <input type="text" class="form-control inputTeceros" id="telefono" v-model="data_edit.telefono" >
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="celular">Celular</label>
+                    <i class="fas fa-mobile-alt iconos"></i>
+                    <input type="text" class="form-control inputTeceros" id="celular" v-model="data_edit.celular" >
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="direccion">Dirección</label>
+                  <i class="fas fa-map-marker-alt iconos"></i>
+                  <input type="text" class="form-control inputTeceros" id="direccion" v-model="data_edit.direccion">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="idMunicipio">Ciudad</label>
+                  <i class="fas fa-city iconos"></i>
+                  <input type="text" class="form-control inputTeceros" id="idMunicipio" v-model="data_edit.idMunicipio" >
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="email">Correo</label>
+                    <i class="far fa-envelope iconos"></i>
+                    <input type="email" class="form-control inputTeceros" id="email" v-model="data_edit.email" >
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="razonSocial">Razon social</label>
+                  <i class="fas fa-city iconos"></i>
+                  <input type="text" class="form-control inputTeceros"  id="razonSocial" v-model="data_edit.razonSocial" >
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="nombreComercial">Nombre comercial</label>
+                  <i class="fas fa-city iconos"></i>
+                  <input type="text" class="form-control inputTeceros" id="nombreComercial" v-model="data_edit.nombreComercial" >
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  
+  
   <div class="modal-header encabezadoFormulario" >
       <h5 class="text-center text-white" id="exampleModalLabel">Registrar Tercero</h5>
   </div>
@@ -28,7 +136,7 @@
           <!--examinar-->    
           <div class="form-group col-md-3 " style="margin-top:2rem;">
             <div class="custom-file ">
-              <input type="file" class="custom-file-input" id="validatedInputGroupCustomFile"  required>
+              <input type="file" class="custom-file-input" id="validatedInputGroupCustomFile"  >
               <label class="custom-file-label" for="validatedInputGroupCustomFile"></label>
             </div>       
           </div>
@@ -130,12 +238,45 @@
      </div>
   </form>  
     </div>
+    <br>
+     <div class="container-fluid">
+            <vue-bootstrap4-table :rows="terceros" :columns="columns"  :config = "config" thead-class="green-bg bg-dark text-white">
+                
+                <templete slot="edit" slot-scope="props">
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal"  v-on:click="verTercero(props.row.idTercero)" v-bind:idTercero="props.row.idTercero">
+                        <i class="icofont-edit"></i>
+                    </button>
+                </templete>
+                <templete slot="ver" slot-scope="props">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"  v-on:click="verTercero(props.row.idTercero)" v-bind:idTercero="props.row.idTercero">
+                        <i class="icofont-eye-alt"></i>
+                    </button>
+                </templete>
+                <templete slot="delete" slot-scope="props">
+                    <button type="button" class="btn btn-danger"   v-on:click="deleteTercero(props.row.idTercero)" v-bind:idTercero="props.row.idTercero">
+                       <i class="icofont-ui-delete"></i>
+                    </button>
+                </templete>
+
+                <templete slot="estado" slot-scope="props">
+                    
+                    <div v-if="props.row.estado === 1">
+                        <toggle-button :value="true" :width="72" @change="stateTercero(props.row.idTercero, 0)" :labels="{checked: 'Activo', unchecked: 'Inactive'}"/>
+                    </div>
+                    <div v-else-if="props.row.estado === 0 ">
+                        <toggle-button :value="false" :width="72" @change="stateTercero(props.row.idTercero, 1)" :labels="{checked: 'Activo', unchecked: 'Inactive'}"/>
+                    </div>
+                </templete>
+                
+            </vue-bootstrap4-table>
+        </div>
 </div>
   
 </template>
 <script>
 import axios from 'axios';
 import router from '../../routes';
+import VueBootstrap4Table from 'vue-bootstrap4-table';
 export default {
 
   data(){
@@ -154,19 +295,102 @@ export default {
       foto:'ninguna',
       direccion:'',
       idMunicipio:'',
-      estado:0,
+      estado:1,
       idUsuarioCrea:1,
       idUsuarioModifica:1,
       imagenMiniatura:'',
+      terceros:[],
       buttons: {
         create: {
           name: 'Agregar',
             state: false,
         },
       },
-
+      columns: [
+                {
+                    label: "Nombre",
+                    name: "nombres",
+                    sort: true,
+                },
+                {
+                    label: "Identificaciòn",
+                    name: "numeroIdentificacion",
+                    sort: true,
+                },
+                {
+                    label: "Celular",
+                    name: "celular",
+                    sort: true,
+                },
+                {
+                    label: "Direcciòn",
+                    name: "direccion",
+                    sort: true,
+                },
+                {
+                    label: "Ver",
+                    name: "ver",
+                    sort: true,
+                },
+                {
+                    label: "Editar",
+                    name: "edit",
+                    sort: false,
+                },
+                {
+                    label: "Eliminar",
+                    name: "delete",
+                    sort: false,
+                },
+                {
+                    label: "Estado",
+                    name: "estado",
+                    sort: false,
+                },
+            ],
+            config: {
+                 pagination: true, // default true
+                    pagination_info: true, // default true
+                    num_of_visibile_pagination_buttons: 7, // default 5
+                    per_page: 6, // default 10
+                    per_page_options:  [6,  10,  20,  30],
+                //highlight_row_hover_color:"blue", over del listado
+                filas_seleccionables: true,
+                card_title: "VEHÍCULOS",
+                show_refresh_button: false,
+                show_reset_button: false,
+                global_search: {
+                        placeholder: "Buscar ",
+                },
+            },
+            data_edit:{
+                show: true,
+                contenedor: false ,
+                numeroIdentificacion:'',
+                tipoIdentificacion:'',
+                nombres:'',
+                apellidos:'',
+                razonSocial:'',
+                nombreComercial:'',
+                genero:'',
+                fechaNacimiento:'',
+                telefono:'',
+                celular:'',
+                email:'',
+                foto:'',
+                direccion:'',
+                idMunicipio:'',
+                estado:'',
+            },
     }
   },
+  components:{
+        VueBootstrap4Table
+    },
+  
+   mounted(){
+      this.getTercero();
+    },
   methods:{
     //agregar tercero
     setTercero: function(){
@@ -186,12 +410,14 @@ export default {
             'email': this.email,
             'direccion': this.direccion,
             'idMunicipio': this.idMunicipio,
-            'foto':  this.image_dish,
+            'foto':  this.foto,
             'estado': this.estado,
             'idUsuarioCrea': this.idUsuarioCrea,
             'idUsuarioModifica': this.idUsuarioModifica,
+            
           }
           axios.post('/setTercero', formData).then((response) =>{
+
             this.numeroIdentificacion='',
             this.tipoIdentificacion='',
             this.nombres='',
@@ -206,9 +432,10 @@ export default {
             this.direccion='',
             this.idMunicipio='',
             this.foto='ninguna',
-            this.estado='',
-            this.idUsuarioCrea='',
-            this.idUsuarioModifica='',
+            this.estado=1,
+            this.idUsuarioCrea=1,
+            this.idUsuarioModifica=1,
+             this.getTercero();
             swal("OK!", "Tercero creado exitosamente!", "success"); 
             this.buttons.create.name = 'Agregar' ;
             this.buttons.create.state = false ;           
@@ -218,25 +445,122 @@ export default {
             });
     },
 
+    //listar terceros
+    getTercero:function(){
+     axios.get('/tercero-resource').then((response) => {
+                if (response.data.length > 0) {
+                    this.terceros = response.data;
+                } else {
+                    this.message = 'No hay registro de terceros!!!';
+                    
+                }
+            }).catch((error) => {
+                console.log(error.response);
+            });
+    },
+    
+    //ver tercero
+         verTercero: function (idTercero) {
+            this.data_edit.idTercero = idTercero ;
+            axios.get('/tercero-resource/'+idTercero+'/edit').then((response) => {
+                this.data_edit.contenedor= true;
+                this.data_edit.show= false;
+                let data = response.data;
+                this.data_edit.numeroIdentificacion = data['numeroIdentificacion'];
+                this.data_edit.tipoIdentificacion = data['tipoIdentificacion'];
+                this.data_edit.nombres = data['nombres'];
+                this.data_edit.apellidos = data['apellidos'];
+                this.data_edit.razonSocial = data['razonSocial'];
+                this.data_edit.nombreComercial = data['nombreComercial'];
+                this.data_edit.genero = data['genero'];
+                this.data_edit.fechaNacimiento = data['fechaNacimiento'];
+                this.data_edit.telefono = data['telefono'];
+                this.data_edit.celular = data['celular'];
+                this.data_edit.email = data['email'];
+                this.data_edit.foto = data['foto'];
+                this.data_edit.direccion = data['direccion'];
+                this.data_edit.idMunicipio = data['idMunicipio'];
+                this.data_edit.estado = data['estado'];               
+            }).catch((error) => {
+                console.log(error);
+            });
+        },
+
+    //elimiar tercero
+    deleteTercero: function(idTercero){
+     swal({
+         title: "Estas seguro ?",
+         text: "Este tercero quedará eliminado de tus registros!",
+         icon: "warning",
+         buttons: ["Cancelar","Confirmar"],
+         dangerMode: true,
+      }).then((willDelete) => {
+         if (willDelete) {
+             this.data_edit.idTercero = idTercero;
+             axios.delete('/tercero-delete/' + this.data_edit.idTercero).then((response) => {
+                 swal("OK!", "El tercero se elimino exitosamente", "success");
+                 this.getTercero();
+             }).catch((error)=>{
+                 swal("Lo sentimos", "Parece que algo salio mal!", "error");
+             });
+         }
+     });
+    },
+    
+    // cambiar estado 
+    stateTercero: function (idTercero, estado) {
+    
+                let formData = {
+                idTercero: idTercero,
+                estado: estado
+                 };
+
+                 if(estado == 1 ){
+                     var nomState = "Activo";
+                 }else{
+                     var nomState = "Inactivo";
+                 }
+                swal({
+                    title: "Estado de tercero",
+                    text: "Este tercero quedará " + nomState + " en tus registros!",
+                    icon: "success",
+                    dangerMode: false,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        axios.post('/stateTerceros', formData).then((response) => {
+                            //Success
+                            swal("OK!", "Estado actualizado exitosamente", "success");
+
+                        }).catch((error) => {
+                            swal("Oops!", "Parece que algo salio mal!", "error");
+                            console.log('la cagamos');
+                            console.log(error.response);
+                        });
+                    }
+                });
+
+        },
+
+
     //cancelar registro
     cancelarRegistro:function (){
       this.numeroIdentificacion='',
-      this.tipoIdentificacion='',
-      this.nombres='',
-      this.apellidos='',
-      this.razonSocial='',
-      this.nombreComercial='',
-      this.genero=0,
-      this.fechaNacimiento='',
-      this.telefono='',
-      this.celular='',
-      this.email='',
-      this.direccion='',
-      this.idMunicipio='',
-      this.foto='',
-      this.estado=1,
-      this.idUsuarioCrea=1,
-      this.idUsuarioModifica=1
+            this.tipoIdentificacion='',
+            this.nombres='',
+            this.apellidos='',
+            this.razonSocial='',
+            this.nombreComercial='',
+            this.genero='',
+            this.fechaNacimiento='',
+            this.telefono='',
+            this.celular='',
+            this.email='',
+            this.direccion='',
+            this.idMunicipio='',
+            this.foto='ninguna',
+            this.estado=1,
+            this.idUsuarioCrea=1,
+            this.idUsuarioModifica=1
     }
   },
   computed:{
