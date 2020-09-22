@@ -15,6 +15,7 @@ class TerceroController extends Controller
     public function index()
     {
 
+
         $lista = \DB::table('tercero')
         ->join('municipio', 'municipio.idMunicipio', '=','tercero.idMunicipio')
         ->select('tercero.*' , 'municipio.descripcion as municipio')
@@ -22,6 +23,9 @@ class TerceroController extends Controller
         return response()->json($lista);
 
        /*  $query = Tercero::where([
+
+        $query = Tercero::where([
+        pb/Tercero
             ['estado', 1],
         ])->orderBy('nombres')->get();
         return response()->json($query); */
@@ -99,9 +103,30 @@ class TerceroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idTercero)
     {
-        //
+        $tercero=Tercero::find($idTercero);
+
+        $tercero->update([
+            'numeroIdentificacion' => $request->numeroIdentificacion,
+            'tipoIdentificacion' => $request->tipoIdentificacion,
+            'nombres' => $request->nombres,
+            'apellidos' => $request->apellidos,
+            'razonSocial' => $request->razonSocial,
+            'nombreComercial' => $request->nombreComercial,
+            'genero' => $request->genero,
+            'fechaNacimiento' => $request->fechaNacimiento,
+            'telefono' => $request->telefono,
+            'celular' => $request->celular,
+            'email' => $request->email,
+            'direccion' => $request->direccion,
+            'idMunicipio' => $request->idMunicipio,
+            'foto' => $request->foto,
+            'estado' => $request->estado,
+            'idUsuarioCrea' => $request->idUsuarioCrea,
+            'idUsuarioModifica' => $request->idUsuarioModifica,
+        ]);
+        return response()->json($tercero);
     }
 
     /**

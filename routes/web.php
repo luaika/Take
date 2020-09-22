@@ -29,10 +29,6 @@ Route::get('my-notification/{type}', 'HomeController@myNotification');
 
 Route::view('/crearHorario', 'Home');
 
-//Terceros
-Route::view('/registrarTercero','Home');
-Route::post('/setTercero', 'TerceroController@store');
-
 //Vehículoa
 Route::view('/registrarVehiculo','Home');
 Route::post('/setVehiculo','VehiculoController@store');
@@ -54,14 +50,26 @@ Route::resource('/vehiculo-resource', 'VehiculoController');
 
 //Horario
 Route::post('/setHorario', 'HorarioController@store');
+Route::put('/updateHorario/{idHorario}', 'HorarioController@update');
+Route::delete('/horario-delete/{idHorario}', 'HorarioController@destroy');
+
+Route::resource('/horario-resource', 'HorarioController');
 
 //Tercero
 Route::resource('/tercero-resource', 'TerceroController');
 Route::post('/stateTerceros','TerceroController@stateTerceros');
 Route::delete('/tercero-delete/{idTercero}', 'TerceroController@destroy');
+Route::put('/updateTercero/{idTercero}', 'TerceroController@update');
+Route::view('/registrarTercero','Home');
+Route::post('/setTercero', 'TerceroController@store');
 
 //Usuario
 Route::post('/setUsuario', 'UsuarioController@store');
+Route::resource('/usuario-resource', 'UsuarioController');
+Route::put('/updateUsuario/{idUsuario}', 'UsuarioController@update');
+Route::delete('/usuario-delete/{idUsuario}', 'UsuarioController@destroy');
+Route::post('/stateUsuario','UsuarioController@stateUsuario');
+
 
 Route::view('/consultarRutasVehiculos','Home');
 Route::view('/despacho','Home');

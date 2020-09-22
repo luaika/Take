@@ -114,9 +114,10 @@
         </div>
     <!-- End crear ruta -->
         <br>
+
         <div class="container-fluid">
             <vue-bootstrap4-table :rows="rutas" :columns="columns"  :config = "config" thead-class="green-bg bg-dark text-white">
-                
+
                 <templete slot="edit" slot-scope="props">
                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal"  v-on:click="editRuta(props.row.idRuta)" v-bind:idRuta="props.row.idRuta">
                         <i class="icofont-edit"></i>
@@ -129,7 +130,7 @@
                 </templete>
 
                 <templete slot="estado" slot-scope="props">
-                    
+
                     <div v-if="props.row.estado === 1">
                         <toggle-button :value="true" :width="72" @change="stateRuta(props.row.idRuta, 0)" :labels="{checked: 'Activo', unchecked: 'Inactive'}"/>
                     </div>
@@ -137,17 +138,16 @@
                         <toggle-button :value="false" :width="72" @change="stateRuta(props.row.idRuta, 1)" :labels="{checked: 'Activo', unchecked: 'Inactive'}"/>
                     </div>
                 </templete>
-                
             </vue-bootstrap4-table>
         </div>
     </div>
 
 </div>
 
-
 </template>
+
 <script>
-import Vue from 'vue' 
+import Vue from 'vue'
 import axios from 'axios';
 import router from '../../routes';
 import VueBootstrap4Table from 'vue-bootstrap4-table';
@@ -167,7 +167,7 @@ export default {
                 show_barrios:true,
                 barrio:[],
                 rutas:[],
-                show_alert: {
+                 show_alert: {
                     create: {
                         state: false ,
                         messaje: ''
@@ -182,6 +182,7 @@ export default {
                         name: 'Agregar',
                         state: false,
                     },
+
                     edit: {
                     name: 'Actualizar',
                     state: false
@@ -228,35 +229,35 @@ export default {
                  pagination: true, // default true
                     pagination_info: true, // default true
                     num_of_visibile_pagination_buttons: 7, // default 5
-                    per_page: 6, // default 10
-                    per_page_options:  [6,  10,  20,  30],
-                //highlight_row_hover_color:"blue", over del listado
+                    per_page: 5, // default 10
+                    per_page_options:  [5,  10,  20,  30],
                 filas_seleccionables: true,
-                card_title: "RUTAS",
+                card_title: "USUARIOS",
                 show_refresh_button: false,
                 show_reset_button: false,
                 global_search: {
-                        placeholder: "Buscar ",
+                placeholder: "Buscar ",
                 },
             },
+
             data_edit:{
                 show: true,
                 contenedor: false ,
-                codigo: '',
-                descripcion: '',
                 estado: '',
+                codigo: '',
+                clave: '',
             },
             }
-
         },
-    components:{
+      components:{
         VueBootstrap4Table
+
     },
     mounted(){
             this.getListBarrios();
             this.getRutaTermina();
             this.getRutas();
-            
+
     },
     methods:{
     //insertar ruta
@@ -278,8 +279,9 @@ export default {
                     'idUsuarioModifica': this.idUsuarioModifica,
                     'idUsuarioCrea': this.idUsuarioModifica
                 }
+
             axios.post('/setRuta', formData).then((response) =>{
-                
+
                 this.codigo = '';
                 this.descripcion = '';
                 this.idBarrioInicia = 0;
@@ -287,10 +289,21 @@ export default {
                 this.estado = 1;
                 this.idUsuarioModifica = '';
                 this.idUsuarioCrea = '';
+
+                    swal("OK!", "Ruta creada exitosamente!", "success");
+                    this.buttons.create.name = 'Agregar' ;
+
+                    this.buttons.create.state = false ;
+
+                    this.getRutas();
+                    this.getBarrioTermina();
+                    $("#Ruta").modal('hide');
+
+
                 swal("OK!", "Ruta creada exitosamente!", "success");
                 this.buttons.create.name = 'Agregar' ;
                 this.buttons.create.state = false ;
-                     this.getRutaTermina();                    
+                     this.getRutaTermina();
                     $("#Ruta").modal('hide');
 
                 }).catch((error) => {
@@ -319,6 +332,7 @@ export default {
                     console.log(error.response);
             });
         },
+
         //listar destino
         getRutaTermina: function(){
              axios.get('/rutas-resource?Q=2').then((response) => {
@@ -333,7 +347,8 @@ export default {
                 console.log(error.response);
             });
         },
-        //Listar Rutas    
+
+        //Listar Rutas
         getRutas: function () {
             axios.get('/rutas-resource?Q=0').then( (response)  => {
                 if (response.data.length > 0) {
@@ -344,10 +359,10 @@ export default {
                     let rutasAndDestino = [];
                     for (var i=0; i<des.length;i++){
                         rutasAndDestino[i] = Object.assign(des[i],this.rut[i]);
-                    } 
-                    
+                    }
+
                     //this.rutas = Object.assign(des[0],this.rut[0]);
-                    this.rutas = rutasAndDestino;                             
+                    this.rutas = rutasAndDestino;
                 } else {
                     this.message = 'No hay registro de tutas!!!';
                 }
@@ -365,7 +380,6 @@ export default {
                 this.data_edit.codigo = data['codigo'];
                 this.data_edit.descripcion = data['descripcion'];
                 this.data_edit.estado = data['estado'];
-               
             }).catch((error) => {
                 console.log(error);
             });
@@ -428,9 +442,10 @@ export default {
             });
 
         },
-       // cambiar estado 
+
+       // cambiar estado
          stateRuta: function (idRuta, estado) {
-    
+
                 let formData = {
                 idRuta: idRuta,
                 estado: estado
@@ -459,10 +474,9 @@ export default {
                         });
                     }
                 });
-
         },
 
-  
+
     }
 }
 </script>

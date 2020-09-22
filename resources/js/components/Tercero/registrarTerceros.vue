@@ -1,7 +1,7 @@
 <template>
 <div class="container contaRuta">
   <!-- Modal ver -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header ">
@@ -104,7 +104,127 @@
       </div>
     </div>
   
-  
+  <!-- Modal editar -->
+   <div class="modal fade " id="exampleModalEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <h5 class="modal-title" id="exampleModalLabel">Tercero</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <form  method="POST" v-on:submit.prevent="putTercero">
+                   <div>
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label for="numeroIdentificacion" >Identificación</label>
+                        <i class="far fa-address-card iconos"></i>
+                        <input type="text" class="form-control inputTeceros" id="numeroIdentificacion" v-model="data_edit.numeroIdentificacion" required>
+                      </div>
+      
+                    <div class="form-group col-md-6">
+                      <label for="tipoIdentificacion">Tipo Documento</label>
+                      <select class="custom-select" id="tipoIdentificacion" v-model="data_edit.tipoIdentificacion" required>
+                        <option value="1">CC</option>
+                        <option value="2">TI</option>
+                        <option value="3">RC</option>
+                      </select>
+                    </div> 
+                  </div>
+              
+                    
+              <div class="row" >                
+                <div class="form-group col-md-6">
+                    <label for="nombres">Nombres</label>
+                    <i class="icofont-ui-user iconos"></i>
+                    <input type="text" class="form-control inputTeceros" id="nombres" v-model="data_edit.nombres" >
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="apellidos" >Apellidos</label>
+                  <i class="icofont-ui-user iconos"></i>
+                  <input type="text" class="form-control inputTeceros" id="apellidos" v-model="data_edit.apellidos" >
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="fechaNacimiento">Fecha Nacimiento</label>
+                  <input type="date" class="form-control"  id="fechaNacimiento" v-model="data_edit.fechaNacimiento" >
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="genero" >Genero</label>
+                  <select class="custom-select" id="genero" v-model="data_edit.genero" >
+                    <option value="0">Seleccione una opción</option>
+                    <option value="1">Masculino</option>
+                    <option value="2">Femenino</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="telefono">Teléfono</label>
+                    <i class="icofont-telephone iconos"></i>
+                    <input type="text" class="form-control inputTeceros" id="telefono" v-model="data_edit.telefono" >
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="celular">Celular</label>
+                    <i class="fas fa-mobile-alt iconos"></i>
+                    <input type="text" class="form-control inputTeceros" id="celular" v-model="data_edit.celular" >
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="direccion">Dirección</label>
+                  <i class="fas fa-map-marker-alt iconos"></i>
+                  <input type="text" class="form-control inputTeceros" id="direccion" v-model="data_edit.direccion">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="idMunicipio">Ciudad</label>
+                  <i class="fas fa-city iconos"></i>
+                  <input type="text" class="form-control inputTeceros" id="idMunicipio" v-model="data_edit.idMunicipio" >
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="email">Correo</label>
+                    <i class="far fa-envelope iconos"></i>
+                    <input type="email" class="form-control inputTeceros" id="email" v-model="data_edit.email" >
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="razonSocial">Razon social</label>
+                  <i class="fas fa-city iconos"></i>
+                  <input type="text" class="form-control inputTeceros"  id="razonSocial" v-model="data_edit.razonSocial" >
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="nombreComercial">Nombre comercial</label>
+                  <i class="fas fa-city iconos"></i>
+                  <input type="text" class="form-control inputTeceros" id="nombreComercial" v-model="data_edit.nombreComercial" >
+                </div>
+              </div>
+            </div> 
+            <div v-if="show_alert.edit.state" class="alert alert-danger alert-dismissible fade show"
+                                role="alert">
+                            {{ show_alert.edit.messaje }}
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-warning botonAsctualizar" :disabled="buttons.edit.state">
+                                {{ buttons.edit.name }}
+                                <i v-if="buttons.edit.state" class="fa fa-spinner fa-spin"></i>
+                            </button>
+                        </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
   
   
   
@@ -166,7 +286,6 @@
               <option value="0">Seleccione una opción</option>
               <option value="1">Masculino</option>
               <option value="2">Femenino</option>
-                <option></option>
             </select>
           </div>
         </div>
@@ -243,7 +362,7 @@
             <vue-bootstrap4-table :rows="terceros" :columns="columns"  :config = "config" thead-class="green-bg bg-dark text-white">
                 
                 <templete slot="edit" slot-scope="props">
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal"  v-on:click="verTercero(props.row.idTercero)" v-bind:idTercero="props.row.idTercero">
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalEditar"  v-on:click="verTercero(props.row.idTercero)" v-bind:idTercero="props.row.idTercero">
                         <i class="icofont-edit"></i>
                     </button>
                 </templete>
@@ -306,6 +425,27 @@ export default {
             state: false,
         },
       },
+      show_alert: {
+                    create: {
+                        state: false ,
+                        messaje: ''
+                    } ,
+                    edit: {
+                    state: false ,
+                    messaje: ''
+                    }
+                },
+      buttons: {
+                    create: {
+                        name: 'Agregar',
+                        state: false,
+                    },
+
+                    edit: {
+                    name: 'Actualizar',
+                    state: false
+                    },
+                },
       columns: [
                 {
                     label: "Nombre",
@@ -381,6 +521,8 @@ export default {
                 direccion:'',
                 idMunicipio:'',
                 estado:'',
+                idUsuarioModifica:1,
+                idUsuarioCrea:1,
             },
     }
   },
@@ -460,7 +602,7 @@ export default {
     },
     
     //ver tercero
-         verTercero: function (idTercero) {
+    verTercero: function (idTercero) {
             this.data_edit.idTercero = idTercero ;
             axios.get('/tercero-resource/'+idTercero+'/edit').then((response) => {
                 this.data_edit.contenedor= true;
@@ -486,6 +628,55 @@ export default {
             });
         },
 
+    //editar Tercero
+    putTercero: function(){
+       this.buttons.edit.name = 'Actualizando...';
+            this.buttons.edit.state = true;
+             
+             let formData = {
+              'numeroIdentificacion': this.data_edit.numeroIdentificacion,
+              'tipoIdentificacion': this.data_edit.tipoIdentificacion,
+              'nombres': this.data_edit.nombres,
+              'apellidos': this.data_edit.apellidos,
+              'razonSocial': this.data_edit.razonSocial,
+              'nombreComercial': this.data_edit.nombreComercial,
+              'genero': this.data_edit.genero,
+              'fechaNacimiento': this.data_edit.fechaNacimiento,
+              'telefono': this.data_edit.telefono,
+              'celular': this.data_edit.celular,
+              'email': this.data_edit.email,
+              'direccion': this.data_edit.direccion,
+              'idMunicipio': this.data_edit.idMunicipio,
+              'foto':  this.data_edit.foto,
+              'estado': this.data_edit.estado,
+              'idUsuarioCrea': this.data_edit.idUsuarioCrea,
+              'idUsuarioModifica': this.data_edit.idUsuarioModifica,
+          }
+            axios.put('/updateTercero/' + this.data_edit.idTercero, formData).then((response) => {
+                console.log('entro a actualizar');
+                this.buttons.edit.name = 'Actualizar';
+                this.buttons.edit.state = false;
+                swal("OK!", "Tercero actualizado exitosamente!", "success");
+                $("#exampleModalEditar").modal('hide');
+                this.getTercero();
+            }).catch((error) => {
+                console.log(error.response);
+                let errors = '';
+                let aux = error.response.data.errors;
+                for (let i in aux) {
+                    let sci = aux[i];
+                    for (let j in sci) {
+                        errors += '\n' + sci[j];
+                    }
+                }
+                this.buttons.edit.name = 'Actualizar';
+                this.buttons.edit.state = false;
+                this.show_alert.edit.state = true;
+                this.show_alert.edit.messaje = errors;
+                setTimeout(() => this.show_alert.edit.state = false, 5000);
+            });
+
+    },
     //elimiar tercero
     deleteTercero: function(idTercero){
      swal({

@@ -13,14 +13,20 @@ class VehiculoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
 
+    {
         $query = Vehiculo::where([
             ['estado', 1],
+<<<<<<< HEAD
         ])->orderBy('placa')->get();
         return response()->json($query);
     }
+=======
+            ])->orderBy('placa')->get();
+            return response()->json($query);
+>>>>>>> pb/Tercero
 
+}
     /**
      * Show the form for creating a new resource.
      *

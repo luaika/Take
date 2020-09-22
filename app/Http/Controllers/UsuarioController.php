@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Usuario;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,7 +14,10 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        return response()->json(Usuario::all()) ;
+        $lista = Usuario::join('tercero', 'tercero.idTercero', 'usuario.idTercero')
+        ->select('usuario.*' , 'tercero.nombres as idTercero')
+        ->get();
+        return response()->json($lista);
     }
 
     /**
@@ -65,9 +67,10 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($idUsuario)
     {
-        //
+        $query= Usuario::find($idUsuario);
+        return response()->json($query);
     }
 
     /**
@@ -77,9 +80,23 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idUsuario)
     {
-        //
+        $attributes = [
+            'estado' => 'estado',
+            'codigo' => 'codigo',
+            'clave' => 'clave',
+        ];
+
+        $usuario = Usuario::find($idUsuario);
+
+        $usuario->update([
+            'estado' => $request->estado,
+            'codigo' =>$request->codigo,
+            'clave' =>$request->clave,
+
+        ]);
+        return response()->json($usuario);
     }
 
     /**
@@ -88,8 +105,15 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($idUsuario)
     {
-        //
+        Usuario::destroy($idUsuario);
+    }
+    //cambiar estado
+    public function stateUsuario(Request $request){
+        $usuario = Usuario::find($request->idUsuario);
+        $usuario->estado = $request->estado;
+        $usuario->save();
+        return response()->json($usuario);
     }
 }

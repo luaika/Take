@@ -7,6 +7,7 @@ import swal from 'sweetalert';
 import ToggleButton from 'vue-js-toggle-button'
  
 Vue.use(ToggleButton);
+
 window.axios = axios;
 
 const app = new Vue({

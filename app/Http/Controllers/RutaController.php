@@ -24,20 +24,19 @@ class RutaController extends Controller
             ->select('ruta.*' , 'barrio.nombreBarrio as barrio_inicia')
             ->get();
             return response()->json($lista);
-            
+
         case 1:
             $query = Ruta::where([
             ['estado', 1],
             ])->get();
             return response()->json($query);
-            
+
         case 2:
             $btermina = Barrio::join('ruta', 'ruta.idBarrioTermina', 'barrio.idBarrio')
             ->select('barrio.nombreBarrio' , 'ruta.descripcion','barrio.nombreBarrio as barrio_termina')
             ->get();
             return response()->json($btermina);
     }
-
 
       //orderBy('descripcion')
 
@@ -120,7 +119,7 @@ class RutaController extends Controller
             'codigo' => $request->codigo,
             'descripcion' =>$request->descripcion,
             'estado' =>  $request->estado,
-           
+
         ]);
         return response()->json($ruta);
     }

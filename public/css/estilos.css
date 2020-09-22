@@ -47,11 +47,6 @@
   margin-top: 5%;
 }
 
-
-.encabezadoModals{
-  width:30rem;
-}
-
 .encabezadoFormulario{
     background-color: #2a2e43 !important;
 }
@@ -99,16 +94,6 @@
 }
 
 .btn-cerrarSesion:hover {
-  background-color: #F0AE05 !important;
-  border-color: #E5A809 !important;
-}
-
-.botonAsctualizar{
-  background-color: #ffb900 !important; 
-  color:black !important;
-}
-
-.botonAsctualizar:hover{
   background-color: #F0AE05 !important;
   border-color: #E5A809 !important;
 }
