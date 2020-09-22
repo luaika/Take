@@ -180,7 +180,7 @@ export default {
                 show_barrios:true,
                 barrio:[],
                 rutas:[],
-                show_alert: {
+                 show_alert: {
                     create: {
                         state: false ,
                         messaje: ''
@@ -195,6 +195,7 @@ export default {
                         name: 'Agregar',
                         state: false,
                     },
+
                     edit: {
                     name: 'Actualizar',
                     state: false
@@ -241,11 +242,10 @@ export default {
                  pagination: true, // default true
                     pagination_info: true, // default true
                     num_of_visibile_pagination_buttons: 7, // default 5
-                    per_page: 6, // default 10
-                    per_page_options:  [6,  10,  20,  30],
-                //highlight_row_hover_color:"blue", over del listado
+                    per_page: 5, // default 10
+                    per_page_options:  [5,  10,  20,  30],
                 filas_seleccionables: true,
-                card_title: "RUTAS",
+                card_title: "USUARIOS",
                 show_refresh_button: false,
                 show_reset_button: false,
                 global_search: {
@@ -256,16 +256,15 @@ export default {
             data_edit:{
                 show: true,
                 contenedor: false ,
-                codigo: '',
-                descripcion: '',
                 estado: '',
+                codigo: '',
+                clave: '',
             },
             }
-
-
         },
-    components:{
+      components:{
         VueBootstrap4Table
+
     },
     mounted(){
             this.getListBarrios();
@@ -337,7 +336,6 @@ export default {
                 this.idUsuarioModifica = '';
                 this.idUsuarioCrea = '';
         },
-
         // Lista Barrios
         getListBarrios: function () {
             axios.get('/barrio-resource').then((response) => {
@@ -437,7 +435,7 @@ export default {
                 this.buttons.edit.name = 'Actualizar';
                 this.buttons.edit.state = false;
                 swal("OK!", "Ruta actualizado exitosamente!", "success");
-                $("#ModalEditRuta").modal('hide');
+                $("#exampleModal").modal('hide');
                 this.getRutaTermina();
 
             }).catch((error) => {

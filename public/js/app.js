@@ -2701,12 +2701,11 @@ __webpack_require__.r(__webpack_exports__);
         // default true
         num_of_visibile_pagination_buttons: 7,
         // default 5
-        per_page: 6,
+        per_page: 5,
         // default 10
-        per_page_options: [6, 10, 20, 30],
-        //highlight_row_hover_color:"blue", over del listado
+        per_page_options: [5, 10, 20, 30],
         filas_seleccionables: true,
-        card_title: "RUTAS",
+        card_title: "USUARIOS",
         show_refresh_button: false,
         show_reset_button: false,
         global_search: {
@@ -2716,9 +2715,9 @@ __webpack_require__.r(__webpack_exports__);
       data_edit: {
         show: true,
         contenedor: false,
+        estado: '',
         codigo: '',
-        descripcion: '',
-        estado: ''
+        clave: ''
       }
     };
   },
@@ -2901,7 +2900,7 @@ __webpack_require__.r(__webpack_exports__);
         _this7.buttons.edit.name = 'Actualizar';
         _this7.buttons.edit.state = false;
         swal("OK!", "Ruta actualizado exitosamente!", "success");
-        $("#ModalEditRuta").modal('hide');
+        $("#exampleModal").modal('hide');
 
         _this7.getRutaTermina();
       })["catch"](function (error) {
@@ -3200,10 +3199,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
-/* harmony import */ var vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-bootstrap4-table */ "./node_modules/vue-bootstrap4-table/dist/vue-bootstrap4-table.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../routes */ "./resources/js/routes.js");
+/* harmony import */ var vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-bootstrap4-table */ "./node_modules/vue-bootstrap4-table/dist/vue-bootstrap4-table.esm.js");
 //
 //
 //
@@ -3331,6 +3332,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -3339,7 +3348,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       idTercero: 0,
-      estado: -1,
+      estado: 1,
       codigo: '',
       clave: '',
       show_tercero: true,
@@ -3370,10 +3379,6 @@ __webpack_require__.r(__webpack_exports__);
         name: "idTercero",
         sort: false
       }, {
-        label: "Estado",
-        name: "estado",
-        sort: true
-      }, {
         label: "Codigo",
         name: "codigo",
         sort: false
@@ -3401,9 +3406,10 @@ __webpack_require__.r(__webpack_exports__);
         // default true
         num_of_visibile_pagination_buttons: 7,
         // default 5
-        per_page: 5,
+        per_page: 6,
         // default 10
-        per_page_options: [5, 10, 20, 30],
+        per_page_options: [6, 10, 20, 30],
+        //highlight_row_hover_color:"blue", over del listado
         filas_seleccionables: true,
         card_title: "USUARIOS",
         show_refresh_button: false,
@@ -3415,14 +3421,14 @@ __webpack_require__.r(__webpack_exports__);
       data_edit: {
         show: true,
         contenedor: false,
-        estado: '',
         codigo: '',
-        clave: ''
+        clave: '',
+        estado: ''
       }
     };
   },
   components: {
-    VueBootstrap4Table: vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_2__["default"]
+    VueBootstrap4Table: vue_bootstrap4_table__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   mounted: function mounted() {
     this.getListTercero();
@@ -3432,7 +3438,7 @@ __webpack_require__.r(__webpack_exports__);
     setUsuario: function setUsuario() {
       var _this = this;
 
-      if (this.idTercero == 0 || this.estado == -1) {
+      if (this.idTercero == 0 || this.estado == 1) {
         this.show_alert.create.state = true;
         this.show_alert.create.messaje = 'Debe seleccionar tercero y estado ';
         setTimeout(function () {
@@ -3447,9 +3453,9 @@ __webpack_require__.r(__webpack_exports__);
           'codigo': this.codigo,
           'clave': this.clave
         };
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/setUsuario', formData).then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/setUsuario', formData).then(function (response) {
           _this.idTercero = 0;
-          _this.estado = '';
+          _this.estado = '1';
           _this.codigo = '';
           _this.clave = '';
           swal("OK!", "Usuario creado exitosamente!", "success");
@@ -3469,15 +3475,15 @@ __webpack_require__.r(__webpack_exports__);
 
       swal({
         title: "Estas seguro ?",
-        text: "Este horario quedará eliminado de tus registros!",
+        text: "Este usuario quedará eliminado de tus registros!",
         icon: "warning",
         buttons: ["Cancelar", "Confirmar"],
         dangerMode: true
       }).then(function (willDelete) {
         if (willDelete) {
           _this2.data_edit.idUsuario = idUsuario;
-          axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/usuario-delete/' + _this2.data_edit.idUsuario).then(function (response) {
-            swal("OK!", "El horario se elimino exitosamente", "success");
+          axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/usuario-delete/' + _this2.data_edit.idUsuario).then(function (response) {
+            swal("OK!", "El usuario se elimino exitosamente", "success");
 
             _this2.getListUsuario();
           })["catch"](function (error) {
@@ -3486,42 +3492,58 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    //cancelar registro
+    //Cancelar registro
     cancelarRegistro: function cancelarRegistro() {
       this.show_alert.create.state = false;
       this.idTercero = 0;
-      this.estado = '';
+      this.estado = 1;
       this.codigo = '';
       this.clave = '';
     },
-    // Lista Categorias
+    //Lista terceros
     getListTercero: function getListTercero() {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/tercero-resource').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/tercero-resource').then(function (response) {
         console.log('response_ ' + JSON.stringify(response.data));
         _this3.tercero = response.data;
       })["catch"](function (error) {
         console.log(error.response);
       });
     },
-    getListUsuario: function getListUsuario() {
+    //traer Usuarios
+    editUsuario: function editUsuario(idUsuario) {
       var _this4 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/usuario-resource').then(function (response) {
+      this.data_edit.idUsuario = idUsuario;
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/usuario-resource/' + idUsuario + '/edit').then(function (response) {
+        _this4.data_edit.contenedor = true;
+        _this4.data_edit.show = false;
+        var data = response.data;
+        _this4.data_edit.codigo = data['codigo'];
+        _this4.data_edit.estado = data['estado'];
+        _this4.data_edit.clave = data['clave'];
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    getListUsuario: function getListUsuario() {
+      var _this5 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/usuario-resource').then(function (response) {
         if (response.data.length > 0) {
-          _this4.usuario = response.data;
-          console.log(_this4.usuario);
+          _this5.usuario = response.data;
+          console.log(_this5.usuario);
         } else {
-          _this4.message = 'No hay registro de usuarios!!!';
+          _this5.message = 'No hay registro de usuarios!!!';
         }
       })["catch"](function (error) {
         console.log(error.response);
       });
     },
-    //put usuario
+    //Put usuario
     putUsuario: function putUsuario() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.buttons.edit.name = 'Actualizando...';
       this.buttons.edit.state = true;
@@ -3530,14 +3552,13 @@ __webpack_require__.r(__webpack_exports__);
         'codigo': this.data_edit.codigo,
         'clave': this.data_edit.clave
       };
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/updateUsuario/' + this.data_edit.idUsuario, formData).then(function (response) {
-        console.log('entro a actualizar');
-        _this5.buttons.edit.name = 'Actualizar';
-        _this5.buttons.edit.state = false;
-        swal("OK!", "Ruta actualizado exitosamente!", "success");
-        $("#ModalEditUsuario").modal('hide');
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.put('/updateUsuario/' + this.data_edit.idUsuario, formData).then(function (response) {
+        _this6.buttons.edit.name = 'Actualizar';
+        _this6.buttons.edit.state = false;
+        swal("OK!", "Usuario actualizado exitosamente!", "success");
+        $("#exampleModal").modal('hide');
 
-        _this5.getListUsuario();
+        _this6.getListUsuario();
       })["catch"](function (error) {
         console.log(error.response);
         var errors = '';
@@ -3551,13 +3572,47 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
 
-        _this5.buttons.edit.name = 'Actualizar';
-        _this5.buttons.edit.state = false;
-        _this5.show_alert.edit.state = true;
-        _this5.show_alert.edit.messaje = errors;
+        _this6.buttons.edit.name = 'Actualizar';
+        _this6.buttons.edit.state = false;
+        _this6.show_alert.edit.state = true;
+        _this6.show_alert.edit.messaje = errors;
         setTimeout(function () {
-          return _this5.show_alert.edit.state = false;
+          return _this6.show_alert.edit.state = false;
         }, 5000);
+      });
+    },
+    //Cambiar estado
+    stateUsuario: function stateUsuario(idUsuario, estado) {
+      var _this7 = this;
+
+      var formData = {
+        idUsuario: idUsuario,
+        estado: estado
+      };
+
+      if (estado == 1) {
+        var nomState = "Activo";
+      } else {
+        var nomState = "Inactivo";
+      }
+
+      swal({
+        title: "Estado de usuario",
+        text: "Este usuario quedará " + nomState + " en tus registros!",
+        icon: "success",
+        dangerMode: true
+      }).then(function (willDelete) {
+        if (willDelete) {
+          axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/stateUsuario', formData).then(function (response) {
+            //Success
+            _this7.getListUsuario();
+
+            swal("OK!", "Estado actualizado exitosamente", "success");
+          })["catch"](function (error) {
+            swal("Oops!", "Parece que algo salio mal!", "error");
+            console.log(error.response);
+          });
+        }
       });
     }
   }
@@ -8380,6 +8435,7 @@ var render = function() {
                               }
                             ],
                             staticClass: "custom-select",
+                            attrs: { required: "" },
                             on: {
                               change: function($event) {
                                 var $$selectedVal = Array.prototype.filter
@@ -8401,11 +8457,9 @@ var render = function() {
                             }
                           },
                           [
-                            _c("option", { attrs: { value: "-1" } }, [
-                              _vm._v("Seleccionar Estado")
+                            _c("option", { attrs: { value: "1" } }, [
+                              _vm._v("Activo")
                             ]),
-                            _vm._v(" "),
-                            _vm._v(' ="1">Activo'),
                             _vm._v(" "),
                             _c("option", { attrs: { value: "0" } }, [
                               _vm._v("Inactivo")
@@ -8457,7 +8511,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "password", required: "" },
+                          attrs: { type: "text", required: "" },
                           domProps: { value: _vm.data_edit.clave },
                           on: {
                             input: function($event) {
@@ -8637,10 +8691,6 @@ var render = function() {
                   }
                 },
                 [
-                  _c("option", { attrs: { value: "-1" } }, [
-                    _vm._v("Seleccionar Estado")
-                  ]),
-                  _vm._v(" "),
                   _c("option", { attrs: { value: "1" } }, [_vm._v("Activo")]),
                   _vm._v(" "),
                   _c("option", { attrs: { value: "0" } }, [_vm._v("Inactivo")])
@@ -8791,6 +8841,58 @@ var render = function() {
                     },
                     [_c("i", { staticClass: "icofont-ui-delete" })]
                   )
+                ])
+              }
+            },
+            {
+              key: "estado",
+              fn: function(props) {
+                return _c("templete", {}, [
+                  props.row.estado === 1
+                    ? _c(
+                        "div",
+                        [
+                          _c("toggle-button", {
+                            attrs: {
+                              value: true,
+                              width: 72,
+                              labels: {
+                                checked: "Activo",
+                                unchecked: "Inactive"
+                              }
+                            },
+                            on: {
+                              change: function($event) {
+                                return _vm.stateUsuario(props.row.idUsuario, 0)
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : props.row.estado === 0
+                    ? _c(
+                        "div",
+                        [
+                          _c("toggle-button", {
+                            attrs: {
+                              value: false,
+                              width: 72,
+                              labels: {
+                                checked: "Activo",
+                                unchecked: "Inactive"
+                              }
+                            },
+                            on: {
+                              change: function($event) {
+                                return _vm.stateUsuario(props.row.idUsuario, 1)
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e()
                 ])
               }
             }

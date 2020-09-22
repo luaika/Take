@@ -15,12 +15,11 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label >Estado</label>
-                                    <select class="custom-select" v-model="data_edit.estado">
-                                     <option value="-1">Seleccionar Estado</option>
-                                     <option ="1">Activo</option>
-                                        <option value="0">Inactivo</option>
-                                     </select>
+                                <label>Estado</label>
+                                <select class="custom-select" v-model="data_edit.estado" required>
+                                    <option value="1">Activo</option>
+                                    <option value="0">Inactivo</option>
+                                </select>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label >Codigo</label>
@@ -28,11 +27,11 @@
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>Clave</label>
-                                    <input type="password" class="form-control"  v-model="data_edit.clave" required>
+                                    <input type="text" class="form-control"  v-model="data_edit.clave" required>
                                 </div>
                             </div>
                         </div>
-                        <div v-if="show_alert.edit.state" class="alert alert-danger alert-dismissible fade show"
+                         <div v-if="show_alert.edit.state" class="alert alert-danger alert-dismissible fade show"
                                 role="alert">
                             {{ show_alert.edit.messaje }}
                         </div>
@@ -79,7 +78,6 @@
             <div class="form-group col-md-6">
                 <label>Estado</label>
                 <select class="custom-select" v-model="estado">
-                    <option value="-1">Seleccionar Estado</option>
                     <option value="1">Activo</option>
                     <option value="0">Inactivo</option>
                 </select>
@@ -119,13 +117,23 @@
                        <i class="icofont-ui-delete"></i>
                     </button>
                 </templete>
-            </vue-bootstrap4-table>
+                <templete slot="estado" slot-scope="props">
+
+                    <div v-if="props.row.estado === 1">
+                        <toggle-button :value="true" :width="72" @change="stateUsuario(props.row.idUsuario, 0)" :labels="{checked: 'Activo', unchecked: 'Inactive'}"/>
+                    </div>
+                    <div v-else-if="props.row.estado === 0 ">
+                        <toggle-button :value="false" :width="72" @change="stateUsuario(props.row.idUsuario, 1)" :labels="{checked: 'Activo', unchecked: 'Inactive'}"/>
+                    </div>
+                </templete>
+                    </vue-bootstrap4-table>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import axios from 'axios';
 import router from '../../routes';
 import VueBootstrap4Table from 'vue-bootstrap4-table';
@@ -135,7 +143,7 @@ export default {
      data(){
             return {
                 idTercero : 0,
-                estado : -1,
+                estado : 1,
                 codigo: '',
                 clave:'',
                 show_tercero:true,
@@ -169,11 +177,6 @@ export default {
                     sort: false,
                 },
                 {
-                    label: "Estado",
-                    name: "estado",
-                    sort: true,
-                },
-                {
                     label: "Codigo",
                     name: "codigo",
                     sort: false,
@@ -204,8 +207,9 @@ export default {
                  pagination: true, // default true
                     pagination_info: true, // default true
                     num_of_visibile_pagination_buttons: 7, // default 5
-                    per_page: 5, // default 10
-                    per_page_options:  [5,  10,  20,  30],
+                    per_page: 6, // default 10
+                    per_page_options:  [6,  10,  20,  30],
+                //highlight_row_hover_color:"blue", over del listado
                 filas_seleccionables: true,
                 card_title: "USUARIOS",
                 show_refresh_button: false,
@@ -218,15 +222,16 @@ export default {
             data_edit:{
                 show: true,
                 contenedor: false ,
-                estado: '',
                 codigo: '',
                 clave: '',
+                estado: '',
             },
             }
-        },
-      components:{
-        VueBootstrap4Table
 
+
+        },
+    components:{
+        VueBootstrap4Table
     },
 
     mounted() {
@@ -235,7 +240,7 @@ export default {
     },
     methods:{
        setUsuario:function() {
-            if (this.idTercero == 0 || this.estado == -1) {
+            if (this.idTercero == 0 || this.estado == 1) {
                 this.show_alert.create.state = true;
                 this.show_alert.create.messaje = 'Debe seleccionar tercero y estado ';
                 setTimeout(() => this.show_alert.create.state = false, 2000);
@@ -252,7 +257,7 @@ export default {
 
             axios.post('/setUsuario', formData).then((response) =>{
                 this.idTercero = 0;
-                this.estado = '';
+                this.estado = '1';
                 this.codigo = '';
                 this.clave = '';
                     swal("OK!", "Usuario creado exitosamente!", "success");
@@ -269,7 +274,7 @@ export default {
        deleteUsuario: function(idUsuario){
             swal({
                 title: "Estas seguro ?",
-                text: "Este horario quedará eliminado de tus registros!",
+                text: "Este usuario quedará eliminado de tus registros!",
                 icon: "warning",
                 buttons: ["Cancelar","Confirmar"],
                 dangerMode: true,
@@ -277,7 +282,7 @@ export default {
                 if (willDelete) {
                     this.data_edit.idUsuario= idUsuario;
                     axios.delete('/usuario-delete/' + this.data_edit.idUsuario).then((response) => {
-                        swal("OK!", "El horario se elimino exitosamente", "success");
+                        swal("OK!", "El usuario se elimino exitosamente", "success");
                         this.getListUsuario();
                     }).catch((error)=>{
                         swal("Lo sentimos", "Parece que algo salio mal!", "error");
@@ -285,17 +290,15 @@ export default {
                 }
             });
         },
-
-
-         //cancelar registro
+         //Cancelar registro
         cancelarRegistro:function (){
             this.show_alert.create.state = false;
             this.idTercero = 0;
-            this.estado = '';
+            this.estado = 1;
             this.codigo ='' ;
             this.clave = '';
         },
-            // Lista Categorias
+            //Lista terceros
             getListTercero: function () {
                 axios.get('/tercero-resource').then((response) => {
                     console.log('response_ '+JSON.stringify(response.data));
@@ -304,6 +307,22 @@ export default {
                     console.log(error.response);
                 });
             },
+
+            //traer Usuarios
+            editUsuario: function (idUsuario) {
+                this.data_edit.idUsuario= idUsuario ;
+                axios.get('/usuario-resource/'+idUsuario+'/edit').then((response) => {
+                this.data_edit.contenedor= true;
+                this.data_edit.show= false;
+                let data = response.data;
+                this.data_edit.codigo = data['codigo'];
+                this.data_edit.estado = data['estado'];
+                  this.data_edit.clave = data['clave'];
+
+            }).catch((error) => {
+                console.log(error);
+            });
+        },
             getListUsuario: function () {
             axios.get('/usuario-resource').then( (response)  => {
                 if (response.data.length > 0) {
@@ -316,7 +335,8 @@ export default {
                 console.log(error.response);
             });
         },
-        //put usuario
+
+        //Put usuario
            putUsuario: function() {
             this.buttons.edit.name = 'Actualizando...';
             this.buttons.edit.state = true;
@@ -327,11 +347,10 @@ export default {
                 'clave': this.data_edit.clave,
             };
             axios.put('/updateUsuario/' + this.data_edit.idUsuario, formData).then((response) => {
-                console.log('entro a actualizar');
                 this.buttons.edit.name = 'Actualizar';
                 this.buttons.edit.state = false;
-                swal("OK!", "Ruta actualizado exitosamente!", "success");
-                $("#ModalEditUsuario").modal('hide');
+                swal("OK!", "Usuario actualizado exitosamente!", "success");
+                $("#exampleModal").modal('hide');
                 this.getListUsuario();
 
             }).catch((error) => {
@@ -351,8 +370,40 @@ export default {
                 setTimeout(() => this.show_alert.edit.state = false, 5000);
             });
         },
+
+        //Cambiar estado
+         stateUsuario: function (idUsuario, estado) {
+
+                let formData = {
+                idUsuario: idUsuario,
+                estado: estado
+                 };
+
+                 if(estado == 1 ){
+                     var nomState = "Activo";
+                 }else{
+                     var nomState = "Inactivo";
+                 }
+                swal({
+                    title: "Estado de usuario",
+                    text: "Este usuario quedará " + nomState + " en tus registros!",
+                    icon: "success",
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        axios.post('/stateUsuario', formData).then((response) => {
+                            //Success
+                            this.getListUsuario();
+                            swal("OK!", "Estado actualizado exitosamente", "success");
+
+                        }).catch((error) => {
+                            swal("Oops!", "Parece que algo salio mal!", "error");
+                            console.log(error.response);
+                        });
+                    }
+                });
+        },
     }
 }
-
 </script>
 
