@@ -3,7 +3,7 @@
   <!-- Modal ver -->
     <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content modal-lg">
                 <div class="modal-header ">
                     <h5 class="modal-title" id="exampleModalLabel">Tercero</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -107,7 +107,7 @@
   <!-- Modal editar -->
    <div class="modal fade " id="exampleModalEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content modal-lg">
                 <div class="modal-header ">
                     <h5 class="modal-title" id="exampleModalLabel">Tercero</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -210,41 +210,36 @@
               </div>
             </div> 
             <div v-if="show_alert.edit.state" class="alert alert-danger alert-dismissible fade show"
-                                role="alert">
-                            {{ show_alert.edit.messaje }}
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-warning botonAsctualizar" :disabled="buttons.edit.state">
-                                {{ buttons.edit.name }}
-                                <i v-if="buttons.edit.state" class="fa fa-spinner fa-spin"></i>
-                            </button>
-                        </div>
+                    role="alert">
+                {{ show_alert.edit.messaje }}
+            </div>
+            <div class="modal-footer centrar">
+                <button class="btn btn-warning botonAsctualizar" :disabled="buttons.edit.state">
+                    {{ buttons.edit.name }}
+                     <i v-if="buttons.edit.state" class="fa fa-spinner fa-spin"></i>
+                </button>
+            </div>
           </form>
           </div>
         </div>
       </div>
     </div>
 
-  
-  
-  
+ <!-- crear vehículo -->
   <div class="modal-header encabezadoFormulario" >
       <h5 class="text-center text-white" id="exampleModalLabel">Registrar Tercero</h5>
   </div>
+
   <div class="card cardRutas">
     <form method="POST" v-on:submit.prevent="setTercero" enctype="multipart/form-data">
       <div class=" primerContenedor">
         <div class="row">
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-6">
             <label for="numeroIdentificacion" >Identificación</label>
             <i class="far fa-address-card iconos"></i>
             <input type="text" class="form-control inputTeceros" id="numeroIdentificacion" v-model="numeroIdentificacion" required>
           </div>
-                  <!-- <div class="form-group col-md-1">
-                      <label for="tipoIdentificacion">D.V</label>
-                      <input type="text" class="form-control inputTeceros" id="tipoIdentificacion" v-model="tipoIdentificacion" required>
-                </div> -->
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-6">
             <label for="tipoIdentificacion">Tipo Documento</label>
             <select class="custom-select" id="tipoIdentificacion" v-model="tipoIdentificacion" required>
               <option value="1">CC</option>
@@ -252,24 +247,14 @@
               <option value="3">RC</option>
             </select>
           </div>
-          
-          <!--examinar-->    
-          <div class="form-group col-md-3 " style="margin-top:2rem;">
-            <div class="custom-file ">
-              <input type="file" class="custom-file-input" id="validatedInputGroupCustomFile"  >
-              <label class="custom-file-label" for="validatedInputGroupCustomFile"></label>
-            </div>       
-          </div>
-        </div>
-        
-               
+        </div>               
         <div class="row" >                
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-6">
               <label for="nombres">Nombres</label>
               <i class="icofont-ui-user iconos"></i>
               <input type="text" class="form-control inputTeceros" id="nombres" v-model="nombres" >
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-6">
               <label for="apellidos" >Apellidos</label>
             <i class="icofont-ui-user iconos"></i>
             <input type="text" class="form-control inputTeceros" id="apellidos" v-model="apellidos" >
@@ -344,8 +329,8 @@
           <div class="form-group col-md-4">
             <label for="estado" >Estado</label>
             <select class="custom-select" id="estado" v-model="estado" required>
-          <option value="1">Activo</option>
-          <option value="0">Inactivo</option>
+              <option value="1">Activo</option>
+              <option value="0">Inactivo</option>
             </select>
           </div>
         </div>
@@ -388,7 +373,7 @@
                 </templete>
                 
             </vue-bootstrap4-table>
-        </div>
+     </div>
 </div>
   
 </template>
@@ -470,7 +455,7 @@ export default {
                 {
                     label: "Ver",
                     name: "ver",
-                    sort: true,
+                    sort: false,
                 },
                 {
                     label: "Editar",
@@ -496,11 +481,11 @@ export default {
                     per_page_options:  [6,  10,  20,  30],
                 //highlight_row_hover_color:"blue", over del listado
                 filas_seleccionables: true,
-                card_title: "VEHÍCULOS",
+                card_title: "TERCEROS",
                 show_refresh_button: false,
                 show_reset_button: false,
                 global_search: {
-                        placeholder: "Buscar ",
+                  placeholder: "Buscar ",
                 },
             },
             data_edit:{

@@ -15,18 +15,10 @@ class VehiculoController extends Controller
     public function index()
 
     {
-        $query = Vehiculo::where([
-            ['estado', 1],
-<<<<<<< HEAD
-        ])->orderBy('placa')->get();
+        $query = Vehiculo::orderBy('placa')->get();
         return response()->json($query);
     }
-=======
-            ])->orderBy('placa')->get();
-            return response()->json($query);
->>>>>>> pb/Tercero
 
-}
     /**
      * Show the form for creating a new resource.
      *
@@ -87,9 +79,10 @@ class VehiculoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($idVehiculo)
     {
-        //
+        $vehiculo = Vehiculo::find($idVehiculo);
+        return response()->json($vehiculo);
     }
 
     /**
