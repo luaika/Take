@@ -81,8 +81,22 @@ class VehiculoController extends Controller
      */
     public function edit($idVehiculo)
     {
-        $vehiculo = Vehiculo::find($idVehiculo);
-        return response()->json($vehiculo);
+        $query = \DB::table('vehiculo')
+            ->join('servicio', 'vehiculo.idServicio', '=', 'servicio.idServicio')
+            ->join('clase', 'vehiculo.idClase', '=', 'clase.idClase')
+            ->join('marca', 'vehiculo.idMarca', '=', 'marca.idMarca')
+            ->join('color', 'vehiculo.idColor', '=', 'color.idcolor')
+            ->join('carroceria', 'vehiculo.idCarroceria', '=', 'carroceria.idCarroceria')
+            ->join('combustible', 'vehiculo.idCombustible', '=', 'combustible.idCombustible')
+            ->select('vehiculo.*','servicio.descripcionServicio','clase.descripcionClase',
+            'marca.descripcionMarca','color.descripcionColor','carroceria.descripcionCarroceria',
+            'combustible.descripcionCombustible')
+            ->where('idVehiculo',$idVehiculo)
+            ->get();
+       // $query = Vehiculo::orderBy('placa')->get();
+        return response()->json($query);
+       /*  $vehiculo = Vehiculo::find($idVehiculo);
+        return response()->json($vehiculo); */
     }
 
     /**

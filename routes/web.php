@@ -47,6 +47,22 @@ Route::resource('/barrio-resource', 'BarrioController');
 
 //Vehiculo
 Route::resource('/vehiculo-resource', 'VehiculoController');
+//marca
+Route::resource('/marca-resource', 'MarcaController');
+//servicio
+Route::resource('/servicio-resource', 'ServicioController');
+//color
+Route::resource('/color-resource','ColorController');
+//clase
+Route::resource('/clase-resource','ClaseController');
+//carroceria
+Route::resource('/carroceria-resource','CarroceriaController');
+
+//combustible
+Route::resource('/combustible-resource','CombustibleController');
+
+//poliza
+Route::resource('/poliza-resource','PolizaController');
 
 //Horario
 Route::post('/setHorario', 'HorarioController@store');

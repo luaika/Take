@@ -20,9 +20,11 @@
                     </div>
                     <div class="col">
                         <label for="idServicio">Servicio</label>
-                        <i class="fas fa-city iconos"></i>
-                        <input type="text" class="form-control inputTeceros" id="idServicio" v-model="idServicio">
-                    </div>
+                        <select class="custom-select" v-model="idServicio" required>
+                            <option value="0">Seleccionar Servicio</option>
+                            <option v-for="idServicio in servicios" :value="idServicio.idServicio" v-text="idServicio.descripcionServicio" v-bind:key="idServicio" ></option>
+                        </select>
+                     </div>
                 </div>
             </div>
 
@@ -30,18 +32,24 @@
                 <div class="row">
                     <div class="col">
                         <label for="idClase">Clase</label>
-                        <i class="fas fa-city iconos"></i>
-                        <input type="text" class="form-control inputTeceros" id="idClase" v-model="idClase">
+                        <select class="custom-select" v-model="idClase" required>
+                            <option value="0">Seleccionar Clase</option>
+                            <option v-for="idClase in clase" :value="idClase.idClase" v-text="idClase.descripcionClase" v-bind:key="idClase" ></option>
+                        </select>
                     </div>
                     <div class="col">
                         <label for="idMarca">Marca</label>
-                        <i class="fas fa-city iconos"></i>
-                        <input type="text" class="form-control inputTeceros" id="idMarca" v-model="idMarca">
+                        <select class="custom-select" v-model="idMarca" required>
+                            <option value="0">Seleccionar Marca</option>
+                            <option v-for="idMarca in marca" :value="idMarca.idMarca" v-text="idMarca.descripcionMarca" v-bind:key="idMarca" ></option>
+                        </select>
                     </div>
                     <div class="col">
                         <label for="idColor">Color</label>
-                        <i class="fas fa-palette iconos"></i>
-                        <input type="text" class="form-control inputTeceros" id="idColor" v-model="idColor">
+                        <select class="custom-select" v-model="idColor" required>
+                            <option value="0">Seleccionar Color</option>
+                            <option v-for="idColor in color" :value="idColor.idColor" v-text="idColor.descripcionColor" v-bind:key="idColor" ></option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -50,13 +58,17 @@
                 <div class="row">
                     <div class="col">
                         <label for="idCarroceria">Carroceria</label>
-                        <i class="fas fa-city iconos"></i>
-                        <input type="text" class="form-control inputTeceros" id="idCarroceria " v-model="idCarroceria">
-                    </div>
+                        <select class="custom-select" v-model="idCarroceria" required>
+                            <option value="0">Seleccionar Carroceria</option>
+                            <option v-for="idCarroceria in carroceria" :value="idCarroceria.idCarroceria" v-text="idCarroceria.descripcionCarroceria" v-bind:key="idCarroceria" ></option>
+                        </select>
+                   </div>
                     <div class="col">
                         <label for="idCombustible">Combustible</label>
-                        <i class="fas fa-gas-pump iconos"></i>
-                        <input type="text" class="form-control inputTeceros" id="idCombustible " v-model="idCombustible ">
+                        <select class="custom-select" v-model="idCombustible" required>
+                            <option value="0">Seleccionar Combustible</option>
+                            <option v-for="idCombustible in combustible" :value="idCombustible.idCombustible" v-text="idCombustible.descripcionCombustible" v-bind:key="idCombustible" ></option>
+                        </select>
                     </div>
                     <div class="col">
                         <label for="linea">Linea</label>
@@ -177,7 +189,7 @@
                                 <div class="col">
                                     <label for="idServicio">Servicio</label>
                                     <i class="fas fa-city iconos"></i>
-                                    <input type="text" class="form-control inputTeceros" id="idServicio" v-model="data_edit.idServicio">
+                                    <input type="text" class="form-control inputTeceros" id="idServicio"  v-model="data_edit.idServicio     ">
                                 </div>
                             </div>
                         </div>
@@ -357,11 +369,6 @@
                     </form>
                     <div class="container-fluid">
                         <vue-bootstrap4-table :rows="vehiculos" :columns="columnMatricula"  :config = "config" thead-class="green-bg bg-dark text-white">
-                            <templete slot="edit" slot-scope="props">
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalVer"  v-on:click="verVehiculo(props.row.idVehiculo,0)" v-bind:idVehiculo="props.row.idVehiculo">
-                                    <i class="icofont-edit"></i>
-                                </button>
-                            </templete>
                             <templete slot="delete" slot-scope="props">
                                 <button type="button" class="btn btn-danger"   v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
                                 <i class="icofont-ui-delete"></i>
@@ -389,30 +396,61 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Licencia de transito">
+                                    <label>Poliza</label>
+                                    <select class="custom-select" v-model="idPoliza" required>
+                                        <option value="0">Seleccionar Tipo de Póliza</option>
+                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
+                                    </select>
                                 </div>
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Estado de matrícula">
+                                    <label for="estado" >Estado</label>
+                                    <select class="custom-select" id="estado" v-model="estado" required>
+                                        <option value="1">Activo</option>
+                                        <option value="0">Inactivo</option>
+                                    </select>                                
                                 </div>
                             </div>
                         </div>
                          <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="date" class="form-control" placeholder="Licencia de transito">
+                                 <label>Tercero</label>
+                                    <select class="custom-select" v-model="idPoliza" required>
+                                        <option value="0">Seleccionar un Tercero</option>
+                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
+                                    </select>
                                 </div>
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Tipo de registro">
+                                <label>Número de póliza</label>
+                                <input type="number" class="form-control" >
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Observaciones">
+                                    <label>Fecha de Inicio de vigencia</label>
+                                    <input type="date" class="form-control" >
+                                </div>
+                                <div class="col">
+                                    <label>Fecha de Finalización de vigencia</label>
+                                    <input type="date" class="form-control" >
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Observaciones</label>
+                                    <input type="text" class="form-control" >
+                                </div>
+                                <div class="col">
+                                    <label>Fecha de expedición</label>
+                                    <input type="date" class="form-control" >
+                                </div>
+                            </div>
+                        </div>
+    
                         <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show"
                                 role="alert">
                                 {{ show_alert.create.messaje }}
@@ -426,12 +464,7 @@
                         </div>
                     </form>
                     <div class="container-fluid">
-                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnMatricula"  :config = "config" thead-class="green-bg bg-dark text-white">
-                            <templete slot="edit" slot-scope="props">
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalVer"  v-on:click="verVehiculo(props.row.idVehiculo,0)" v-bind:idVehiculo="props.row.idVehiculo">
-                                    <i class="icofont-edit"></i>
-                                </button>
-                            </templete>
+                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnPoliza"  :config = "config" thead-class="green-bg bg-dark text-white">
                             <templete slot="delete" slot-scope="props">
                                 <button type="button" class="btn btn-danger"   v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
                                 <i class="icofont-ui-delete"></i>
@@ -459,30 +492,58 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Licencia de transito">
+                                    <label>Número de tarjeta operación</label>
+                                    <select class="custom-select" v-model="idPoliza" required>
+                                        <option value="0">Seleccionar</option>
+                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
+                                    </select>
                                 </div>
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Estado de matrícula">
+                                    <label for="estado" >Estado</label>
+                                    <select class="custom-select" id="estado" v-model="estado" required>
+                                        <option value="1">Activo</option>
+                                        <option value="0">Inactivo</option>
+                                    </select>                                
                                 </div>
                             </div>
                         </div>
                          <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="date" class="form-control" placeholder="Licencia de transito">
+                                    <label>Tercero</label>
+                                    <select class="custom-select" v-model="idPoliza" required>
+                                        <option value="0">Seleccionar un Tercero</option>
+                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
+                                    </select>
                                 </div>
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Tipo de registro">
+                                    <label>Fecha de expedición</label>
+                                    <input type="date" class="form-control" >
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Fecha de Inicio de vigencia</label>
+                                    <input type="date" class="form-control" >
+                                </div>
+                                <div class="col">
+                                    <label>Fecha de Finalización de vigencia</label>
+                                    <input type="date" class="form-control" >
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Observaciones">
+                                    <label>Observaciones</label>
+                                    <input type="text" class="form-control" >
                                 </div>
                             </div>
                         </div>
+    
                         <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show"
                                 role="alert">
                                 {{ show_alert.create.messaje }}
@@ -496,12 +557,7 @@
                         </div>
                     </form>
                     <div class="container-fluid">
-                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnMatricula"  :config = "config" thead-class="green-bg bg-dark text-white">
-                            <templete slot="edit" slot-scope="props">
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalVer"  v-on:click="verVehiculo(props.row.idVehiculo,0)" v-bind:idVehiculo="props.row.idVehiculo">
-                                    <i class="icofont-edit"></i>
-                                </button>
-                            </templete>
+                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnOperacion"  :config = "config" thead-class="green-bg bg-dark text-white">
                             <templete slot="delete" slot-scope="props">
                                 <button type="button" class="btn btn-danger"   v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
                                 <i class="icofont-ui-delete"></i>
@@ -526,30 +582,54 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="form-group">
+                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Licencia de transito">
+                                    <label>Número de certificado</label>
+                                    <input type="text" class="form-control" placeholder="Certificado" >
                                 </div>
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Estado de matrícula">
+                                    <label for="estado" >Estado</label>
+                                    <select class="custom-select" id="estado" v-model="estado" required>
+                                        <option value="1">Activo</option>
+                                        <option value="0">Inactivo</option>
+                                    </select>                                
                                 </div>
                             </div>
                         </div>
                          <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="date" class="form-control" placeholder="Licencia de transito">
+                                    <label>Tercero</label>
+                                    <select class="custom-select" v-model="idPoliza" required>
+                                        <option value="0">Seleccionar un Tercero</option>
+                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
+                                    </select>
                                 </div>
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Tipo de registro">
+                                    <label>Fecha de expedición</label>
+                                    <input type="date" class="form-control" >
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Fecha de Inicio de vigencia</label>
+                                    <input type="date" class="form-control" >
+                                </div>
+                                <div class="col">
+                                    <label>Fecha de Finalización de vigencia</label>
+                                    <input type="date" class="form-control" >
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Observaciones">
+                                    <label>Observaciones</label>
+                                    <input type="text" class="form-control" >
                                 </div>
                             </div>
                         </div>
@@ -566,13 +646,8 @@
                         </div>
                     </form>
                     <div class="container-fluid">
-                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnMatricula"  :config = "config" thead-class="green-bg bg-dark text-white">
-                            <templete slot="edit" slot-scope="props">
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalVer"  v-on:click="verVehiculo(props.row.idVehiculo,0)" v-bind:idVehiculo="props.row.idVehiculo">
-                                    <i class="icofont-edit"></i>
-                                </button>
-                            </templete>
-                            <templete slot="delete" slot-scope="props">
+                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnRtm"  :config = "config" thead-class="green-bg bg-dark text-white">
+                           <templete slot="delete" slot-scope="props">
                                 <button type="button" class="btn btn-danger"   v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
                                 <i class="icofont-ui-delete"></i>
                                 </button>
@@ -596,36 +671,45 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col">
-                                <input type="text" class="form-control" placeholder="Licencia de transito">
-                                </div>
-                                <div class="col">
-                                <input type="text" class="form-control" placeholder="Estado de matrícula">
-                                </div>
-                            </div>
-                        </div>
+                        
                          <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="date" class="form-control" placeholder="Licencia de transito">
+                                    <label>Tercero</label>
+                                    <select class="custom-select" v-model="idPoliza" required>
+                                        <option value="0">Seleccionar un Tercero</option>
+                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
+                                    </select>
                                 </div>
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Tipo de registro">
+                                    <label for="estado" >Estado</label>
+                                    <select class="custom-select" id="estado" v-model="estado" required>
+                                        <option value="1">Activo</option>
+                                        <option value="0">Inactivo</option>
+                                    </select>                                
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Inicio</label>
+                                    <input type="date" class="form-control" >
+                                </div>
+                                <div class="col">
+                                    <label>Fin</label>
+                                    <input type="date" class="form-control" >
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Observaciones">
+                                    <label>Observaciones</label>
+                                    <input type="text" class="form-control" >
                                 </div>
                             </div>
-                        </div>
-                        <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show"
-                                role="alert">
-                                {{ show_alert.create.messaje }}
                         </div>
                         <div class="modal-footer centrar">
                                 <button class="btn btn-warning botonAsctualizar" :disabled="buttons.create.state">
@@ -636,13 +720,8 @@
                         </div>
                     </form>
                     <div class="container-fluid">
-                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnMatricula"  :config = "config" thead-class="green-bg bg-dark text-white">
-                            <templete slot="edit" slot-scope="props">
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalVer"  v-on:click="verVehiculo(props.row.idVehiculo,0)" v-bind:idVehiculo="props.row.idVehiculo">
-                                    <i class="icofont-edit"></i>
-                                </button>
-                            </templete>
-                            <templete slot="delete" slot-scope="props">
+                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnTercero"  :config = "config" thead-class="green-bg bg-dark text-white">
+                             <templete slot="delete" slot-scope="props">
                                 <button type="button" class="btn btn-danger"   v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
                                 <i class="icofont-ui-delete"></i>
                                 </button>
@@ -668,27 +747,22 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Licencia de transito">
+                                    <label>Ruta</label>
+                                    <select class="custom-select" v-model="idPoliza" required>
+                                        <option value="0">Seleccionar Ruta</option>
+                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
+                                    </select>
                                 </div>
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Estado de matrícula">
-                                </div>
-                            </div>
-                        </div>
-                         <div class="form-group">
-                            <div class="row">
-                                <div class="col">
-                                <input type="date" class="form-control" placeholder="Licencia de transito">
+                                    <label for="estado" >Estado</label>
+                                    <select class="custom-select" id="estado" v-model="estado" required>
+                                        <option value="1">Activo</option>
+                                        <option value="0">Inactivo</option>
+                                    </select>                                
                                 </div>
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Tipo de registro">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col">
-                                <input type="text" class="form-control" placeholder="Observaciones">
+                                    <label>Observaciones</label>
+                                    <input type="text" class="form-control" placeholder="Observación">
                                 </div>
                             </div>
                         </div>
@@ -705,7 +779,7 @@
                         </div>
                     </form>
                     <div class="container-fluid">
-                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnMatricula"  :config = "config" thead-class="green-bg bg-dark text-white">
+                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnRuta"  :config = "config" thead-class="green-bg bg-dark text-white">
                             <templete slot="edit" slot-scope="props">
                                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalVer"  v-on:click="verVehiculo(props.row.idVehiculo,0)" v-bind:idVehiculo="props.row.idVehiculo">
                                     <i class="icofont-edit"></i>
@@ -786,7 +860,7 @@
      </div>
 
 
-            <div class="form-goup listado">
+        <div class="form-goup listado">
                 <div class="">
                     <ul class="tabs">
                         <li><a href="#tab1"><span class="fas fa-digital-tachograph "></span><span class="tab-text">Matrícula</span></a></li>
@@ -969,7 +1043,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+        </div>
   </div>
 </template>
 
@@ -985,12 +1059,12 @@ export default {
      placa:'',
      numeroInterno:'',
      idVehiculoMatricula:'',
-     idServicio:'',
-     idClase:'',
-     idMarca:'',
-     idColor:'',
-     idCarroceria:'',
-     idCombustible:'',
+     idServicio:0,
+     idClase:0,
+     idMarca:0,
+     idColor:0,
+     idCarroceria:0,
+     idCombustible:0,
      linea:'',
      modelo:'',
      numeroSerie:'',
@@ -1002,7 +1076,15 @@ export default {
      estado:1,
      idUsuarioCrea:1,
      idUsuarioModifica:1,
+     idPoliza:0,
      vehiculos:[],
+     color:[],
+     servicios:[],
+     marca:[],
+     clase:[],
+     carroceria:[],
+     combustible:[],
+     tiposdePolizas:[],
      editar:false,
       config: {
                  pagination: true, // default true
@@ -1012,7 +1094,7 @@ export default {
                     per_page_options:  [6,  10,  20,  30],
                 //highlight_row_hover_color:"blue", over del listado
                 filas_seleccionables: true,
-                card_title: "VEHÍCULOS",
+                card_title: "Registros",
                 show_refresh_button: false,
                 show_reset_button: false,
                 global_search: {
@@ -1023,7 +1105,7 @@ export default {
                 {
                     label: "Placa",
                     name: "placa",
-                    sort: true,
+                    sort: false,
                 },
                 {
                     label: "Ver",
@@ -1083,7 +1165,7 @@ export default {
             sort: false,
         },
         {
-            label: "Estado de Matrícula",
+            label: "Estado",
             name: "estado",
             sort: false,
         },
@@ -1103,8 +1185,50 @@ export default {
             sort: false,
         },
         {
-            label: "Editar",
-            name: "edit",
+            label: "Eliminar",
+            name: "delete",
+            sort: false,
+        },
+    ],
+    columnPoliza:[
+        {
+            label: "Poliza",
+            name: "idPoliza",
+            sort: false,
+        },
+        {
+            label: "Estado",
+            name: "estado",
+            sort: false,
+        },
+        {
+            label: "Tercero",
+            name: "tercero",
+            sort: false,
+        },
+        {
+            label: "Número Póliza",
+            name: "numero",
+            sort: false,
+        },
+        {
+            label:'Vigencia Inicio',
+            name: "fecha",
+            sort: false,
+        },
+        {
+            label: "Vigencia Fin",
+            name: "tipo",
+            sort: false,
+        },
+        {
+            label: "Expedición",
+            name: "espedicion",
+            sort: false,
+        },
+        {
+            label: "Observaciones",
+            name: "observacion",
             sort: false,
         },
         {
@@ -1113,6 +1237,148 @@ export default {
             sort: false,
         },
     ],
+    columnOperacion:[
+        {
+            label: "# Tarjeta Operación",
+            name: "idPoliza",
+            sort: false,
+        },
+        {
+            label: "Estado",
+            name: "estado",
+            sort: false,
+        },
+        {
+            label: "Tercero",
+            name: "tercero",
+            sort: false,
+        },
+        
+        {
+            label:'Vigencia Inicio',
+            name: "fecha",
+            sort: false,
+        },
+        {
+            label: "Vigencia Fin",
+            name: "tipo",
+            sort: false,
+        },
+        {
+            label: "Expedición",
+            name: "espedicion",
+            sort: false,
+        },
+        {
+            label: "Observaciones",
+            name: "observacion",
+            sort: false,
+        },
+        {
+            label: "Eliminar",
+            name: "delete",
+            sort: false,
+        },
+    ],
+    columnRtm:[
+        {
+            label: "# Certificado",
+            name: "idPoliza",
+            sort: false,
+        },
+        {
+            label: "Estado",
+            name: "estado",
+            sort: false,
+        },
+        {
+            label: "Tercero",
+            name: "tercero",
+            sort: false,
+        },
+        {
+            label:'Vigencia Inicio',
+            name: "fecha",
+            sort: false,
+        },
+        {
+            label: "Vigencia Fin",
+            name: "tipo",
+            sort: false,
+        },
+        {
+            label: "Expedición",
+            name: "espedicion",
+            sort: false,
+        },
+        {
+            label: "Observaciones",
+            name: "observacion",
+            sort: false,
+        },
+        {
+            label: "Eliminar",
+            name: "delete",
+            sort: false,
+        },
+    ],
+    columnTercero:[
+        
+        {
+            label: "Tercero",
+            name: "tercero",
+            sort: false,
+        },
+        {
+            label: "Estado",
+            name: "estado",
+            sort: false,
+        },
+        {
+            label:'Inicio',
+            name: "fecha",
+            sort: false,
+        },
+        {
+            label: "Fin",
+            name: "tipo",
+            sort: false,
+        },
+       {
+            label: "Observaciones",
+            name: "observacion",
+            sort: false,
+        },
+        {
+            label: "Eliminar",
+            name: "delete",
+            sort: false,
+        },
+    ],
+    columnRuta:[
+        
+        {
+            label: "Ruta",
+            name: "tercero",
+            sort: false,
+        },
+        {
+            label: "Estado",
+            name: "estado",
+            sort: false,
+        },
+        {
+            label: "Observaciones",
+            name: "observacion",
+            sort: false,
+        },
+        {
+            label: "Eliminar",
+            name: "delete",
+            sort: false,
+        },
+    ],
+    
     show_alert: {
         create: {
             state: false ,
@@ -1140,12 +1406,19 @@ export default {
                 placa:'',
                 numeroInterno:'',
                 idVehiculoMatricula:'',
-                idServicio:'',
-                idClase:'',
-                idMarca:'',
-                idColor:'',
-                idCarroceria:'',
-                idCombustible:'',
+                idServicio:0,
+                descripcionServicio:0,
+                descripcionServicio:'',
+                idClase:0,
+                descripcionClase:0,
+                idMarca:0,
+                descripcionMarca:0,
+                idColor:0,
+                descripcionColor:0,
+                idCarroceria:0,
+                descripcionCarroceria:0,
+                idCombustible:0,
+                descripcionCombustible:0,
                 linea:'',
                 modelo:'',
                 numeroSerie:'',
@@ -1162,7 +1435,14 @@ export default {
         VueBootstrap4Table
     },
   mounted(){
+      this.getColor();
+      this.getMarca();
+      this.getServicio();
+      this.getClase();
+      this.getCarroceria();
+      this.getCombustible();
       this.getVehiculo();
+      this.getTiposPoliza();
     },
   methods:{
       //insertar vehiculo
@@ -1212,6 +1492,7 @@ export default {
         this.estado='',
         this.idUsuarioCrea=1,
         this.idUsuarioModifica=1,
+        this.getVehiculo();
         swal("OK!", "Vehículo creado exitosamente!", "success"); 
             this.buttons.create.name = 'Agregar' ;
             this.buttons.create.state = false ;
@@ -1227,16 +1508,89 @@ export default {
                     this.vehiculos  = response.data;
                 } else {
                     this.message = 'No hay registro de vehículos!!!';
-                    
                 }
             }).catch((error) => {
                 console.log(error.response);
             });
     },
+   //listar color
+   getColor:function (){
+       axios.get('/color-resource').then((response) => {
+                if (response.data.length > 0) {
+                    this.color  = response.data;
+                } 
+            }).catch((error) => {
+                console.log(error.response);
+            });
+   },
+
+   //listar servicio
+   getServicio: function(){
+       axios.get('/servicio-resource').then((response) => {
+            if (response.data.length > 0) {
+                this.servicios  = response.data;
+            } 
+        }).catch((error) => {
+                console.log(error.response);
+        });
+   },
+
+   //listar marca
+   getMarca: function(){
+      axios.get('/marca-resource').then((response) => {
+            if (response.data.length > 0) {
+                this.marca  = response.data;
+            } 
+        }).catch((error) => {
+            console.log(error.response);
+        }); 
+   },
+
+   //listar clase
+   getClase: function(){
+       axios.get('/clase-resource').then((response) => {
+            if (response.data.length > 0) {
+                this.clase  = response.data;
+            } 
+        }).catch((error) => {
+            console.log(error.response);
+        });
+   },
+   //listar carroceria
+   getCarroceria: function(){
+       axios.get('/carroceria-resource').then((response) => {
+            if (response.data.length > 0) {
+                this.carroceria  = response.data;
+            } 
+        }).catch((error) => {
+            console.log(error.response);
+        });
+   },
+
+   //listar combustible
+   getCombustible: function(){
+       axios.get('/combustible-resource').then((response) => {
+            if (response.data.length > 0) {
+                this.combustible  = response.data;
+            } 
+        }).catch((error) => {
+            console.log(error.response);
+        });
+   },
+
+   //listar tipos de polizas
+   getTiposPoliza: function(){
+       axios.get('/poliza-resource?Q=0').then((response) => {
+            if (response.data.length > 0) {
+                this.tiposdePolizas  = response.data;
+            } 
+        }).catch((error) => {
+            console.log(error.response);
+        });
+   },
    //ver vehiculo
-    //ver tercero
     verVehiculo: function (idVehiculo,funcion) {
-        console.log(funcion);
+     
             if(funcion == 0){
                 this.editar = true;
             }else{
@@ -1251,11 +1605,17 @@ export default {
                 this.data_edit.numeroInterno=data['numeroInterno'],
                 this.data_edit.idVehiculoMatricula=data['idVehiculoMatricula'],
                 this.data_edit.idServicio=data['idServicio'],
+                this.data_edit.descripcionServicio=data['descripcionServicio'],
                 this.data_edit.idClase=data['idClase'],
+                this.data_edit.descripcionClase=data['descripcionClase'],
                 this.data_edit.idMarca=data['idMarca'],
+                this.data_edit.descripcionMarca=data['descripcionMarca'],
                 this.data_edit.idColor=data['idColor'],
+                this.data_edit.descripcionColor=data['descripcionColor'],
                 this.data_edit.idCarroceria=data['idCarroceria'],
+                this.data_edit.descripcionCarroceria=data['descripcionCarroceria'],
                 this.data_edit.idCombustible=data['idCombustible'],
+                this.data_edit.descripcionCombustible=data['descripcionCombustible'],
                 this.data_edit.linea=data['linea'],
                 this.data_edit.modelo=data['modelo'],
                 this.data_edit.numeroSerie=data['numeroSerie'],
