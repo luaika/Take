@@ -3656,7 +3656,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             swal("OK!", "Estado actualizado exitosamente", "success");
           })["catch"](function (error) {
             swal("Oops!", "Parece que algo salio mal!", "error");
-            console.log('la cagamos');
             console.log(error.response);
           });
         }
@@ -5045,190 +5044,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -5267,6 +5082,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       carroceria: [],
       combustible: [],
       tiposdePolizas: [],
+      terceros: [],
+      data: [],
+      rutas: [],
       editar: false,
       config: {
         pagination: true,
@@ -5530,7 +5348,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         idVehiculoMatricula: '',
         idServicio: 0,
         descripcionServicio: 0
-      }, _defineProperty(_data_edit, "descripcionServicio", ''), _defineProperty(_data_edit, "idClase", 0), _defineProperty(_data_edit, "descripcionClase", 0), _defineProperty(_data_edit, "idMarca", 0), _defineProperty(_data_edit, "descripcionMarca", 0), _defineProperty(_data_edit, "idColor", 0), _defineProperty(_data_edit, "descripcionColor", 0), _defineProperty(_data_edit, "idCarroceria", 0), _defineProperty(_data_edit, "descripcionCarroceria", 0), _defineProperty(_data_edit, "idCombustible", 0), _defineProperty(_data_edit, "descripcionCombustible", 0), _defineProperty(_data_edit, "linea", ''), _defineProperty(_data_edit, "modelo", ''), _defineProperty(_data_edit, "numeroSerie", ''), _defineProperty(_data_edit, "numeroChasis", ''), _defineProperty(_data_edit, "numeroMotor", ''), _defineProperty(_data_edit, "numeroPuertas", ''), _defineProperty(_data_edit, "numeroPasajeros", ''), _defineProperty(_data_edit, "observaciones", ''), _defineProperty(_data_edit, "estado", ''), _data_edit)
+      }, _defineProperty(_data_edit, "descripcionServicio", ''), _defineProperty(_data_edit, "idClase", 0), _defineProperty(_data_edit, "descripcionClase", 0), _defineProperty(_data_edit, "idMarca", 0), _defineProperty(_data_edit, "descripcionMarca", 0), _defineProperty(_data_edit, "idColor", 0), _defineProperty(_data_edit, "descripcionColor", 0), _defineProperty(_data_edit, "idCarroceria", 0), _defineProperty(_data_edit, "descripcionCarroceria", 0), _defineProperty(_data_edit, "idCombustible", 0), _defineProperty(_data_edit, "descripcionCombustible", 0), _defineProperty(_data_edit, "linea", ''), _defineProperty(_data_edit, "modelo", ''), _defineProperty(_data_edit, "numeroSerie", ''), _defineProperty(_data_edit, "numeroChasis", ''), _defineProperty(_data_edit, "numeroMotor", ''), _defineProperty(_data_edit, "numeroPuertas", ''), _defineProperty(_data_edit, "numeroPasajeros", ''), _defineProperty(_data_edit, "observaciones", ''), _defineProperty(_data_edit, "estado", ''), _data_edit),
+      data_poliza: {
+        idTercero: 0,
+        numeroPoliza: '',
+        fechaExpedicion: '',
+        fechaVigenciaInicio: '',
+        fechaVigenciaFin: '',
+        observaciones: '',
+        estado: '',
+        idUsuarioCrea: 1,
+        idUsuarioModifica: 1
+      },
+      data_ruta: {
+        idRuta: 0,
+        estado: 1,
+        descripcion: '',
+        observaciones: '',
+        idUsuarioCrea: 1,
+        idUsuarioModifica: 1
+      }
     };
   },
   components: {
@@ -5545,6 +5382,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getCombustible();
     this.getVehiculo();
     this.getTiposPoliza();
+    this.getTercero();
+    this.getRutas();
   },
   methods: {
     //insertar vehiculo
@@ -5573,7 +5412,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'observaciones': this.observaciones,
         'estado': this.estado,
         'idUsuarioCrea': this.idUsuarioCrea,
-        'idUsuarioModific': this.idUsuarioModifica
+        'idUsuarioModifica': this.idUsuarioModifica
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/setVehiculo', formData).then(function (response) {
         _this.placa = '', _this.numeroInterno = '', _this.idVehiculoMatricula = '', _this.idServicio = '', _this.idClase = '', _this.idMarca = '', _this.idColor = '', _this.idCarroceria = '', _this.idCombustible = '', _this.linea = '', _this.modelo = '', _this.numeroSerie = '', _this.numeroChasis = '', _this.numeroMotor = '', _this.numeroPuertas = '', _this.numeroPasajeros = '', _this.observaciones = '', _this.estado = '', _this.idUsuarioCrea = 1, _this.idUsuarioModifica = 1, _this.getVehiculo();
@@ -5585,15 +5424,55 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         console.log(error.response);
       });
     },
+    //insertar Ruta vehiculo
+    setVehiculoRuta: function setVehiculoRuta() {
+      var _this2 = this;
+
+      this.buttons.create.name = 'Agregando ...';
+      this.buttons.create.state = true;
+      console.log('ojo' + idVehiculo);
+      var formData = {
+        'idVehiculo': this.idVehiculo,
+        'idRuta': this.data_ruta.idRuta,
+        'observaciones': this.data_ruta.observaciones,
+        'estado': this.data_ruta.estado,
+        'idUsuarioCrea': this.data_ruta.idUsuarioCrea,
+        'idUsuarioModifica': this.data_ruta.idUsuarioModifica
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/vehiculoRuta', formData).then(function (response) {
+        _this2.idVehiculo = '', _this2.data_ruta.idRuta = '', _this2.data_ruta.observaciones = '';
+        _this2.data_ruta.estado = '', //this.getVehiculo();
+        swal("OK!", "Ruta agregada exitosamente!", "success");
+        _this2.buttons.create.name = 'Agregar';
+        _this2.buttons.create.state = false;
+      })["catch"](function (error) {
+        swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+        console.log(error.response);
+      });
+    },
     //listar vehículos
     getVehiculo: function getVehiculo() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/vehiculo-resource').then(function (response) {
         if (response.data.length > 0) {
-          _this2.vehiculos = response.data;
+          _this3.vehiculos = response.data;
         } else {
-          _this2.message = 'No hay registro de vehículos!!!';
+          _this3.message = 'No hay registro de vehículos!!!';
+        }
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
+    },
+    //listar terceros
+    getTercero: function getTercero() {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/tercero-resource').then(function (response) {
+        if (response.data.length > 0) {
+          _this4.terceros = response.data;
+        } else {
+          _this4.message = 'No hay registro de terceros!!!';
         }
       })["catch"](function (error) {
         console.log(error.response);
@@ -5601,11 +5480,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //listar color
     getColor: function getColor() {
-      var _this3 = this;
+      var _this5 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/color-resource').then(function (response) {
         if (response.data.length > 0) {
-          _this3.color = response.data;
+          _this5.color = response.data;
         }
       })["catch"](function (error) {
         console.log(error.response);
@@ -5613,11 +5492,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //listar servicio
     getServicio: function getServicio() {
-      var _this4 = this;
+      var _this6 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/servicio-resource').then(function (response) {
         if (response.data.length > 0) {
-          _this4.servicios = response.data;
+          _this6.servicios = response.data;
         }
       })["catch"](function (error) {
         console.log(error.response);
@@ -5625,11 +5504,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //listar marca
     getMarca: function getMarca() {
-      var _this5 = this;
+      var _this7 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/marca-resource').then(function (response) {
         if (response.data.length > 0) {
-          _this5.marca = response.data;
+          _this7.marca = response.data;
         }
       })["catch"](function (error) {
         console.log(error.response);
@@ -5637,11 +5516,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //listar clase
     getClase: function getClase() {
-      var _this6 = this;
+      var _this8 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/clase-resource').then(function (response) {
         if (response.data.length > 0) {
-          _this6.clase = response.data;
+          _this8.clase = response.data;
         }
       })["catch"](function (error) {
         console.log(error.response);
@@ -5649,11 +5528,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //listar carroceria
     getCarroceria: function getCarroceria() {
-      var _this7 = this;
+      var _this9 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/carroceria-resource').then(function (response) {
         if (response.data.length > 0) {
-          _this7.carroceria = response.data;
+          _this9.carroceria = response.data;
         }
       })["catch"](function (error) {
         console.log(error.response);
@@ -5661,11 +5540,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //listar combustible
     getCombustible: function getCombustible() {
-      var _this8 = this;
+      var _this10 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/combustible-resource').then(function (response) {
         if (response.data.length > 0) {
-          _this8.combustible = response.data;
+          _this10.combustible = response.data;
         }
       })["catch"](function (error) {
         console.log(error.response);
@@ -5673,11 +5552,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //listar tipos de polizas
     getTiposPoliza: function getTiposPoliza() {
-      var _this9 = this;
+      var _this11 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/poliza-resource?Q=0').then(function (response) {
         if (response.data.length > 0) {
-          _this9.tiposdePolizas = response.data;
+          _this11.tiposdePolizas = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
+    },
+    //Listar Rutas
+    getRutas: function getRutas() {
+      var _this12 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/rutas-resource?Q=0').then(function (response) {
+        if (response.data.length > 0) {
+          _this12.rutas = response.data;
+        } else {
+          _this12.message = 'No hay registro de tutas!!!';
         }
       })["catch"](function (error) {
         console.log(error.response);
@@ -5685,22 +5578,100 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //ver vehiculo
     verVehiculo: function verVehiculo(idVehiculo, funcion) {
-      var _this10 = this;
+      var _this13 = this;
 
-      if (funcion == 0) {
-        this.editar = true;
-      } else {
-        this.editar = false;
-      }
-
+      /*  if(funcion == 0){
+           this.editar = true;
+       }else{
+            this.editar = false;
+       }; */
       this.data_edit.idVehiculo = idVehiculo;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/vehiculo-resource/' + idVehiculo + '/edit').then(function (response) {
-        _this10.data_edit.contenedor = true;
-        _this10.data_edit.show = false;
+        _this13.data_edit.contenedor = true;
+        _this13.data_edit.show = false;
         var data = response.data;
-        _this10.data_edit.placa = data['placa'], _this10.data_edit.numeroInterno = data['numeroInterno'], _this10.data_edit.idVehiculoMatricula = data['idVehiculoMatricula'], _this10.data_edit.idServicio = data['idServicio'], _this10.data_edit.descripcionServicio = data['descripcionServicio'], _this10.data_edit.idClase = data['idClase'], _this10.data_edit.descripcionClase = data['descripcionClase'], _this10.data_edit.idMarca = data['idMarca'], _this10.data_edit.descripcionMarca = data['descripcionMarca'], _this10.data_edit.idColor = data['idColor'], _this10.data_edit.descripcionColor = data['descripcionColor'], _this10.data_edit.idCarroceria = data['idCarroceria'], _this10.data_edit.descripcionCarroceria = data['descripcionCarroceria'], _this10.data_edit.idCombustible = data['idCombustible'], _this10.data_edit.descripcionCombustible = data['descripcionCombustible'], _this10.data_edit.linea = data['linea'], _this10.data_edit.modelo = data['modelo'], _this10.data_edit.numeroSerie = data['numeroSerie'], _this10.data_edit.numeroChasis = data['numeroChasis'], _this10.data_edit.numeroMotor = data['numeroMotor'], _this10.data_edit.numeroPuertas = data['numeroPuertas'], _this10.data_edit.numeroPasajeros = data['numeroPasajeros'], _this10.data_edit.observaciones = data['observaciones'], _this10.data_edit.estado = data['estado'];
+        console.log(data);
+        _this13.data_edit.placa = data['placa'];
+        _this13.data_edit.numeroInterno = data['numeroInterno'];
+        _this13.data_edit.idVehiculoMatricula = data['idVehiculoMatricula'];
+        _this13.data_edit.idServicio = data['idServicio'];
+        _this13.data_edit.descripcionServicio = data['descripcionServicio'];
+        _this13.data_edit.idClase = data['idClase'];
+        _this13.data_edit.descripcionClase = data['descripcionClase'];
+        _this13.data_edit.idMarca = data['idMarca'];
+        _this13.data_edit.descripcionMarca = data['descripcionMarca'];
+        _this13.data_edit.idColor = data['idColor'];
+        _this13.data_edit.descripcionColor = data['descripcionColor'];
+        _this13.data_edit.idCarroceria = data['idCarroceria'];
+        _this13.data_edit.descripcionCarroceria = data['descripcionCarroceria'];
+        _this13.data_edit.idCombustible = data['idCombustible'];
+        _this13.data_edit.descripcionCombustible = data['descripcionCombustible'];
+        _this13.data_edit.linea = data['linea'];
+        _this13.data_edit.modelo = data['modelo'];
+        _this13.data_edit.numeroSerie = data['numeroSerie'];
+        _this13.data_edit.numeroChasis = data['numeroChasis'];
+        _this13.data_edit.numeroMotor = data['numeroMotor'];
+        _this13.data_edit.numeroPuertas = data['numeroPuertas'];
+        _this13.data_edit.numeroPasajeros = data['numeroPasajeros'];
+        _this13.data_edit.observaciones = data['observaciones'];
+        _this13.data_edit.estado = data['estado'];
       })["catch"](function (error) {
         console.log(error);
+      });
+      console.log('Placa');
+      console.log(this.data_edit.placa);
+    },
+    //eliminar vehiculo
+    deleteVehiculo: function deleteVehiculo(idVehiculo) {
+      var _this14 = this;
+
+      swal({
+        title: "Estas seguro ?",
+        text: "Este Vehiculo quedará eliminado de tus registros!",
+        icon: "warning",
+        buttons: ["Cancelar", "Confirmar"],
+        dangerMode: true
+      }).then(function (willDelete) {
+        if (willDelete) {
+          _this14.data_edit.idVehiculo = idVehiculo;
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/vehiculo-delete/' + _this14.data_edit.idVehiculo).then(function (response) {
+            swal("OK!", "El tercero se elimino exitosamente", "success");
+
+            _this14.getVehiculo();
+          })["catch"](function (error) {
+            swal("Lo sentimos", "Parece que algo salio mal!", "error");
+          });
+        }
+      });
+    },
+    //cambiar estado de vehiculo
+    stateTercero: function stateTercero(idVehiculo, estado) {
+      var formData = {
+        idVehiculo: idVehiculo,
+        estado: estado
+      };
+
+      if (estado == 1) {
+        var nomState = "Activo";
+      } else {
+        var nomState = "Inactivo";
+      }
+
+      swal({
+        title: "Estado de vehículo",
+        text: "Este tercero quedará " + nomState + " en tus registros!",
+        icon: "success",
+        dangerMode: false
+      }).then(function (willDelete) {
+        if (willDelete) {
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/stateVehiculo', formData).then(function (response) {
+            //Success
+            swal("OK!", "Estado actualizado exitosamente", "success");
+          })["catch"](function (error) {
+            swal("Oops!", "Parece que algo salio mal!", "error");
+            console.log(error.response);
+          });
+        }
       });
     }
   }
@@ -13488,8 +13459,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.idPoliza,
-                              expression: "idPoliza"
+                              value: _vm.data_poliza.idTercero,
+                              expression: "data_poliza.idTercero"
                             }
                           ],
                           staticClass: "custom-select",
@@ -13504,9 +13475,13 @@ var render = function() {
                                   var val = "_value" in o ? o._value : o.value
                                   return val
                                 })
-                              _vm.idPoliza = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
+                              _vm.$set(
+                                _vm.data_poliza,
+                                "idTercero",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
                             }
                           }
                         },
@@ -13515,12 +13490,14 @@ var render = function() {
                             _vm._v("Seleccionar un Tercero")
                           ]),
                           _vm._v(" "),
-                          _vm._l(_vm.tiposdePolizas, function(idPoliza) {
+                          _vm._l(_vm.terceros, function(idTercero) {
                             return _c("option", {
-                              key: idPoliza,
+                              key: idTercero,
                               domProps: {
-                                value: idPoliza.idPoliza,
-                                textContent: _vm._s(idPoliza.descripcion)
+                                value: idTercero.idTercero,
+                                textContent: _vm._s(
+                                  idTercero.numeroIdentificacion
+                                )
                               }
                             })
                           })
@@ -13756,8 +13733,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.idPoliza,
-                              expression: "idPoliza"
+                              value: _vm.data_poliza.idTercero,
+                              expression: "data_poliza.idTercero"
                             }
                           ],
                           staticClass: "custom-select",
@@ -13772,9 +13749,13 @@ var render = function() {
                                   var val = "_value" in o ? o._value : o.value
                                   return val
                                 })
-                              _vm.idPoliza = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
+                              _vm.$set(
+                                _vm.data_poliza,
+                                "idTercero",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
                             }
                           }
                         },
@@ -13783,12 +13764,14 @@ var render = function() {
                             _vm._v("Seleccionar un Tercero")
                           ]),
                           _vm._v(" "),
-                          _vm._l(_vm.tiposdePolizas, function(idPoliza) {
+                          _vm._l(_vm.terceros, function(idTercero) {
                             return _c("option", {
-                              key: idPoliza,
+                              key: idTercero,
                               domProps: {
-                                value: idPoliza.idPoliza,
-                                textContent: _vm._s(idPoliza.descripcion)
+                                value: idTercero.idTercero,
+                                textContent: _vm._s(
+                                  idTercero.numeroIdentificacion
+                                )
                               }
                             })
                           })
@@ -13975,8 +13958,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.idPoliza,
-                              expression: "idPoliza"
+                              value: _vm.data_poliza.idTercero,
+                              expression: "data_poliza.idTercero"
                             }
                           ],
                           staticClass: "custom-select",
@@ -13991,9 +13974,13 @@ var render = function() {
                                   var val = "_value" in o ? o._value : o.value
                                   return val
                                 })
-                              _vm.idPoliza = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
+                              _vm.$set(
+                                _vm.data_poliza,
+                                "idTercero",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
                             }
                           }
                         },
@@ -14002,12 +13989,14 @@ var render = function() {
                             _vm._v("Seleccionar un Tercero")
                           ]),
                           _vm._v(" "),
-                          _vm._l(_vm.tiposdePolizas, function(idPoliza) {
+                          _vm._l(_vm.terceros, function(idTercero) {
                             return _c("option", {
-                              key: idPoliza,
+                              key: idTercero,
                               domProps: {
-                                value: idPoliza.idPoliza,
-                                textContent: _vm._s(idPoliza.descripcion)
+                                value: idTercero.idTercero,
+                                textContent: _vm._s(
+                                  idTercero.numeroIdentificacion
+                                )
                               }
                             })
                           })
@@ -14142,8 +14131,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.idPoliza,
-                              expression: "idPoliza"
+                              value: _vm.data_poliza.idTercero,
+                              expression: "data_poliza.idTercero"
                             }
                           ],
                           staticClass: "custom-select",
@@ -14158,9 +14147,13 @@ var render = function() {
                                   var val = "_value" in o ? o._value : o.value
                                   return val
                                 })
-                              _vm.idPoliza = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
+                              _vm.$set(
+                                _vm.data_poliza,
+                                "idTercero",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
                             }
                           }
                         },
@@ -14169,12 +14162,14 @@ var render = function() {
                             _vm._v("Seleccionar un Tercero")
                           ]),
                           _vm._v(" "),
-                          _vm._l(_vm.tiposdePolizas, function(idPoliza) {
+                          _vm._l(_vm.terceros, function(idTercero) {
                             return _c("option", {
-                              key: idPoliza,
+                              key: idTercero,
                               domProps: {
-                                value: idPoliza.idPoliza,
-                                textContent: _vm._s(idPoliza.descripcion)
+                                value: idTercero.idTercero,
+                                textContent: _vm._s(
+                                  idTercero.numeroIdentificacion
+                                )
                               }
                             })
                           })
@@ -14322,149 +14317,197 @@ var render = function() {
             _vm._m(22),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
-              _c("form", [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col" }, [
-                      _c("label", [_vm._v("Ruta")]),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.idPoliza,
-                              expression: "idPoliza"
-                            }
-                          ],
-                          staticClass: "custom-select",
-                          attrs: { required: "" },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.idPoliza = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            }
-                          }
-                        },
-                        [
-                          _c("option", { attrs: { value: "0" } }, [
-                            _vm._v("Seleccionar Ruta")
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(_vm.tiposdePolizas, function(idPoliza) {
-                            return _c("option", {
-                              key: idPoliza,
-                              domProps: {
-                                value: idPoliza.idPoliza,
-                                textContent: _vm._s(idPoliza.descripcion)
+              _c(
+                "form",
+                {
+                  attrs: { method: "POST" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.setVehiculoRuta($event)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col" }, [
+                        _c("label", [_vm._v("Ruta")]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.data_ruta.idRuta,
+                                expression: "data_ruta.idRuta"
                               }
+                            ],
+                            staticClass: "custom-select",
+                            attrs: { required: "" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.data_ruta,
+                                  "idRuta",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "0" } }, [
+                              _vm._v("Seleccionar Ruta")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.rutas, function(idRuta) {
+                              return _c("option", {
+                                key: idRuta,
+                                domProps: {
+                                  value: idRuta.idRuta,
+                                  textContent: _vm._s(idRuta.descripcion)
+                                }
+                              })
                             })
-                          })
-                        ],
-                        2
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col" }, [
-                      _c("label", { attrs: { for: "estado" } }, [
-                        _vm._v("Estado")
+                          ],
+                          2
+                        )
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "select",
-                        {
+                      _c("div", { staticClass: "col" }, [
+                        _c("label", { attrs: { for: "estado" } }, [
+                          _vm._v("Estado")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.data_ruta.estado,
+                                expression: "data_ruta.estado"
+                              }
+                            ],
+                            staticClass: "custom-select",
+                            attrs: { id: "estado", required: "" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.data_ruta,
+                                  "estado",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "1" } }, [
+                              _vm._v("Activo")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "0" } }, [
+                              _vm._v("Inactivo")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col" }, [
+                        _c("label", [_vm._v("Observaciones")]),
+                        _vm._v(" "),
+                        _c("input", {
                           directives: [
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.estado,
-                              expression: "estado"
+                              value: _vm.data_ruta.observaciones,
+                              expression: "data_ruta.observaciones"
                             }
                           ],
-                          staticClass: "custom-select",
-                          attrs: { id: "estado", required: "" },
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "Observación" },
+                          domProps: { value: _vm.data_ruta.observaciones },
                           on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.estado = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.data_ruta,
+                                "observaciones",
+                                $event.target.value
+                              )
                             }
                           }
+                        })
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm.show_alert.create.state
+                    ? _c(
+                        "div",
+                        {
+                          staticClass:
+                            "alert alert-danger alert-dismissible fade show",
+                          attrs: { role: "alert" }
                         },
                         [
-                          _c("option", { attrs: { value: "1" } }, [
-                            _vm._v("Activo")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "0" } }, [
-                            _vm._v("Inactivo")
-                          ])
+                          _vm._v(
+                            "\n                              " +
+                              _vm._s(_vm.show_alert.create.messaje) +
+                              "\n                      "
+                          )
                         ]
                       )
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(23)
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm.show_alert.create.state
-                  ? _c(
-                      "div",
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer centrar" }, [
+                    _c(
+                      "button",
                       {
-                        staticClass:
-                          "alert alert-danger alert-dismissible fade show",
-                        attrs: { role: "alert" }
+                        staticClass: "btn btn-warning botonAsctualizar",
+                        attrs: { disabled: _vm.buttons.create.state }
                       },
                       [
+                        _c("i", { staticClass: "icofont-ui-add" }),
                         _vm._v(
-                          "\n                              " +
-                            _vm._s(_vm.show_alert.create.messaje) +
-                            "\n                      "
-                        )
+                          "\n                                  " +
+                            _vm._s(_vm.buttons.create.name) +
+                            "\n                                  "
+                        ),
+                        _vm.buttons.create.state
+                          ? _c("i", { staticClass: "fa fa-spinner fa-spin" })
+                          : _vm._e()
                       ]
                     )
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-footer centrar" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-warning botonAsctualizar",
-                      attrs: { disabled: _vm.buttons.create.state }
-                    },
-                    [
-                      _c("i", { staticClass: "icofont-ui-add" }),
-                      _vm._v(
-                        "\n                                  " +
-                          _vm._s(_vm.buttons.create.name) +
-                          "\n                                  "
-                      ),
-                      _vm.buttons.create.state
-                        ? _c("i", { staticClass: "fa fa-spinner fa-spin" })
-                        : _vm._e()
-                    ]
-                  )
-                ])
-              ]),
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "div",
@@ -14620,7 +14663,7 @@ var render = function() {
                       },
                       on: {
                         click: function($event) {
-                          return _vm.deleteTercero(props.row.idVehiculo)
+                          return _vm.deleteVehiculo(props.row.idVehiculo)
                         }
                       }
                     },
@@ -14835,9 +14878,7 @@ var render = function() {
         })
       ],
       1
-    ),
-    _vm._v(" "),
-    _vm._m(24)
+    )
   ])
 }
 var staticRenderFns = [
@@ -15273,432 +15314,6 @@ var staticRenderFns = [
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col" }, [
-      _c("label", [_vm._v("Observaciones")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", placeholder: "Observación" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-goup listado" }, [
-      _c("div", {}, [
-        _c("ul", { staticClass: "tabs" }, [
-          _c("li", [
-            _c("a", { attrs: { href: "#tab1" } }, [
-              _c("span", { staticClass: "fas fa-digital-tachograph " }),
-              _c("span", { staticClass: "tab-text" }, [_vm._v("Matrícula")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#tab2" } }, [
-              _c("span", { staticClass: "fas fa-file-alt" }),
-              _c("span", { staticClass: "fas fa-search" }),
-              _c("span", { staticClass: "tab-text" }, [_vm._v("Póliza")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#tab3" } }, [
-              _c("span", { staticClass: "fa fa-briefcase" }),
-              _c("span", { staticClass: "tab-text" }, [_vm._v("Operación")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#tab4" } }, [
-              _c("span", { staticClass: "fas fa-screwdriver" }),
-              _c("span", { staticClass: "tab-text" }, [_vm._v("RTM")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#tab5" } }, [
-              _c("span", { staticClass: "fas fa-users " }),
-              _c("span", { staticClass: "tab-text" }, [_vm._v("Terceros")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#tab6" } }, [
-              _c("span", { staticClass: "fas fa-route " }),
-              _c("span", { staticClass: "tab-text" }, [_vm._v("Rutas")])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "secciones" }, [
-          _c("div", { attrs: { id: "tab1" } }, [
-            _c("table", { staticClass: "table md-7" }, [
-              _c(
-                "thead",
-                { staticClass: " encabezadoFormulario text-white " },
-                [
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("# Licencia Transito")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Fecha Registro")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Tipo Registro")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Observaciones")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Fecha Creación")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Fecha Modificación")
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("tbody", [
-                _c("tr", [
-                  _c("th", [_vm._v("1")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Mark")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Otto")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")])
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { attrs: { id: "tab2" } }, [
-            _c("table", { staticClass: "table md-7" }, [
-              _c(
-                "thead",
-                { staticClass: " encabezadoFormulario text-white " },
-                [
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Descripción")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Aseguradora")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Número")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Fecha expide")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Fecha inicio")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Fecha vence")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Observación")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("tbody", [
-                _c("tr", [
-                  _c("th", [_vm._v("1")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Mark")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Otto")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")])
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { attrs: { id: "tab3" } }, [
-            _c("table", { staticClass: "table" }, [
-              _c(
-                "thead",
-                { staticClass: " encabezadoFormulario text-white " },
-                [
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "col", rowspan: "2" } }, [
-                      _vm._v("# Tarjeta Operación")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticStyle: {
-                          border: "2px solid white !important",
-                          "text-align": "center !important"
-                        },
-                        attrs: { scope: "col", colspan: "4" }
-                      },
-                      [_vm._v("Fecha")]
-                    ),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col", rowspan: "2" } }, [
-                      _vm._v("Observaciones")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col", rowspan: "2" } }, [
-                      _vm._v("Estado")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Vigencia Inicia")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Vigencia Fin")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Creación")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Modificación")
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("tbody", [
-                _c("tr", [
-                  _c("th", [_vm._v("1")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Mark")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Otto")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")])
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { attrs: { id: "tab4" } }, [
-            _c("table", { staticClass: "table md-7" }, [
-              _c(
-                "thead",
-                { staticClass: " encabezadoFormulario text-white " },
-                [
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "col", rowspan: "2" } }, [
-                      _vm._v("# Certificado")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticStyle: {
-                          border: "2px solid white !important",
-                          "text-align": "center !important"
-                        },
-                        attrs: { scope: "col", colspan: "5" }
-                      },
-                      [_vm._v("Fecha")]
-                    ),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col", rowspan: "2" } }, [
-                      _vm._v("Observaciones")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col", rowspan: "2" } }, [
-                      _vm._v("Estado")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Expedición")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Vigencia Inicia")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Vigencia Fin")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Creación")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Modificación")
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("tbody", [
-                _c("tr", [
-                  _c("th", [_vm._v("1")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Mark")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Otto")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")])
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { attrs: { id: "tab5" } }, [
-            _c("table", { staticClass: "table md-7" }, [
-              _c(
-                "thead",
-                { staticClass: " encabezadoFormulario text-white " },
-                [
-                  _c("tr", [
-                    _c(
-                      "th",
-                      {
-                        staticStyle: {
-                          border: "2px solid white !important",
-                          "text-align": "center !important"
-                        },
-                        attrs: { scope: "col", colspan: "4" }
-                      },
-                      [_vm._v("Fecha")]
-                    ),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col", rowspan: "2" } }, [
-                      _vm._v("Observaciones")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col", rowspan: "2" } }, [
-                      _vm._v("Estado")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Inicio")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Fin")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Creación")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Modificación")
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("tbody", [
-                _c("tr", [
-                  _c("th", [_vm._v("1")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Mark")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Otto")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")])
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { attrs: { id: "tab6" } }, [
-            _c("table", { staticClass: "table md-7" }, [
-              _c(
-                "thead",
-                { staticClass: " encabezadoFormulario text-white " },
-                [
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Observaciones")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Fecha Creación")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Fecha Modificación")
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("tbody", [
-                _c("tr", [
-                  _c("th", [_vm._v("1")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Mark")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Otto")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("@mdo")])
-                ])
-              ])
-            ])
-          ])
-        ])
-      ])
     ])
   }
 ]

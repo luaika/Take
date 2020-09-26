@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Vehiculo;
+use App\Vehiculoruta;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -62,6 +64,19 @@ class VehiculoController extends Controller
         return response()->json($vehiculo);
     }
 
+
+   public function vehiculoRuta(Request $request){
+    $vehiculoRuta = Vehiculoruta::create([
+        'idVehiculo'=>$request->idVehiculo,
+        'idRuta'=>$request->idRuta,
+        'observaciones'=>$request->observaciones,
+        'estado'=>$request->estado,
+        'idUsuarioCrea'=>$request->idUsuarioCrea,
+        'idUsuarioModifica'=>$request->idUsuarioModifica
+   ]);
+    return response()->json($vehiculoRuta);
+   }
+
     /**
      * Display the specified resource.
      *
@@ -117,8 +132,16 @@ class VehiculoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($idVehiculo)
     {
-        //
+        Vehiculo::destroy($idVehiculo);
+    }
+
+    //cambiar estado
+    public function stateVehiculo(Request $request){
+        $vehiculo = Vehiculo::find($request->idVehiculo);
+        $vehiculo->estado = $request->estado;
+        $vehiculo->save();
+        return response()->json($vehiculo);
     }
 }

@@ -415,9 +415,9 @@
                             <div class="row">
                                 <div class="col">
                                  <label>Tercero</label>
-                                    <select class="custom-select" v-model="idPoliza" required>
+                                    <select class="custom-select" v-model="data_poliza.idTercero" required>
                                         <option value="0">Seleccionar un Tercero</option>
-                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
+                                        <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" v-bind:key="idTercero" ></option>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -511,9 +511,9 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Tercero</label>
-                                    <select class="custom-select" v-model="idPoliza" required>
+                                    <select class="custom-select" v-model="data_poliza.idTercero" required>
                                         <option value="0">Seleccionar un Tercero</option>
-                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
+                                        <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" v-bind:key="idTercero" ></option>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -601,9 +601,9 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Tercero</label>
-                                    <select class="custom-select" v-model="idPoliza" required>
+                                    <select class="custom-select" v-model="data_poliza.idTercero" required>
                                         <option value="0">Seleccionar un Tercero</option>
-                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
+                                        <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" v-bind:key="idTercero" ></option>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -676,9 +676,9 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Tercero</label>
-                                    <select class="custom-select" v-model="idPoliza" required>
+                                    <select class="custom-select" v-model="data_poliza.idTercero" required>
                                         <option value="0">Seleccionar un Tercero</option>
-                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
+                                        <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" v-bind:key="idTercero" ></option>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -743,26 +743,26 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form method="POST" v-on:submit.prevent="setVehiculoRuta">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
                                     <label>Ruta</label>
-                                    <select class="custom-select" v-model="idPoliza" required>
+                                    <select class="custom-select" v-model="data_ruta.idRuta" required>
                                         <option value="0">Seleccionar Ruta</option>
-                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
+                                        <option v-for="idRuta in rutas" :value="idRuta.idRuta" v-text="idRuta.descripcion" v-bind:key="idRuta" ></option>
                                     </select>
                                 </div>
                                 <div class="col">
                                     <label for="estado" >Estado</label>
-                                    <select class="custom-select" id="estado" v-model="estado" required>
+                                    <select class="custom-select" id="estado" v-model="data_ruta.estado" required>
                                         <option value="1">Activo</option>
                                         <option value="0">Inactivo</option>
                                     </select>                                
                                 </div>
                                 <div class="col">
                                     <label>Observaciones</label>
-                                    <input type="text" class="form-control" placeholder="Observación">
+                                    <input type="text" class="form-control" placeholder="Observación" v-model="data_ruta.observaciones">
                                 </div>
                             </div>
                         </div>
@@ -811,7 +811,7 @@
                     </button>
                 </templete>
                 <templete slot="delete" slot-scope="props">
-                    <button type="button" class="btn btn-danger"   v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
+                    <button type="button" class="btn btn-danger"   v-on:click="deleteVehiculo(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
                        <i class="icofont-ui-delete"></i>
                     </button>
                 </templete>
@@ -860,190 +860,6 @@
      </div>
 
 
-        <div class="form-goup listado">
-                <div class="">
-                    <ul class="tabs">
-                        <li><a href="#tab1"><span class="fas fa-digital-tachograph "></span><span class="tab-text">Matrícula</span></a></li>
-                        <li><a href="#tab2"><span class="fas fa-file-alt"></span><span class="fas fa-search"></span><span class="tab-text">Póliza</span></a></li>
-                        <li><a href="#tab3"><span class="fa fa-briefcase"></span><span class="tab-text">Operación</span></a></li>
-                        <li><a href="#tab4"><span class="fas fa-screwdriver"></span><span class="tab-text">RTM</span></a></li>
-                        <li><a href="#tab5"><span class="fas fa-users "></span><span class="tab-text">Terceros</span></a></li>
-                        <li><a href="#tab6"><span class="fas fa-route "></span><span class="tab-text">Rutas</span></a></li>
-                   </ul>
-
-                    <div class="secciones">
-                        <div id="tab1">
-                                <table class="table md-7" >
-                                <thead class=" encabezadoFormulario text-white " >
-                                    <tr>
-                                    <th scope="col"># Licencia Transito</th>
-                                    <th scope="col">Fecha Registro</th>
-                                    <th scope="col">Tipo Registro</th>
-                                    <th scope="col">Observaciones</th>
-                                    <th scope="col">Estado</th>
-                                    <th scope="col">Fecha Creación</th>
-                                    <th scope="col">Fecha Modificación</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                    <th>1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td >@mdo</td>
-                                    <td >@mdo</td>
-                                    <td >@mdo</td>
-                                    <td >@mdo</td>
-                                    
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div id="tab2">
-                            <table class="table md-7" >
-                            <thead class=" encabezadoFormulario text-white " >
-                                    <tr>
-                                    <th scope="col">Descripción</th>
-                                    <th scope="col">Aseguradora</th>
-                                    <th scope="col">Número</th>
-                                    <th scope="col">Fecha expide</th>
-                                    <th scope="col">Fecha inicio</th>
-                                    <th scope="col">Fecha vence</th>
-                                    <th scope="col">Observación</th>
-                                    <th scope="col">Estado</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                    <th>1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td >@mdo</td>
-                                    <td >@mdo</td>
-                                    <td >@mdo</td>
-                                    <td >@mdo</td>
-                                    <td >@mdo</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                        <div id="tab3">
-                            <table class="table">
-                            <thead class=" encabezadoFormulario text-white " >
-                                <tr>
-                                <th scope="col" rowspan="2"># Tarjeta Operación</th>
-                                <th scope="col" colspan="4" style="border:2px solid white !important; text-align:center !important;">Fecha</th>
-                                <th scope="col" rowspan="2">Observaciones</th>
-                                <th scope="col" rowspan="2">Estado</th>
-                                </tr>
-                                <tr>
-                                <th scope="col">Vigencia Inicia</th>
-                                <th scope="col">Vigencia Fin</th>
-                                <th scope="col">Creación</th>
-                                <th scope="col">Modificación</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                <th>1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td >@mdo</td>
-                                <td >@mdo</td>
-                                <td >@mdo</td>
-                                <td >@mdo</td>
-                              
-                                </tr>
-                            </tbody>
-                            </table>
-                        </div>
-
-                        <div id="tab4">
-                            <table class="table md-7" >
-                            <thead class=" encabezadoFormulario text-white " >
-                            <tr>
-                                <th scope="col" rowspan="2"># Certificado</th>
-                                <th scope="col" colspan="5" style="border:2px solid white !important; text-align:center !important;">Fecha</th>
-                                <th scope="col" rowspan="2">Observaciones</th>
-                                <th scope="col" rowspan="2">Estado</th>
-                                </tr>
-                                <tr>
-                                <th scope="col">Expedición</th>
-                                <th scope="col">Vigencia Inicia</th>
-                                <th scope="col">Vigencia Fin</th>
-                                <th scope="col">Creación</th>
-                                <th scope="col">Modificación</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                <th>1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td >@mdo</td>
-                                <td >@mdo</td>
-                                <td >@mdo</td>
-                                <td >@mdo</td>
-                                </tr>
-                            </tbody>
-                            </table>
-                        </div>
-
-
-                        <div id="tab5">
-                            <table class="table md-7" >
-                            <thead class=" encabezadoFormulario text-white " >
-                            <tr>
-                                <th scope="col" colspan="4" style="border:2px solid white !important; text-align:center !important;">Fecha</th>
-                                <th scope="col" rowspan="2">Observaciones</th>
-                                <th scope="col" rowspan="2">Estado</th>
-                                </tr>
-                                <tr>
-                                <th scope="col">Inicio</th>
-                                <th scope="col">Fin</th>
-                                <th scope="col">Creación</th>
-                                <th scope="col">Modificación</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                <th>1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td >@mdo</td>
-                                <td >@mdo</td>
-                                <td >@mdo</td>
-                                </tr>
-                            </tbody>
-                            </table>
-                        </div>
-
-
-                        <div id="tab6">
-                            <table class="table md-7" >
-                            <thead class=" encabezadoFormulario text-white " >
-                                <tr>
-                                <th scope="col">Observaciones</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Fecha Creación</th>
-                                <th scope="col">Fecha Modificación</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                <th>1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td >@mdo</td>
-                                </tr>
-                            </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-        </div>
   </div>
 </template>
 
@@ -1085,6 +901,9 @@ export default {
      carroceria:[],
      combustible:[],
      tiposdePolizas:[],
+     terceros:[],
+     data:[],
+     rutas:[],
      editar:false,
       config: {
                  pagination: true, // default true
@@ -1429,6 +1248,26 @@ export default {
                 observaciones:'',
                 estado:'',
             },
+     data_poliza:{
+         idTercero:0,
+         numeroPoliza:'',
+         fechaExpedicion:'',
+         fechaVigenciaInicio:'',
+         fechaVigenciaFin:'',
+         observaciones:'',
+         estado:'',
+         idUsuarioCrea:1,
+         idUsuarioModifica:1,
+     },
+
+     data_ruta:{
+         idRuta:0,
+         estado:1,
+         descripcion:'',
+         observaciones:'',
+         idUsuarioCrea:1,
+         idUsuarioModifica:1,
+     },
     };
   },
   components:{
@@ -1443,6 +1282,8 @@ export default {
       this.getCombustible();
       this.getVehiculo();
       this.getTiposPoliza();
+      this.getTercero();
+      this.getRutas();
     },
   methods:{
       //insertar vehiculo
@@ -1469,7 +1310,7 @@ export default {
         'observaciones':this.observaciones,
         'estado':this.estado,
         'idUsuarioCrea':this.idUsuarioCrea,
-        'idUsuarioModific':this.idUsuarioModifica
+        'idUsuarioModifica':this.idUsuarioModifica
       }
       axios.post('/setVehiculo', formData).then((response) =>{
         this.placa='',
@@ -1501,6 +1342,36 @@ export default {
           console.log(error.response);
       });
     },
+    
+    //insertar Ruta vehiculo
+    setVehiculoRuta: function(){
+      this.buttons.create.name = 'Agregando ...';
+      this.buttons.create.state = true;
+      console.log('ojo'+idVehiculo);
+      let formData = {
+        'idVehiculo':this.idVehiculo,
+        'idRuta':this.data_ruta.idRuta,
+        'observaciones':this.data_ruta.observaciones,
+        'estado':this.data_ruta.estado,
+        'idUsuarioCrea':this.data_ruta.idUsuarioCrea,
+        'idUsuarioModifica':this.data_ruta.idUsuarioModifica
+      }
+      axios.post('/vehiculoRuta', formData).then((response) =>{
+        
+        this.idVehiculo = '',
+        this.data_ruta.idRuta = '',
+        this.data_ruta.observaciones = ''
+        this.data_ruta.estado = '',
+        //this.getVehiculo();
+        swal("OK!", "Ruta agregada exitosamente!", "success"); 
+            this.buttons.create.name = 'Agregar' ;
+            this.buttons.create.state = false ;
+      }).catch((error)=>{
+         swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+          console.log(error.response);
+      });
+    },
+   
     //listar vehículos
     getVehiculo:function(){
      axios.get('/vehiculo-resource').then((response) => {
@@ -1508,6 +1379,18 @@ export default {
                     this.vehiculos  = response.data;
                 } else {
                     this.message = 'No hay registro de vehículos!!!';
+                }
+            }).catch((error) => {
+                console.log(error.response);
+            });
+    },
+   //listar terceros
+    getTercero:function(){
+     axios.get('/tercero-resource').then((response) => {
+                if (response.data.length > 0) {
+                    this.terceros = response.data;
+                } else {
+                    this.message = 'No hay registro de terceros!!!';
                 }
             }).catch((error) => {
                 console.log(error.response);
@@ -1588,49 +1471,123 @@ export default {
             console.log(error.response);
         });
    },
+   
+
+    //Listar Rutas
+    getRutas: function(){
+        axios.get('/rutas-resource?Q=0').then( (response)  => {
+           if (response.data.length > 0) {
+                this.rutas  = response.data;
+            } else {
+                this.message = 'No hay registro de tutas!!!';
+            }
+        }).catch((error) => {
+                console.log(error.response);
+        });
+    },
+
+   
    //ver vehiculo
     verVehiculo: function (idVehiculo,funcion) {
      
-            if(funcion == 0){
+           /*  if(funcion == 0){
                 this.editar = true;
             }else{
                  this.editar = false;
-            }
+            }; */
             this.data_edit.idVehiculo = idVehiculo;
             axios.get('/vehiculo-resource/'+idVehiculo+'/edit').then((response) => {
                 this.data_edit.contenedor= true;
                 this.data_edit.show= false;
                 let data = response.data;
-                this.data_edit.placa=data['placa'],
-                this.data_edit.numeroInterno=data['numeroInterno'],
-                this.data_edit.idVehiculoMatricula=data['idVehiculoMatricula'],
-                this.data_edit.idServicio=data['idServicio'],
-                this.data_edit.descripcionServicio=data['descripcionServicio'],
-                this.data_edit.idClase=data['idClase'],
-                this.data_edit.descripcionClase=data['descripcionClase'],
-                this.data_edit.idMarca=data['idMarca'],
-                this.data_edit.descripcionMarca=data['descripcionMarca'],
-                this.data_edit.idColor=data['idColor'],
-                this.data_edit.descripcionColor=data['descripcionColor'],
-                this.data_edit.idCarroceria=data['idCarroceria'],
-                this.data_edit.descripcionCarroceria=data['descripcionCarroceria'],
-                this.data_edit.idCombustible=data['idCombustible'],
-                this.data_edit.descripcionCombustible=data['descripcionCombustible'],
-                this.data_edit.linea=data['linea'],
-                this.data_edit.modelo=data['modelo'],
-                this.data_edit.numeroSerie=data['numeroSerie'],
-                this.data_edit.numeroChasis=data['numeroChasis'],
-                this.data_edit.numeroMotor=data['numeroMotor'],
-                this.data_edit.numeroPuertas=data['numeroPuertas'],
-                this.data_edit.numeroPasajeros=data['numeroPasajeros'],
-                this.data_edit.observaciones=data['observaciones'],
-                this.data_edit.estado=data['estado']
+                console.log(data);
+                this.data_edit.placa = data['placa'];
+                this.data_edit.numeroInterno = data['numeroInterno'];
+                this.data_edit.idVehiculoMatricula = data['idVehiculoMatricula'];
+                this.data_edit.idServicio = data['idServicio'];
+                this.data_edit.descripcionServicio = data['descripcionServicio'];
+                this.data_edit.idClase = data['idClase'];
+                this.data_edit.descripcionClase = data['descripcionClase'];
+                this.data_edit.idMarca = data['idMarca'];
+                this.data_edit.descripcionMarca = data['descripcionMarca'];
+                this.data_edit.idColor = data['idColor'];
+                this.data_edit.descripcionColor = data['descripcionColor'];
+                this.data_edit.idCarroceria = data['idCarroceria'];
+                this.data_edit.descripcionCarroceria = data['descripcionCarroceria'];
+                this.data_edit.idCombustible = data['idCombustible'];
+                this.data_edit.descripcionCombustible = data['descripcionCombustible'];
+                this.data_edit.linea = data['linea'];
+                this.data_edit.modelo = data['modelo'];
+                this.data_edit.numeroSerie = data['numeroSerie'];
+                this.data_edit.numeroChasis = data['numeroChasis'];
+                this.data_edit.numeroMotor = data['numeroMotor'];
+                this.data_edit.numeroPuertas = data['numeroPuertas'];
+                this.data_edit.numeroPasajeros = data['numeroPasajeros'];
+                this.data_edit.observaciones = data['observaciones'];
+                this.data_edit.estado = data['estado'];
+
             }).catch((error) => {
                 console.log(error);
             });
+            console.log('Placa');
+            console.log(this.data_edit.placa);
         },
 
-  }
+    //eliminar vehiculo
+    deleteVehiculo: function(idVehiculo){
+        swal({
+         title: "Estas seguro ?",
+         text: "Este Vehiculo quedará eliminado de tus registros!",
+         icon: "warning",
+         buttons: ["Cancelar","Confirmar"],
+         dangerMode: true,
+      }).then((willDelete) => {
+         if (willDelete) {
+             this.data_edit.idVehiculo = idVehiculo;
+             axios.delete('/vehiculo-delete/' + this.data_edit.idVehiculo).then((response) => {
+                 swal("OK!", "El tercero se elimino exitosamente", "success");
+                 this.getVehiculo();
+             }).catch((error)=>{
+                 swal("Lo sentimos", "Parece que algo salio mal!", "error");
+             });
+         }
+     });
+    },
+
+    //cambiar estado de vehiculo
+    stateTercero: function (idVehiculo, estado) {
+    
+                let formData = {
+                idVehiculo: idVehiculo,
+                estado: estado
+                 };
+
+                 if(estado == 1 ){
+                     var nomState = "Activo";
+                 }else{
+                     var nomState = "Inactivo";
+                 }
+                swal({
+                    title: "Estado de vehículo",
+                    text: "Este tercero quedará " + nomState + " en tus registros!",
+                    icon: "success",
+                    dangerMode: false,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        axios.post('/stateVehiculo', formData).then((response) => {
+                            //Success
+                            swal("OK!", "Estado actualizado exitosamente", "success");
+
+                        }).catch((error) => {
+                            swal("Oops!", "Parece que algo salio mal!", "error");
+                            console.log(error.response);
+                        });
+                    }
+                });
+
+        },
+
+ }
 }
 </script>
 

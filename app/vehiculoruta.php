@@ -4,19 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class vehiculoruta extends Model
+class Vehiculoruta extends Model
 {
+    protected $table='vehiculoruta';
+    protected $primaryKey = 'idVehiculoRuta';
     protected $fillable = [
-        
-        'idVehiculoRuta',
         'idVehiculo',
         'idRuta',
         'observaciones',
         'estado',
-        'fechaCrea',
-        'fechaModifica',
         'idUsuarioCrea',
-        'idUsuarioModific',
+        'idUsuarioModifica',
 
     ];
 }

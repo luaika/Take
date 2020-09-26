@@ -47,6 +47,10 @@ Route::resource('/barrio-resource', 'BarrioController');
 
 //Vehiculo
 Route::resource('/vehiculo-resource', 'VehiculoController');
+Route::delete('/vehiculo-delete/{idVehiculo}', 'VehiculoController@destroy');
+Route::post('/stateVehiculo','VehiculoController@stateVehiculo');
+Route::post('/vehiculoRuta','VehiculoController@vehiculoRuta');
+
 //marca
 Route::resource('/marca-resource', 'MarcaController');
 //servicio

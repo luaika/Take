@@ -17,5 +17,4 @@ class Poliza extends Model
         'idUsuarioModifica',
         'idUsuarioCrea'
     ];
-
 }

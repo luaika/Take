@@ -709,7 +709,6 @@ export default {
 
                         }).catch((error) => {
                             swal("Oops!", "Parece que algo salio mal!", "error");
-                            console.log('la cagamos');
                             console.log(error.response);
                         });
                     }
