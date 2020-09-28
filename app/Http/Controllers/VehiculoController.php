@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 use App\Vehiculo;
 use App\Vehiculoruta;
+use App\Vehiculopoliza;
+use App\Vehiculooperacion;
+use App\Vehiculortm;
+use App\Vehiculotercero;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -64,7 +68,7 @@ class VehiculoController extends Controller
         return response()->json($vehiculo);
     }
 
-
+    //insertar ruta
    public function vehiculoRuta(Request $request){
     $vehiculoRuta = Vehiculoruta::create([
         'idVehiculo'=>$request->idVehiculo,
@@ -76,6 +80,77 @@ class VehiculoController extends Controller
    ]);
     return response()->json($vehiculoRuta);
    }
+   
+   //insertar ruta
+   public function vehiculoPoliza(Request $request){
+    $vehiculoPoliza = Vehiculopoliza::create([
+        'idVehiculo'=>$request->idVehiculo,
+        'idTercero'=>$request->idTercero,
+        'idPoliza'=>$request->idPoliza,
+        'numeroPoliza'=>$request->numeroPoliza,
+        'estado'=>$request->estado,
+        'fechaExpedicion'=>$request->fechaExpedicion,
+        'observaciones'=>$request->observaciones,
+        'fechaVigenciaInicio'=>$request->fechaVigenciaInicio,
+        'fechaVegenciaFin'=>$request->fechaVegenciaFin,
+        'idUsuarioCrea'=>$request->idUsuarioCrea,
+        'idUsuarioModifica'=>$request->idUsuarioModifica
+   ]);
+    return response()->json($vehiculoPoliza);
+   }
+
+   //insertar operacion
+   public function vehiculoOperacion(Request $request){
+    $vehiculoOperacion = Vehiculooperacion::create([
+        'idVehiculo'=>$request->idVehiculo,
+        'idTercero'=>$request->idTercero,
+        'numeroTarjetaOperacion'=>$request->numeroTarjetaOperacion,
+        'fechaExpedicion'=>$request->fechaExpedicion,
+        'estado'=>$request->estado,
+        'fechaExpedicion'=>$request->fechaExpedicion,
+        'observaciones'=>$request->observaciones,
+        'fechaVigenciaInicia'=>$request->fechaVigenciaInicia,
+        'fechaVigenciaFin'=>$request->fechaVigenciaFin,
+        'idUsuarioCrea'=>$request->idUsuarioCrea,
+        'idUsuarioModifica'=>$request->idUsuarioModifica
+   ]);
+    return response()->json($vehiculoOperacion);
+   }
+
+    //insertar rtm
+    public function vehiculoRtm(Request $request){
+        $vehiculoRtm = Vehiculortm::create([
+            'idVehiculo'=>$request->idVehiculo,
+            'idTercero'=>$request->idTercero,
+            'numeroCertificado'=>$request->numeroCertificado,
+            'fechaExpedicion'=>$request->fechaExpedicion,
+            'estado'=>$request->estado,
+            'fechaExpedicion'=>$request->fechaExpedicion,
+            'observaciones'=>$request->observaciones,
+            'fechaVigenciaInicia'=>$request->fechaVigenciaInicia,
+            'fechaVigenciaFin'=>$request->fechaVigenciaFin,
+            'idUsuarioCrea'=>$request->idUsuarioCrea,
+            'idUsuarioModifica'=>$request->idUsuarioModifica
+       ]);
+        return response()->json($vehiculoRtm);
+       }
+
+       //insertar tercero
+        public function vehiculoTercero(Request $request){
+            $vehiculoTercero = vehiculotercero::create([
+                'idVehiculo'=>$request->idVehiculo,
+                'idTercero'=>$request->idTercero,
+                'estado'=>$request->estado,
+                'observaciones'=>$request->observaciones,
+                'fechaInicia'=>$request->fechaInicia,
+                'fechaFin'=>$request->fechaFin,
+                'idUsuarioCrea'=>$request->idUsuarioCrea,
+                'idUsuarioModifica'=>$request->idUsuarioModifica
+        ]);
+            return response()->json($vehiculoTercero);
+       }
+    
+   
 
     /**
      * Display the specified resource.
@@ -94,6 +169,62 @@ class VehiculoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function verRutas($idVehiculo)
+    {
+        $query = Vehiculoruta::join('ruta', 'ruta.idRuta', 'vehiculoruta.idRuta')
+            ->select('vehiculoruta.*' , 'ruta.descripcion as nombreRuta')
+            ->where('idVehiculo',$idVehiculo)
+            ->get();
+        return response()->json($query);
+    }
+
+
+    //ver polizas
+    public function verPolizas($idVehiculo)
+    {
+        $query = \DB::table('vehiculopoliza')
+            ->join('poliza', 'poliza.idPoliza','=', 'vehiculopoliza.idPoliza')
+            ->join('tercero', 'tercero.idTercero','=', 'vehiculopoliza.idTercero')
+            ->select('vehiculopoliza.*' , 'poliza.descripcion as nombrePoliza','tercero.numeroIdentificacion')
+            ->where('idVehiculo','=',$idVehiculo)
+            ->get();
+        return response()->json($query);
+    }
+
+   //ver operaciones
+   public function verOperaciones($idVehiculo)
+   {
+       $query = \DB::table('vehiculooperacion')
+           ->join('tercero', 'tercero.idTercero','=', 'vehiculooperacion.idTercero')
+           ->select('vehiculooperacion.*' , 'tercero.numeroIdentificacion')
+           ->where('idVehiculo',$idVehiculo)
+           ->get();
+       return response()->json($query);
+   }
+
+   //ver rtm
+   public function verRtm($idVehiculo)
+   {
+       $query = \DB::table('vehiculortm')
+           ->join('tercero', 'tercero.idTercero','=', 'vehiculortm.idTercero')
+           ->select('vehiculortm.*' , 'tercero.numeroIdentificacion')
+           ->where('idVehiculo',$idVehiculo)
+           ->get();
+       return response()->json($query);
+   }
+
+   //ver  tercero
+   public function verTerceros($idVehiculo)
+   {
+       $query = \DB::table('vehiculotercero')
+           ->join('tercero', 'tercero.idTercero','=', 'vehiculotercero.idTercero')
+           ->select('vehiculotercero.*' , 'tercero.numeroIdentificacion')
+           ->where('idVehiculo',$idVehiculo)
+           ->get();
+       return response()->json($query);
+   }
+
+
     public function edit($idVehiculo)
     {
         $query = \DB::table('vehiculo')
@@ -108,12 +239,9 @@ class VehiculoController extends Controller
             'combustible.descripcionCombustible')
             ->where('idVehiculo',$idVehiculo)
             ->get();
-       // $query = Vehiculo::orderBy('placa')->get();
         return response()->json($query);
-       /*  $vehiculo = Vehiculo::find($idVehiculo);
-        return response()->json($vehiculo); */
+       
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -121,9 +249,33 @@ class VehiculoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idVehiculo)
     {
-        //
+        $vehiculo=Vehiculo::find($idVehiculo);
+
+        $vehiculo->update([
+            'placa'=>$request->placa,
+            'numeroInterno'=>$request->numeroInterno,
+            'idVehiculoMatricula'=>$request->idVehiculoMatricula,
+            'idServicio'=>$request->idServicio,
+            'idClase'=>$request->idClase,
+            'idMarca'=>$request->idMarca,
+            'idColor'=>$request->idColor,
+            'idCarroceria'=>$request->idCarroceria,
+            'idCombustible'=>$request->idCombustible,
+            'linea'=>$request->linea,
+            'modelo'=>$request->modelo,
+            'numeroSerie'=>$request->numeroSerie,
+            'numeroChasis'=>$request->numeroChasis,
+            'numeroMotor'=>$request->numeroMotor,
+            'numeroPuertas'=>$request->numeroPuertas,
+            'numeroPasajeros'=>$request->numeroPasajeros,
+            'observaciones'=>$request->observaciones,
+            'estado'=>$request->estado,
+            'idUsuarioCrea'=>$request->idUsuarioCrea,
+            'idUsuarioModifica'=>$request->idUsuarioModifica,
+        ]);
+        return response()->json($vehiculo);
     }
 
     /**
@@ -136,6 +288,37 @@ class VehiculoController extends Controller
     {
         Vehiculo::destroy($idVehiculo);
     }
+
+    //eliminar ruta de vehiculo
+    public function destroyRuta($idVehiculo)
+    {
+        Vehiculoruta::destroy($idVehiculo);
+    }
+
+    //eliminar poliza de vehiculo
+    public function destroyPoliza($idVehiculo)
+    {
+        Vehiculopoliza::destroy($idVehiculo);
+    }
+
+    //eliminar operacion de vehiculo
+    public function destroyOperacion($idVehiculo)
+    {
+        Vehiculooperacion::destroy($idVehiculo);
+    }
+
+     //eliminar rtm de vehiculo
+     public function destroyRtm($idVehiculo)
+     {
+         Vehiculortm::destroy($idVehiculo);
+     }
+
+     //eliminar tercero de vehiculo
+     public function destroyTercero($idVehiculo)
+     {
+         Vehiculotercero::destroy($idVehiculo);
+     }
+
 
     //cambiar estado
     public function stateVehiculo(Request $request){

@@ -62,16 +62,16 @@ class RutaController extends Controller
     {
         $ruta = Ruta::create([
 
-            'codigo' => $request->codigo,
-            'descripcion' => $request->descripcion,
-            'idBarrioInicia' => $request->idBarrioInicia,
-            'idBarrioTermina' => $request->idBarrioTermina,
-            'estado' => $request->estado,
-            'idUsuarioModifica' => $request->idUsuarioModifica,
-            'idUsuarioCrea' => $request->idUsuarioCrea
-            ]);
+            'codigo'=>$request->codigo,
+            'descripcion'=>$request->descripcion,
+            'idBarrioInicia'=>$request->idBarrioInicia,
+            'idBarrioTermina'=>$request->idBarrioTermina,
+            'estado'=>$request->estado,
+            'idUsuarioModifica'=>$request->idUsuarioModifica,
+            'idUsuarioCrea'=>$request->idUsuarioCrea
+        ]);
 
-         return response()->json($ruta);
+        return response()->json($ruta);
     }
 
     /**

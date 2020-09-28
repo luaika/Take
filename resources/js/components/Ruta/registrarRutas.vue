@@ -282,30 +282,19 @@ export default {
 
             axios.post('/setRuta', formData).then((response) =>{
 
-                this.codigo = '';
-                this.descripcion = '';
-                this.idBarrioInicia = 0;
-                this.idBarrioTermina = 0;
-                this.estado = 1;
-                this.idUsuarioModifica = '';
-                this.idUsuarioCrea = '';
-
-                    swal("OK!", "Ruta creada exitosamente!", "success");
+                    this.codigo = '';
+                    this.descripcion = '';
+                    this.idBarrioInicia = 0;
+                    this.idBarrioTermina = 0;
+                    this.estado = 1;
+                    this.idUsuarioModifica = 1;
+                    this.idUsuarioCrea = 1;
                     this.buttons.create.name = 'Agregar' ;
-
                     this.buttons.create.state = false ;
-
-                    this.getRutas();
-                    this.getBarrioTermina();
-                    $("#Ruta").modal('hide');
-
-
                 swal("OK!", "Ruta creada exitosamente!", "success");
                 this.buttons.create.name = 'Agregar' ;
                 this.buttons.create.state = false ;
-                     this.getRutaTermina();
-                    $("#Ruta").modal('hide');
-
+                this.getRutaTermina();
                 }).catch((error) => {
                     swal("Lo sentimos!", "Parece que algo salio mal!", "error");
                     console.log(error.response);
@@ -320,8 +309,8 @@ export default {
                 this.idBarrioInicia = 0;
                 this.idBarrioTermina = 0;
                 this.estado = 1;
-                this.idUsuarioModifica = '';
-                this.idUsuarioCrea = '';
+                this.idUsuarioModifica = 1;
+                this.idUsuarioCrea = 1;
         },
         // Lista Barrios
         getListBarrios: function () {

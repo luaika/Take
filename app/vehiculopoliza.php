@@ -4,8 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class vehiculopoliza extends Model
+class Vehiculopoliza extends Model
 {
+    protected $table = 'vehiculopoliza';
+    protected $primaryKey = 'idVehiculoPoliza';
     protected $fillable = [
         
         'idVehiculoPoliza',
@@ -18,10 +20,8 @@ class vehiculopoliza extends Model
         'fechaVegenciaFin',
         'observaciones',
         'estado',
-        'fechaCrea',
-        'fechaModifica',
         'idUsuarioCrea',
-        'idUsuarioModific',
+        'idUsuarioModifica',
 
     ];
 }

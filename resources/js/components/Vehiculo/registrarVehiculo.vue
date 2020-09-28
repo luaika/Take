@@ -188,8 +188,10 @@
                                 </div>
                                 <div class="col">
                                     <label for="idServicio">Servicio</label>
-                                    <i class="fas fa-city iconos"></i>
-                                    <input type="text" class="form-control inputTeceros" id="idServicio"  v-model="data_edit.idServicio     ">
+                                    <select class="custom-select" v-model="data_edit.idServicio" required>
+                                        <option value="0">Seleccionar Servicio</option>
+                                        <option v-for="idServicio in servicios" :value="idServicio.idServicio" v-text="idServicio.descripcionServicio" v-bind:key="idServicio" ></option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -197,41 +199,50 @@
                             <div class="row">
                                 <div class="col">
                                     <label for="idClase">Clase</label>
-                                    <i class="fas fa-city iconos"></i>
-                                    <input type="text" class="form-control inputTeceros" id="idClase" v-model="data_edit.idClase">
+                                    <select class="custom-select" v-model="data_edit.idClase" required>
+                                        <option value="0">Seleccionar Clase</option>
+                                        <option v-for="idClase in clase" :value="idClase.idClase" v-text="idClase.descripcionClase" v-bind:key="idClase" ></option>
+                                    </select>
                                 </div>
                                 <div class="col">
                                     <label for="idMarca">Marca</label>
-                                    <i class="fas fa-city iconos"></i>
-                                    <input type="text" class="form-control inputTeceros" id="idMarca" v-model="data_edit.idMarca">
-                                </div>
+                                    <select class="custom-select" v-model="data_edit.idMarca" required>
+                                        <option value="0">Seleccionar Marca</option>
+                                        <option v-for="idMarca in marca" :value="idMarca.idMarca" v-text="idMarca.descripcionMarca" v-bind:key="idMarca" ></option>
+                                    </select>  
+                               </div>
                                 <div class="col">
                                     <label for="idColor">Color</label>
-                                    <i class="fas fa-palette iconos"></i>
-                                    <input type="text" class="form-control inputTeceros" id="idColor" v-model="data_edit.idColor">
-                                </div>
+                                    <select class="custom-select" v-model="data_edit.idColor" required>
+                                        <option value="0">Seleccionar Color</option>
+                                        <option v-for="idColor in color" :value="idColor.idColor" v-text="idColor.descripcionColor" v-bind:key="idColor" ></option>
+                                    </select>
+                             </div>
                             </div>
                         </div>
                         <div class="form-group">
                                 <div class="row">
                                     <div class="col">
                                         <label for="idCarroceria">Carroceria</label>
-                                        <i class="fas fa-city iconos"></i>
-                                        <input type="text" class="form-control inputTeceros" id="idCarroceria " v-model="data_edit.idCarroceria">
+                                        <select class="custom-select" v-model="data_edit.idCarroceria" required>
+                                            <option value="0">Seleccionar Carroceria</option>
+                                            <option v-for="idCarroceria in carroceria" :value="idCarroceria.idCarroceria" v-text="idCarroceria.descripcionCarroceria" v-bind:key="idCarroceria" ></option>
+                                        </select>
                                     </div>
                                     <div class="col">
                                         <label for="idCombustible">Combustible</label>
-                                        <i class="fas fa-gas-pump iconos"></i>
-                                        <input type="text" class="form-control inputTeceros" id="idCombustible " v-model="data_edit.idCombustible ">
+                                        <select class="custom-select" v-model="data_edit.idCombustible" required>
+                                            <option value="0">Seleccionar Combustible</option>
+                                            <option v-for="idCombustible in combustible" :value="idCombustible.idCombustible" v-text="idCombustible.descripcionCombustible" v-bind:key="idCombustible" ></option>
+                                        </select>
                                     </div>
                                     <div class="col">
                                         <label for="linea">Linea</label>
                                         <i class="fas fa-palette iconos"></i>
                                         <input type="text" class="form-control inputTeceros" id="linea" v-model="data_edit.linea">
                                     </div>
-                                            
                                 </div>
-                        </div>
+                            </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-4">
@@ -392,19 +403,19 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form method="POST" v-on:submit.prevent="setVehiculoPoliza">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
                                     <label>Poliza</label>
-                                    <select class="custom-select" v-model="idPoliza" required>
+                                    <select class="custom-select" v-model="data_poliza.idPoliza" required>
                                         <option value="0">Seleccionar Tipo de Póliza</option>
                                         <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
                                     </select>
                                 </div>
                                 <div class="col">
                                     <label for="estado" >Estado</label>
-                                    <select class="custom-select" id="estado" v-model="estado" required>
+                                    <select class="custom-select" id="estado" v-model="data_poliza.estado" required>
                                         <option value="1">Activo</option>
                                         <option value="0">Inactivo</option>
                                     </select>                                
@@ -422,7 +433,7 @@
                                 </div>
                                 <div class="col">
                                 <label>Número de póliza</label>
-                                <input type="number" class="form-control" >
+                                <input type="number" class="form-control" v-model="data_poliza.numeroPoliza">
                                 </div>
                             </div>
                         </div>
@@ -430,11 +441,11 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Fecha de Inicio de vigencia</label>
-                                    <input type="date" class="form-control" >
+                                    <input type="date" class="form-control" v-model="data_poliza.fechaVigenciaInicio">
                                 </div>
                                 <div class="col">
                                     <label>Fecha de Finalización de vigencia</label>
-                                    <input type="date" class="form-control" >
+                                    <input type="date" class="form-control"  v-model="data_poliza.fechaVigenciaFin" >
                                 </div>
                             </div>
                         </div>
@@ -442,11 +453,11 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Observaciones</label>
-                                    <input type="text" class="form-control" >
+                                    <input type="text" class="form-control"  v-model="data_poliza.observaciones">
                                 </div>
                                 <div class="col">
                                     <label>Fecha de expedición</label>
-                                    <input type="date" class="form-control" >
+                                    <input type="date" class="form-control"  v-model="data_poliza.fechaExpedicion">
                                 </div>
                             </div>
                         </div>
@@ -464,9 +475,17 @@
                         </div>
                     </form>
                     <div class="container-fluid">
-                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnPoliza"  :config = "config" thead-class="green-bg bg-dark text-white">
+                        <vue-bootstrap4-table :rows="polizasList" :columns="columnPoliza"  :config = "config" thead-class="green-bg bg-dark text-white">
+                            <templete slot="estado" slot-scope="props">
+                                <div v-if="props.row.estado === 1">
+                                    Activo
+                                </div>
+                                <div v-else-if="props.row.estado === 0 ">
+                                    Inactiva
+                                </div>
+                            </templete>
                             <templete slot="delete" slot-scope="props">
-                                <button type="button" class="btn btn-danger"   v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
+                                <button type="button" class="btn btn-danger"   v-on:click="deletePolizaVehiculo(props.row.idVehiculoPoliza)" v-bind:idVehiculoPoliza="props.row.idVehiculoPoliza">
                                 <i class="icofont-ui-delete"></i>
                                 </button>
                             </templete>
@@ -488,19 +507,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                   <form>
+                   <form method="POST" v-on:submit.prevent="setVehiculoOperacion">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
                                     <label>Número de tarjeta operación</label>
-                                    <select class="custom-select" v-model="idPoliza" required>
-                                        <option value="0">Seleccionar</option>
-                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
-                                    </select>
+                                    <input type="text" class="form-control" v-model="data_operacion.numeroTarjetaOperacion">
                                 </div>
                                 <div class="col">
                                     <label for="estado" >Estado</label>
-                                    <select class="custom-select" id="estado" v-model="estado" required>
+                                    <select class="custom-select" id="estado" v-model="data_operacion.estado" required>
                                         <option value="1">Activo</option>
                                         <option value="0">Inactivo</option>
                                     </select>                                
@@ -511,14 +527,14 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Tercero</label>
-                                    <select class="custom-select" v-model="data_poliza.idTercero" required>
+                                    <select class="custom-select" v-model="data_operacion.idTercero" required>
                                         <option value="0">Seleccionar un Tercero</option>
                                         <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" v-bind:key="idTercero" ></option>
                                     </select>
                                 </div>
                                 <div class="col">
                                     <label>Fecha de expedición</label>
-                                    <input type="date" class="form-control" >
+                                    <input type="date" class="form-control" v-model="data_operacion.fechaExpedicion" >
                                 </div>
                             </div>
                         </div>
@@ -527,11 +543,11 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Fecha de Inicio de vigencia</label>
-                                    <input type="date" class="form-control" >
+                                    <input type="date" class="form-control" v-model="data_operacion.fechaVigenciaInicia">
                                 </div>
                                 <div class="col">
                                     <label>Fecha de Finalización de vigencia</label>
-                                    <input type="date" class="form-control" >
+                                    <input type="date" class="form-control" v-model="data_operacion.fechaVigenciaFin">
                                 </div>
                             </div>
                         </div>
@@ -539,7 +555,7 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Observaciones</label>
-                                    <input type="text" class="form-control" >
+                                    <input type="text" class="form-control" v-model="data_operacion.observaciones">
                                 </div>
                             </div>
                         </div>
@@ -557,9 +573,17 @@
                         </div>
                     </form>
                     <div class="container-fluid">
-                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnOperacion"  :config = "config" thead-class="green-bg bg-dark text-white">
+                        <vue-bootstrap4-table :rows="operacionesList" :columns="columnOperacion"  :config = "config" thead-class="green-bg bg-dark text-white">
+                            <templete slot="estado" slot-scope="props">
+                                <div v-if="props.row.estado === 1">
+                                    Activo
+                                </div>
+                                <div v-else-if="props.row.estado === 0 ">
+                                    Inactivo
+                                </div>
+                            </templete>
                             <templete slot="delete" slot-scope="props">
-                                <button type="button" class="btn btn-danger"   v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
+                                <button type="button" class="btn btn-danger"  v-on:click="deleteOperacionVehiculo(props.row.idVehiculoOperacion)" v-bind:idVehiculoOperacion="props.row.idVehiculoOperacion">
                                 <i class="icofont-ui-delete"></i>
                                 </button>
                             </templete>
@@ -581,16 +605,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form method="POST" v-on:submit.prevent="setVehiculoRtm">
                          <div class="form-group">
                             <div class="row">
                                 <div class="col">
                                     <label>Número de certificado</label>
-                                    <input type="text" class="form-control" placeholder="Certificado" >
+                                    <input type="text" class="form-control" placeholder="Certificado" v-model="data_rtm.numeroCertificado">
                                 </div>
                                 <div class="col">
                                     <label for="estado" >Estado</label>
-                                    <select class="custom-select" id="estado" v-model="estado" required>
+                                    <select class="custom-select" id="estado" v-model="data_rtm.estado" required>
                                         <option value="1">Activo</option>
                                         <option value="0">Inactivo</option>
                                     </select>                                
@@ -601,14 +625,14 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Tercero</label>
-                                    <select class="custom-select" v-model="data_poliza.idTercero" required>
+                                    <select class="custom-select" v-model="data_rtm.idTercero" required>
                                         <option value="0">Seleccionar un Tercero</option>
                                         <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" v-bind:key="idTercero" ></option>
                                     </select>
                                 </div>
                                 <div class="col">
                                     <label>Fecha de expedición</label>
-                                    <input type="date" class="form-control" >
+                                    <input type="date" class="form-control" v-model="data_rtm.fechaExpedicion">
                                 </div>
                             </div>
                         </div>
@@ -617,11 +641,11 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Fecha de Inicio de vigencia</label>
-                                    <input type="date" class="form-control" >
+                                    <input type="date" class="form-control" v-model="data_rtm.fechaVigenciaInicia">
                                 </div>
                                 <div class="col">
                                     <label>Fecha de Finalización de vigencia</label>
-                                    <input type="date" class="form-control" >
+                                    <input type="date" class="form-control" v-model="data_rtm.fechaVigenciaFin" >
                                 </div>
                             </div>
                         </div>
@@ -629,7 +653,7 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Observaciones</label>
-                                    <input type="text" class="form-control" >
+                                    <input type="text" class="form-control" v-model="data_rtm.observaciones" >
                                 </div>
                             </div>
                         </div>
@@ -646,9 +670,17 @@
                         </div>
                     </form>
                     <div class="container-fluid">
-                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnRtm"  :config = "config" thead-class="green-bg bg-dark text-white">
+                        <vue-bootstrap4-table :rows="rtmList" :columns="columnRtm"  :config = "config" thead-class="green-bg bg-dark text-white">
+                           <templete slot="estado" slot-scope="props">
+                                <div v-if="props.row.estado === 1">
+                                    Activo
+                                </div>
+                                <div v-else-if="props.row.estado === 0 ">
+                                    Inactiva
+                                </div>
+                            </templete>
                            <templete slot="delete" slot-scope="props">
-                                <button type="button" class="btn btn-danger"   v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
+                                <button type="button" class="btn btn-danger"   v-on:click="deleteRtmVehiculo(props.row.idVehiculoRTM)" v-bind:idVehiculoRTM="props.row.idVehiculoRTM">
                                 <i class="icofont-ui-delete"></i>
                                 </button>
                             </templete>
@@ -670,20 +702,20 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form method="POST" v-on:submit.prevent="setVehiculoTercero">
                         
                          <div class="form-group">
                             <div class="row">
                                 <div class="col">
                                     <label>Tercero</label>
-                                    <select class="custom-select" v-model="data_poliza.idTercero" required>
+                                    <select class="custom-select" v-model="data_tercero.idTercero" required>
                                         <option value="0">Seleccionar un Tercero</option>
                                         <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" v-bind:key="idTercero" ></option>
                                     </select>
                                 </div>
                                 <div class="col">
                                     <label for="estado" >Estado</label>
-                                    <select class="custom-select" id="estado" v-model="estado" required>
+                                    <select class="custom-select" id="estado" v-model="data_tercero.estado" required>
                                         <option value="1">Activo</option>
                                         <option value="0">Inactivo</option>
                                     </select>                                
@@ -695,11 +727,11 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Inicio</label>
-                                    <input type="date" class="form-control" >
+                                    <input type="date" class="form-control" v-model="data_tercero.fechaInicia">
                                 </div>
                                 <div class="col">
                                     <label>Fin</label>
-                                    <input type="date" class="form-control" >
+                                    <input type="date" class="form-control" v-model="data_tercero.fechaFin" >
                                 </div>
                             </div>
                         </div>
@@ -707,7 +739,7 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Observaciones</label>
-                                    <input type="text" class="form-control" >
+                                    <input type="text" class="form-control" v-model="data_tercero.observaciones">
                                 </div>
                             </div>
                         </div>
@@ -720,9 +752,17 @@
                         </div>
                     </form>
                     <div class="container-fluid">
-                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnTercero"  :config = "config" thead-class="green-bg bg-dark text-white">
+                        <vue-bootstrap4-table :rows="terceroList" :columns="columnTercero"  :config = "config" thead-class="green-bg bg-dark text-white">
+                             <templete slot="estado" slot-scope="props">
+                                <div v-if="props.row.estado === 1">
+                                    Activo
+                                </div>
+                                <div v-else-if="props.row.estado === 0 ">
+                                    Inactiva
+                                </div>
+                            </templete>
                              <templete slot="delete" slot-scope="props">
-                                <button type="button" class="btn btn-danger"   v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
+                                <button type="button" class="btn btn-danger"   v-on:click="deleteTerceroVehiculo(props.row.idVehiculoTercero)" v-bind:idVehiculoTercero="props.row.idVehiculoTercero">
                                 <i class="icofont-ui-delete"></i>
                                 </button>
                             </templete>
@@ -779,14 +819,17 @@
                         </div>
                     </form>
                     <div class="container-fluid">
-                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnRuta"  :config = "config" thead-class="green-bg bg-dark text-white">
-                            <templete slot="edit" slot-scope="props">
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalVer"  v-on:click="verVehiculo(props.row.idVehiculo,0)" v-bind:idVehiculo="props.row.idVehiculo">
-                                    <i class="icofont-edit"></i>
-                                </button>
+                        <vue-bootstrap4-table :rows="rutasList" :columns="columnRuta"  :config = "config" thead-class="green-bg bg-dark text-white">
+                            <templete slot="estado" slot-scope="props">
+                                <div v-if="props.row.estado === 1">
+                                    Activo
+                                </div>
+                                <div v-else-if="props.row.estado === 0 ">
+                                    Inactiva
+                                </div>
                             </templete>
                             <templete slot="delete" slot-scope="props">
-                                <button type="button" class="btn btn-danger"   v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
+                                <button type="button" class="btn btn-danger"   v-on:click="deleteRutaVehiculo(props.row.idVehiculoRuta)" v-bind:idVehiculoRuta="props.row.idVehiculoRuta">
                                 <i class="icofont-ui-delete"></i>
                                 </button>
                             </templete>
@@ -831,27 +874,27 @@
                     </button>
                 </templete>
                 <templete slot="poliza" slot-scope="props">
-                    <button type="button" class="btn btn-warning botonesModal"  data-toggle="modal" data-target="#exampleModalPoliza" v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
+                    <button type="button" class="btn btn-warning botonesModal"  data-toggle="modal" data-target="#exampleModalPoliza" v-on:click="verPoliza(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
                        <i class="icofont-list"></i>
                     </button>
                 </templete>
                 <templete slot="operacion" slot-scope="props">
-                    <button type="button" class="btn btn-warning botonesModal"  data-toggle="modal" data-target="#exampleModalOperacion" v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
+                    <button type="button" class="btn btn-warning botonesModal"  data-toggle="modal" data-target="#exampleModalOperacion" v-on:click="verOperacion(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
                      <i class="icofont-license"></i>
                     </button>
                 </templete>
                 <templete slot="rtm" slot-scope="props">
-                    <button type="button" class="btn btn-warning botonesModal"  data-toggle="modal" data-target="#exampleModalRtm" v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
+                    <button type="button" class="btn btn-warning botonesModal"  data-toggle="modal" data-target="#exampleModalRtm" v-on:click="verRtm(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
                        <i class="icofont-mail"></i>
                     </button>
                 </templete>
                 <templete slot="terceros" slot-scope="props">
-                    <button type="button" class="btn btn-warning botonesModal"  data-toggle="modal" data-target="#exampleModalTercero" v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
+                    <button type="button" class="btn btn-warning botonesModal"  data-toggle="modal" data-target="#exampleModalTercero" v-on:click="verTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
                        <i class="icofont-users-alt-2"></i>
                     </button>
                 </templete>
                 <templete slot="ruta" slot-scope="props">
-                    <button type="button" class="btn btn-warning botonesModal"  data-toggle="modal" data-target="#exampleModalRuta" v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
+                    <button type="button" class="btn btn-warning botonesModal"  data-toggle="modal" data-target="#exampleModalRuta" v-on:click="verRuta(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
                       <i class="icofont-map-pins"></i>
                     </button>
                 </templete>
@@ -882,6 +925,7 @@ export default {
      idCarroceria:0,
      idCombustible:0,
      linea:'',
+     idRuta:'',
      modelo:'',
      numeroSerie:'',
      numeroChasis:'',
@@ -904,13 +948,18 @@ export default {
      terceros:[],
      data:[],
      rutas:[],
+     rutasList:[],
+     polizasList:[],
+     operacionesList:[],
+     rtmList:[],
+     terceroList:[],
      editar:false,
       config: {
-                 pagination: true, // default true
-                    pagination_info: true, // default true
-                    num_of_visibile_pagination_buttons: 7, // default 5
-                    per_page: 6, // default 10
-                    per_page_options:  [6,  10,  20,  30],
+                pagination: true, // default true
+                pagination_info: true, // default true
+                num_of_visibile_pagination_buttons: 7, // default 5
+                per_page: 6, // default 10
+                per_page_options:  [6,  10,  20,  30],
                 //highlight_row_hover_color:"blue", over del listado
                 filas_seleccionables: true,
                 card_title: "Registros",
@@ -1012,7 +1061,7 @@ export default {
     columnPoliza:[
         {
             label: "Poliza",
-            name: "idPoliza",
+            name: "nombrePoliza",
             sort: false,
         },
         {
@@ -1022,32 +1071,32 @@ export default {
         },
         {
             label: "Tercero",
-            name: "tercero",
+            name: "numeroIdentificacion",
             sort: false,
         },
         {
             label: "Número Póliza",
-            name: "numero",
+            name: "numeroPoliza",
             sort: false,
         },
         {
             label:'Vigencia Inicio',
-            name: "fecha",
+            name: "fechaVigenciaInicio",
             sort: false,
         },
         {
             label: "Vigencia Fin",
-            name: "tipo",
+            name: "fechaVegenciaFin",
             sort: false,
         },
         {
             label: "Expedición",
-            name: "espedicion",
+            name: "fechaExpedicion",
             sort: false,
         },
         {
             label: "Observaciones",
-            name: "observacion",
+            name: "observaciones",
             sort: false,
         },
         {
@@ -1059,7 +1108,7 @@ export default {
     columnOperacion:[
         {
             label: "# Tarjeta Operación",
-            name: "idPoliza",
+            name: "numeroTarjetaOperacion",
             sort: false,
         },
         {
@@ -1069,28 +1118,28 @@ export default {
         },
         {
             label: "Tercero",
-            name: "tercero",
+            name: "numeroIdentificacion",
             sort: false,
         },
         
         {
             label:'Vigencia Inicio',
-            name: "fecha",
+            name: "fechaVigenciaInicia",
             sort: false,
         },
         {
             label: "Vigencia Fin",
-            name: "tipo",
+            name: "fechaVigenciaFin",
             sort: false,
         },
         {
             label: "Expedición",
-            name: "espedicion",
+            name: "fechaExpedicion",
             sort: false,
         },
         {
             label: "Observaciones",
-            name: "observacion",
+            name: "observaciones",
             sort: false,
         },
         {
@@ -1102,7 +1151,7 @@ export default {
     columnRtm:[
         {
             label: "# Certificado",
-            name: "idPoliza",
+            name: "numeroCertificado",
             sort: false,
         },
         {
@@ -1112,27 +1161,27 @@ export default {
         },
         {
             label: "Tercero",
-            name: "tercero",
+            name: "numeroIdentificacion",
             sort: false,
         },
         {
             label:'Vigencia Inicio',
-            name: "fecha",
+            name: "fechaVigenciaInicia",
             sort: false,
         },
         {
             label: "Vigencia Fin",
-            name: "tipo",
+            name: "fechaVigenciaFin",
             sort: false,
         },
         {
             label: "Expedición",
-            name: "espedicion",
+            name: "fechaExpedicion",
             sort: false,
         },
         {
             label: "Observaciones",
-            name: "observacion",
+            name: "observaciones",
             sort: false,
         },
         {
@@ -1145,7 +1194,7 @@ export default {
         
         {
             label: "Tercero",
-            name: "tercero",
+            name: "numeroIdentificacion",
             sort: false,
         },
         {
@@ -1155,19 +1204,20 @@ export default {
         },
         {
             label:'Inicio',
-            name: "fecha",
+            name: "fechaInicia",
             sort: false,
         },
         {
             label: "Fin",
-            name: "tipo",
+            name: "fechaFin",
             sort: false,
         },
        {
             label: "Observaciones",
-            name: "observacion",
+            name: "observaciones",
             sort: false,
         },
+        
         {
             label: "Eliminar",
             name: "delete",
@@ -1178,7 +1228,7 @@ export default {
         
         {
             label: "Ruta",
-            name: "tercero",
+            name: "nombreRuta",
             sort: false,
         },
         {
@@ -1188,7 +1238,7 @@ export default {
         },
         {
             label: "Observaciones",
-            name: "observacion",
+            name: "observaciones",
             sort: false,
         },
         {
@@ -1247,23 +1297,62 @@ export default {
                 numeroPasajeros:'',
                 observaciones:'',
                 estado:'',
+                idUsuarioCrea:1,
+                idUsuarioModifica:1,
             },
      data_poliza:{
+         idVehiculo:'',
+         idPoliza:0,
          idTercero:0,
          numeroPoliza:'',
          fechaExpedicion:'',
          fechaVigenciaInicio:'',
          fechaVigenciaFin:'',
          observaciones:'',
-         estado:'',
+         estado:1,
          idUsuarioCrea:1,
          idUsuarioModifica:1,
      },
+     data_operacion:{
+        idVehiculo:'',
+        idTercero:0,
+        numeroTarjetaOperacion:'',
+        fechaExpedicion:'',
+        fechaVigenciaInicia:'',
+        fechaVigenciaFin:'',
+        observaciones:'',
+        estado:1,
+        idUsuarioCrea:1,
+        idUsuarioModifica:1,
 
+    },
      data_ruta:{
+         idVehiculo:'',
          idRuta:0,
          estado:1,
          descripcion:'',
+         observaciones:'',
+         idUsuarioCrea:1,
+         idUsuarioModifica:1,
+     },
+     data_rtm:{
+         idVehiculo:'',
+         idTercero:0,
+         numeroCertificado:'',
+         estado:1,
+         fechaExpedicion:'',
+         fechaVigenciaInicia:'',
+         fechaVigenciaFin:'',
+         observaciones:'',
+         idUsuarioCrea:1,
+         idUsuarioModifica:1,
+     },
+     data_tercero:{
+         idVehiculo:'',
+         idTercero:0,
+         estado:1,
+         fechaInicia:'',
+         fechaFin:'',
          observaciones:'',
          idUsuarioCrea:1,
          idUsuarioModifica:1,
@@ -1286,7 +1375,8 @@ export default {
       this.getRutas();
     },
   methods:{
-      //insertar vehiculo
+    //INSERTAR
+    //insertar vehiculo
     setVehiculo: function(){
       this.buttons.create.name = 'Agregando ...';
       this.buttons.create.state = true;
@@ -1347,9 +1437,8 @@ export default {
     setVehiculoRuta: function(){
       this.buttons.create.name = 'Agregando ...';
       this.buttons.create.state = true;
-      console.log('ojo'+idVehiculo);
       let formData = {
-        'idVehiculo':this.idVehiculo,
+        'idVehiculo':this.data_ruta.idVehiculo,
         'idRuta':this.data_ruta.idRuta,
         'observaciones':this.data_ruta.observaciones,
         'estado':this.data_ruta.estado,
@@ -1358,11 +1447,11 @@ export default {
       }
       axios.post('/vehiculoRuta', formData).then((response) =>{
         
-        this.idVehiculo = '',
-        this.data_ruta.idRuta = '',
+        
+        this.data_ruta.idRuta = 0,
         this.data_ruta.observaciones = ''
-        this.data_ruta.estado = '',
-        //this.getVehiculo();
+        this.data_ruta.estado = 1
+        this.verRuta(this.data_ruta.idVehiculo);
         swal("OK!", "Ruta agregada exitosamente!", "success"); 
             this.buttons.create.name = 'Agregar' ;
             this.buttons.create.state = false ;
@@ -1371,7 +1460,147 @@ export default {
           console.log(error.response);
       });
     },
-   
+    
+    //insertar poliza
+    setVehiculoPoliza: function(){
+      this.buttons.create.name = 'Agregando ...';
+      this.buttons.create.state = true;
+      let formData = {
+
+        'idVehiculo':this.data_poliza.idVehiculo,
+        'idTercero':this.data_poliza.idTercero,
+        'idPoliza':this.data_poliza.idPoliza,
+        'numeroPoliza':this.data_poliza.numeroPoliza,
+        'estado':this.data_poliza.estado,
+        'fechaExpedicion':this.data_poliza.fechaExpedicion,
+        'observaciones':this.data_poliza.observaciones,
+        'fechaVigenciaInicio':this.data_poliza.fechaVigenciaInicio,
+        'fechaVegenciaFin':this.data_poliza.fechaVigenciaFin,
+        'idUsuarioCrea':this.data_poliza.idUsuarioCrea,
+        'idUsuarioModifica':this.data_poliza.idUsuarioModifica
+      }
+      axios.post('/vehiculoPoliza', formData).then((response) =>{
+        this.data_poliza.idTercero = 0,
+        this.data_poliza.idPoliza = 0,
+        this.data_poliza.numeroPoliza='',
+        this.data_poliza.observaciones = '',
+        this.data_poliza.fechaExpedicion='',
+        this.data_poliza.fechaVigenciaInicio='',
+        this.data_poliza.fechaVigenciaFin='',
+        this.data_poliza.estado = 1
+        this.verPoliza(this.data_poliza.idVehiculo);
+        swal("OK!", "Ruta agregada exitosamente!", "success"); 
+            this.buttons.create.name = 'Agregar' ;
+            this.buttons.create.state = false ;
+      }).catch((error)=>{
+         swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+          console.log(error.response);
+      });
+    },
+    
+    //insertar operacion
+    setVehiculoOperacion: function(){
+      this.buttons.create.name = 'Agregando ...';
+      this.buttons.create.state = true;
+      let formData = {
+
+        'idVehiculo':this.data_operacion.idVehiculo,
+        'idTercero':this.data_operacion.idTercero,
+        'numeroTarjetaOperacion':this.data_operacion.numeroTarjetaOperacion,
+        'fechaExpedicion':this.data_operacion.fechaExpedicion,
+        'estado':this.data_operacion.estado,
+        'fechaExpedicion':this.data_operacion.fechaExpedicion,
+        'observaciones':this.data_operacion.observaciones,
+        'fechaVigenciaInicia':this.data_operacion.fechaVigenciaInicia,
+        'fechaVigenciaFin':this.data_operacion.fechaVigenciaFin,
+        'idUsuarioCrea':this.data_operacion.idUsuarioCrea,
+        'idUsuarioModifica':this.data_operacion.idUsuarioModifica
+      }
+      axios.post('/vehiculoOperacion', formData).then((response) =>{
+        this.data_operacion.idTercero = 0,
+        this.data_operacion.numeroTarjetaOperacion='',
+        this.data_operacion.observaciones = '',
+        this.data_operacion.fechaExpedicion='',
+        this.data_operacion.fechaVigenciaInicia='',
+        this.data_operacion.fechaVigenciaFin='',
+        this.data_operacion.estado = 1
+        this.verOperacion(this.data_operacion.idVehiculo);
+        swal("OK!", "Ruta agregada exitosamente!", "success"); 
+            this.buttons.create.name = 'Agregar' ;
+            this.buttons.create.state = false ;
+      }).catch((error)=>{
+         swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+          console.log(error.response);
+      });
+    },
+    
+    //insertar RTM
+    setVehiculoRtm: function(){
+      this.buttons.create.name = 'Agregando ...';
+      this.buttons.create.state = true;
+      let formData = {
+
+        'idVehiculo':this.data_rtm.idVehiculo,
+        'idTercero':this.data_rtm.idTercero,
+        'numeroCertificado':this.data_rtm.numeroCertificado,
+        'fechaExpedicion':this.data_rtm.fechaExpedicion,
+        'estado':this.data_rtm.estado,
+        'fechaExpedicion':this.data_rtm.fechaExpedicion,
+        'observaciones':this.data_rtm.observaciones,
+        'fechaVigenciaInicia':this.data_rtm.fechaVigenciaInicia,
+        'fechaVigenciaFin':this.data_rtm.fechaVigenciaFin,
+        'idUsuarioCrea':this.data_rtm.idUsuarioCrea,
+        'idUsuarioModifica':this.data_rtm.idUsuarioModifica
+      }
+      axios.post('/vehiculoRtm', formData).then((response) =>{
+        this.data_rtm.idTercero = 0,
+        this.data_rtm.numeroCertificado='',
+        this.data_rtm.observaciones = '',
+        this.data_rtm.fechaExpedicion='',
+        this.data_rtm.fechaVigenciaInicia='',
+        this.data_rtm.fechaVigenciaFin='',
+        this.data_rtm.estado = 1
+        this.verRtm(this.data_rtm.idVehiculo);
+        swal("OK!", "Rtm agregada exitosamente!", "success"); 
+            this.buttons.create.name = 'Agregar' ;
+            this.buttons.create.state = false ;
+      }).catch((error)=>{
+         swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+          console.log(error.response);
+      });
+    },
+    
+    //insertar Tercero
+    setVehiculoTercero: function(){
+      this.buttons.create.name = 'Agregando ...';
+      this.buttons.create.state = true;
+      let formData = {
+        'idVehiculo':this.data_tercero.idVehiculo,
+        'idTercero':this.data_tercero.idTercero,
+        'estado':this.data_tercero.estado,
+        'observaciones':this.data_tercero.observaciones,
+        'fechaInicia':this.data_tercero.fechaInicia,
+        'fechaFin':this.data_tercero.fechaFin,
+        'idUsuarioCrea':this.data_tercero.idUsuarioCrea,
+        'idUsuarioModifica':this.data_tercero.idUsuarioModifica
+      }
+      axios.post('/vehiculoTercero', formData).then((response) =>{
+        this.data_tercero.idTercero = 0,
+        this.data_tercero.observaciones = '',
+        this.data_tercero.fechaInicia='',
+        this.data_tercero.fechaFin='',
+        this.data_tercero.estado = 1
+        this.verTercero(this.data_tercero.idVehiculo);
+        swal("OK!", "Tercero agregada exitosamente!", "success"); 
+            this.buttons.create.name = 'Agregar' ;
+            this.buttons.create.state = false ;
+      }).catch((error)=>{
+         swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+          console.log(error.response);
+      });
+    },
+    
+    //LISTAR
     //listar vehículos
     getVehiculo:function(){
      axios.get('/vehiculo-resource').then((response) => {
@@ -1490,48 +1719,206 @@ export default {
    //ver vehiculo
     verVehiculo: function (idVehiculo,funcion) {
      
-           /*  if(funcion == 0){
+            if(funcion == 0){
                 this.editar = true;
             }else{
                  this.editar = false;
-            }; */
+            };
             this.data_edit.idVehiculo = idVehiculo;
             axios.get('/vehiculo-resource/'+idVehiculo+'/edit').then((response) => {
                 this.data_edit.contenedor= true;
                 this.data_edit.show= false;
-                let data = response.data;
-                console.log(data);
-                this.data_edit.placa = data['placa'];
-                this.data_edit.numeroInterno = data['numeroInterno'];
-                this.data_edit.idVehiculoMatricula = data['idVehiculoMatricula'];
-                this.data_edit.idServicio = data['idServicio'];
-                this.data_edit.descripcionServicio = data['descripcionServicio'];
-                this.data_edit.idClase = data['idClase'];
-                this.data_edit.descripcionClase = data['descripcionClase'];
-                this.data_edit.idMarca = data['idMarca'];
-                this.data_edit.descripcionMarca = data['descripcionMarca'];
-                this.data_edit.idColor = data['idColor'];
-                this.data_edit.descripcionColor = data['descripcionColor'];
-                this.data_edit.idCarroceria = data['idCarroceria'];
-                this.data_edit.descripcionCarroceria = data['descripcionCarroceria'];
-                this.data_edit.idCombustible = data['idCombustible'];
-                this.data_edit.descripcionCombustible = data['descripcionCombustible'];
-                this.data_edit.linea = data['linea'];
-                this.data_edit.modelo = data['modelo'];
-                this.data_edit.numeroSerie = data['numeroSerie'];
-                this.data_edit.numeroChasis = data['numeroChasis'];
-                this.data_edit.numeroMotor = data['numeroMotor'];
-                this.data_edit.numeroPuertas = data['numeroPuertas'];
-                this.data_edit.numeroPasajeros = data['numeroPasajeros'];
-                this.data_edit.observaciones = data['observaciones'];
-                this.data_edit.estado = data['estado'];
+                this.data_edit.placa = response.data[0].placa;
+                this.data_edit.numeroInterno = response.data[0].numeroInterno;
+                this.data_edit.idVehiculoMatricula = response.data[0].idVehiculoMatricula;
+                this.data_edit.idServicio = response.data[0].idServicio;
+                this.data_edit.descripcionServicio = response.data[0].descripcionServicio;
+                this.data_edit.idClase = response.data[0].idClase;
+                this.data_edit.descripcionClase = response.data[0].descripcionClase;
+                this.data_edit.idMarca = response.data[0].idMarca;
+                this.data_edit.descripcionMarca = response.data[0].descripcionMarca;
+                this.data_edit.idColor = response.data[0].idColor;
+                this.data_edit.descripcionColor = response.data[0].descripcionColor;
+                this.data_edit.idCarroceria = response.data[0].idCarroceria;
+                this.data_edit.descripcionCarroceria = response.data[0].descripcionCarroceria;
+                this.data_edit.idCombustible = response.data[0].idCombustible;
+                this.data_edit.descripcionCombustible = response.data[0].descripcionCombustible;
+                this.data_edit.linea = response.data[0].linea;
+                this.data_edit.modelo = response.data[0].modelo;
+                this.data_edit.numeroSerie = response.data[0].numeroSerie;
+                this.data_edit.numeroChasis = response.data[0].numeroChasis;
+                this.data_edit.numeroMotor = response.data[0].numeroMotor;
+                this.data_edit.numeroPuertas = response.data[0].numeroPuertas;
+                this.data_edit.numeroPasajeros = response.data[0].numeroPasajeros;
+                this.data_edit.observaciones = response.data[0].observaciones;
+                this.data_edit.estado = response.data[0].estado;
 
             }).catch((error) => {
                 console.log(error);
             });
-            console.log('Placa');
-            console.log(this.data_edit.placa);
         },
+
+    //ver ruta
+     verRuta: function (idVehiculo){
+            axios.get('/vehiculo-listarRuta/'+idVehiculo).then((response) => {
+                if (response.data.length > 0) {
+                    this.rutasList  = response.data;
+                    this.data_ruta.idVehiculo = response.data[0].idVehiculo;
+                } else {
+                    
+                    this.rutasList  = [];
+                    this.message = 'No hay registro de vehículos!!!';
+                }
+            }).catch((error) => {
+                console.log(error.response);
+            });
+    },
+
+    //ver poliza
+     verPoliza: function (idVehiculo){
+            axios.get('/vehiculo-listarPoliza/'+idVehiculo).then((response) => {
+                if (response.data.length > 0) {
+                    this.polizasList  = response.data;
+                    this.data_poliza.idVehiculo = response.data[0].idVehiculo;
+                } else {
+                     this.polizasList  = [];
+                    this.message = 'No hay registro de vehículos!!!';
+                }
+            }).catch((error) => {
+                console.log(error.response);
+            });
+    },
+
+    // ver operacion
+    verOperacion: function (idVehiculo){
+            axios.get('/vehiculo-listarOperacion/'+idVehiculo).then((response) => {
+                if (response.data.length > 0) {
+                    this.operacionesList  = response.data;
+                    this.data_operacion.idVehiculo = response.data[0].idVehiculo;
+                } else {
+                    this.operacionesList  = [];
+                    this.message = 'No hay registro de vehículos!!!';
+                }
+            }).catch((error) => {
+                console.log(error.response);
+            });
+    },
+    //ver rtm
+    verRtm: function (idVehiculo){
+            axios.get('/vehiculo-listarRtm/'+idVehiculo).then((response) => {
+                if (response.data.length > 0) {
+                    this.rtmList  = response.data;
+                    this.data_rtm.idVehiculo = response.data[0].idVehiculo;
+                } else {
+                     this.rtmList  = [];
+                    this.message = 'No hay registro de vehículos!!!';
+                }
+            }).catch((error) => {
+                console.log(error.response);
+            });
+    },
+    //ver tercero
+    verTercero: function (idVehiculo){
+            axios.get('/vehiculo-listarTerceros/'+idVehiculo).then((response) => {
+                if (response.data.length > 0) {
+                     this.terceroList  = response.data;
+                    this.data_tercero.idVehiculo = response.data[0].idVehiculo;
+                } else {
+                    this.terceroList  = [];
+                    this.message = 'No hay registro de vehículos!!!';
+                }
+            }).catch((error) => {
+                console.log(error.response);
+            });
+    },
+
+    //ACTUALIZAR O EDITAR
+    //cambiar estado de vehiculo
+    stateTercero: function (idVehiculo, estado) {
+        
+                    let formData = {
+                    idVehiculo: idVehiculo,
+                    estado: estado
+                     };
+    
+                     if(estado == 1 ){
+                         var nomState = "Activo";
+                     }else{
+                         var nomState = "Inactivo";
+                     }
+                    swal({
+                        title: "Estado de vehículo",
+                        text: "Este tercero quedará " + nomState + " en tus registros!",
+                        icon: "success",
+                        dangerMode: false,
+                    }).then((willDelete) => {
+                        if (willDelete) {
+                            axios.post('/stateVehiculo', formData).then((response) => {
+                                //Success
+                                swal("OK!", "Estado actualizado exitosamente", "success");
+    
+                            }).catch((error) => {
+                                swal("Oops!", "Parece que algo salio mal!", "error");
+                                console.log(error.response);
+                            });
+                        }
+                    });
+    
+            },
+    
+    //editar vehículo
+    putVehiculo: function(){
+       this.buttons.edit.name = 'Actualizando...';
+            this.buttons.edit.state = true;
+             
+             let formData = {
+            'placa':this.data_edit.placa,
+            'numeroInterno':this.data_edit.numeroInterno,
+            'idVehiculoMatricula':this.data_edit.idVehiculoMatricula,
+            'idServicio':this.data_edit.idServicio,
+            'idClase':this.data_edit.idClase,
+            'idMarca':this.data_edit.idMarca,
+            'idColor':this.data_edit.idColor,
+            'idCarroceria':this.data_edit.idCarroceria,
+            'idCombustible':this.data_edit.idCombustible,
+            'linea':this.data_edit.linea,
+            'modelo':this.data_edit.modelo,
+            'numeroSerie':this.data_edit.numeroSerie,
+            'numeroChasis':this.data_edit.numeroChasis,
+            'numeroMotor':this.data_edit.numeroMotor,
+            'numeroPuertas':this.data_edit.numeroPuertas,
+            'numeroPasajeros':this.data_edit.numeroPasajeros,
+            'observaciones':this.data_edit.observaciones,
+            'estado':this.data_edit.estado,
+            'idUsuarioCrea':this.data_edit.idUsuarioCrea,
+            'idUsuarioModifica':this.data_edit.idUsuarioModifica,
+             
+          }
+            axios.put('/updateVehiculo/' + this.data_edit.idVehiculo, formData).then((response) => {
+                console.log('entro a actualizar');
+                this.buttons.edit.name = 'Actualizar';
+                this.buttons.edit.state = false;
+                swal("OK!", "Tercero actualizado exitosamente!", "success");
+                $("#exampleModalVer").modal('hide');
+                this.getVehiculo();
+            }).catch((error) => {
+                console.log(error.response);
+                let errors = '';
+                let aux = error.response.data.errors;
+                for (let i in aux) {
+                    let sci = aux[i];
+                    for (let j in sci) {
+                        errors += '\n' + sci[j];
+                    }
+                }
+                this.buttons.edit.name = 'Actualizar';
+                this.buttons.edit.state = false;
+                this.show_alert.edit.state = true;
+                this.show_alert.edit.messaje = errors;
+                setTimeout(() => this.show_alert.edit.state = false, 5000);
+            });
+
+    },
 
     //eliminar vehiculo
     deleteVehiculo: function(idVehiculo){
@@ -1554,38 +1941,112 @@ export default {
      });
     },
 
-    //cambiar estado de vehiculo
-    stateTercero: function (idVehiculo, estado) {
+    //eliminar ruta
+    deleteRutaVehiculo: function(idVehiculoRuta){
+        swal({
+         title: "Estas seguro ?",
+         text: "Esta Ruta quedará eliminada de tus registros!",
+         icon: "warning",
+         buttons: ["Cancelar","Confirmar"],
+         dangerMode: true,
+      }).then((willDelete) => {
+         if (willDelete) {
+             this.data_edit.idVehiculoRuta = idVehiculoRuta;
+             axios.delete('/vehiculoRuta-delete/' + this.data_edit.idVehiculoRuta).then((response) => {
+                 swal("OK!", "La Ruta se elimino exitosamente", "success");
+                 this.verRuta(this.data_ruta.idVehiculo);
+             }).catch((error)=>{
+                 swal("Lo sentimos", "Parece que algo salio mal!", "error");
+             });
+         }
+     });
+    },
     
-                let formData = {
-                idVehiculo: idVehiculo,
-                estado: estado
-                 };
+    //eliminar poliza
+     deletePolizaVehiculo: function(idVehiculoPoliza){
+        swal({
+         title: "Estas seguro ?",
+         text: "Esta poliza quedará eliminada de tus registros!",
+         icon: "warning",
+         buttons: ["Cancelar","Confirmar"],
+         dangerMode: true,
+      }).then((willDelete) => {
+         if (willDelete) {
+             this.data_poliza.idVehiculoPoliza = idVehiculoPoliza;
+             axios.delete('/vehiculoPoliza-delete/' + this.data_poliza.idVehiculoPoliza).then((response) => {
+                 swal("OK!", "La Poliza se elimino exitosamente", "success");
+                 this.verPoliza(this.data_poliza.idVehiculo);
+             }).catch((error)=>{
+                 swal("Lo sentimos", "Parece que algo salio mal!", "error");
+             });
+         }
+     });
+    },
 
-                 if(estado == 1 ){
-                     var nomState = "Activo";
-                 }else{
-                     var nomState = "Inactivo";
-                 }
-                swal({
-                    title: "Estado de vehículo",
-                    text: "Este tercero quedará " + nomState + " en tus registros!",
-                    icon: "success",
-                    dangerMode: false,
-                }).then((willDelete) => {
-                    if (willDelete) {
-                        axios.post('/stateVehiculo', formData).then((response) => {
-                            //Success
-                            swal("OK!", "Estado actualizado exitosamente", "success");
+    //eliminar Operacion
+    deleteOperacionVehiculo: function(idVehiculo){
+        swal({
+         title: "Estas seguro ?",
+         text: "Esta operación quedará eliminada de tus registros!",
+         icon: "warning",
+         buttons: ["Cancelar","Confirmar"],
+         dangerMode: true,
+      }).then((willDelete) => {
+         if (willDelete) {
+             this.data_operacion.idVehiculoOperacion = idVehiculo;
+             axios.delete('/vehiculoOperacion-delete/' + this.data_operacion.idVehiculoOperacion).then((response) => {
+                 swal("OK!", "La Operación se elimino exitosamente", "success");
+                 this.verOperacion(this.data_operacion.idVehiculo);
+             }).catch((error)=>{
+                 swal("Lo sentimos", "Parece que algo salio mal!", "error");
+             });
+         }
+     });
+    },
+    
+     //eliminar Rtm
+    deleteRtmVehiculo: function(idVehiculo){
+        swal({
+         title: "Estas seguro ?",
+         text: "Este RTM quedará eliminado de tus registros!",
+         icon: "warning",
+         buttons: ["Cancelar","Confirmar"],
+         dangerMode: true,
+      }).then((willDelete) => {
+         if (willDelete) {
+             this.data_rtm.idVehiculoRtm = idVehiculo;
+             axios.delete('/vehiculoRtm-delete/' + this.data_rtm.idVehiculoRtm).then((response) => {
+                 swal("OK!", "La rtm se elimino exitosamente", "success");
+                 this.verRtm(this.data_rtm.idVehiculo);
+             }).catch((error)=>{
+                 swal("Lo sentimos", "Parece que algo salio mal!", "error");
+             });
+         }
+     });
+    },
+    
+     //eliminar Tercero
+    deleteTerceroVehiculo: function(idVehiculo){
+        swal({
+         title: "Estas seguro ?",
+         text: "Este Tercero quedará eliminado de tus registros!",
+         icon: "warning",
+         buttons: ["Cancelar","Confirmar"],
+         dangerMode: true,
+      }).then((willDelete) => {
+         if (willDelete) {
+             this.data_tercero.idVehiculoTercero = idVehiculo;
+             axios.delete('/vehiculoTercero-delete/' + this.data_tercero.idVehiculoTercero).then((response) => {
+                 swal("OK!", "El tercero se elimino exitosamente", "success");
+                 this.verTercero(this.data_tercero.idVehiculo);
+             }).catch((error)=>{
+                 swal("Lo sentimos", "Parece que algo salio mal!", "error");
+             });
+         }
+     });
+    },
+    
 
-                        }).catch((error) => {
-                            swal("Oops!", "Parece que algo salio mal!", "error");
-                            console.log(error.response);
-                        });
-                    }
-                });
-
-        },
 
  }
 }

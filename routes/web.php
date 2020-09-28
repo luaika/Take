@@ -50,7 +50,22 @@ Route::resource('/vehiculo-resource', 'VehiculoController');
 Route::delete('/vehiculo-delete/{idVehiculo}', 'VehiculoController@destroy');
 Route::post('/stateVehiculo','VehiculoController@stateVehiculo');
 Route::post('/vehiculoRuta','VehiculoController@vehiculoRuta');
+Route::post('/vehiculoPoliza','VehiculoController@vehiculoPoliza');
+Route::post('/vehiculoOperacion','VehiculoController@vehiculoOperacion');
+Route::post('/vehiculoRtm','VehiculoController@vehiculoRtm');
+Route::post('/vehiculoTercero','VehiculoController@vehiculoTercero');
+Route::put('/updateVehiculo/{idVehiculo}', 'VehiculoController@update');
+Route::get('/vehiculo-listarPoliza/{idVehiculo}', 'VehiculoController@verPolizas');
+Route::get('/vehiculo-listarRuta/{idVehiculo}', 'VehiculoController@verRutas');
+Route::get('/vehiculo-listarOperacion/{idVehiculo}', 'VehiculoController@verOperaciones');
+Route::get('/vehiculo-listarRtm/{idVehiculo}', 'VehiculoController@verRtm');
+Route::get('/vehiculo-listarTerceros/{idVehiculo}', 'VehiculoController@verTerceros');
 
+Route::delete('/vehiculoRuta-delete/{idVehiculoRuta}', 'VehiculoController@destroyRuta');
+Route::delete('/vehiculoPoliza-delete/{idVehiculoPolia}', 'VehiculoController@destroyPoliza');
+Route::delete('/vehiculoOperacion-delete/{idVehiculo}', 'VehiculoController@destroyOperacion');
+Route::delete('/vehiculoRtm-delete/{idVehiculo}', 'VehiculoController@destroyRtm');
+Route::delete('/vehiculoTercero-delete/{idVehiculo}', 'VehiculoController@destroyTercero');
 //marca
 Route::resource('/marca-resource', 'MarcaController');
 //servicio
