@@ -5076,8 +5076,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -5955,7 +5953,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'idUsuarioModifica': this.data_edit.idUsuarioModifica
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/updateVehiculo/' + this.data_edit.idVehiculo, formData).then(function (response) {
-        console.log('entro a actualizar');
         _this23.buttons.edit.name = 'Actualizar';
         _this23.buttons.edit.state = false;
         swal("OK!", "Tercero actualizado exitosamente!", "success");
@@ -12185,7 +12182,7 @@ var render = function() {
                 _c("div", { staticClass: "col" }, [
                   _c("label", { attrs: { for: "placa" } }, [_vm._v("Placa")]),
                   _vm._v(" "),
-                  _c("i", { staticClass: "fas fa-digital-tachograph iconos" }),
+                  _c("i", { staticClass: "icofont-card iconos" }),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -12214,8 +12211,6 @@ var render = function() {
                   _c("label", { attrs: { for: "idVehiculoMatricula" } }, [
                     _vm._v("Matrícula")
                   ]),
-                  _vm._v(" "),
-                  _c("i", { staticClass: "fas fa-city iconos" }),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -12281,7 +12276,6 @@ var render = function() {
                       _vm._v(" "),
                       _vm._l(_vm.servicios, function(idServicio) {
                         return _c("option", {
-                          key: idServicio,
                           domProps: {
                             value: idServicio.idServicio,
                             textContent: _vm._s(idServicio.descripcionServicio)
@@ -12336,7 +12330,6 @@ var render = function() {
                       _vm._v(" "),
                       _vm._l(_vm.clase, function(idClase) {
                         return _c("option", {
-                          key: idClase,
                           domProps: {
                             value: idClase.idClase,
                             textContent: _vm._s(idClase.descripcionClase)
@@ -12387,7 +12380,6 @@ var render = function() {
                       _vm._v(" "),
                       _vm._l(_vm.marca, function(idMarca) {
                         return _c("option", {
-                          key: idMarca,
                           domProps: {
                             value: idMarca.idMarca,
                             textContent: _vm._s(idMarca.descripcionMarca)
@@ -12438,7 +12430,6 @@ var render = function() {
                       _vm._v(" "),
                       _vm._l(_vm.color, function(idColor) {
                         return _c("option", {
-                          key: idColor,
                           domProps: {
                             value: idColor.idColor,
                             textContent: _vm._s(idColor.descripcionColor)
@@ -12495,7 +12486,6 @@ var render = function() {
                       _vm._v(" "),
                       _vm._l(_vm.carroceria, function(idCarroceria) {
                         return _c("option", {
-                          key: idCarroceria,
                           domProps: {
                             value: idCarroceria.idCarroceria,
                             textContent: _vm._s(
@@ -12550,7 +12540,6 @@ var render = function() {
                       _vm._v(" "),
                       _vm._l(_vm.combustible, function(idCombustible) {
                         return _c("option", {
-                          key: idCombustible,
                           domProps: {
                             value: idCombustible.idCombustible,
                             textContent: _vm._s(
@@ -12567,7 +12556,7 @@ var render = function() {
                 _c("div", { staticClass: "col" }, [
                   _c("label", { attrs: { for: "linea" } }, [_vm._v("Linea")]),
                   _vm._v(" "),
-                  _c("i", { staticClass: "fas fa-palette iconos" }),
+                  _c("i", { staticClass: "icofont-car-alt-1 iconos" }),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -12599,7 +12588,7 @@ var render = function() {
                 _c("div", { staticClass: "col-4" }, [
                   _c("label", { attrs: { for: "modelo" } }, [_vm._v("Modelo")]),
                   _vm._v(" "),
-                  _c("i", { staticClass: "fas fa-palette iconos" }),
+                  _c("i", { staticClass: "fas fa-hashtag iconos" }),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -12865,10 +12854,10 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-md-4" }, [
                 _c("label", { attrs: { for: "numeroInterno" } }, [
-                  _vm._v("numeroInterno")
+                  _vm._v("Número Interno")
                 ]),
                 _vm._v(" "),
-                _c("i", { staticClass: "fas fa-palette iconos" }),
+                _c("i", { staticClass: "fas fa-hashtag iconos" }),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -12956,9 +12945,7 @@ var render = function() {
                           _vm._v("Placa")
                         ]),
                         _vm._v(" "),
-                        _c("i", {
-                          staticClass: "fas fa-digital-tachograph iconos"
-                        }),
+                        _c("i", { staticClass: "icofont-card iconos" }),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -12991,8 +12978,6 @@ var render = function() {
                         _c("label", { attrs: { for: "idVehiculoMatricula" } }, [
                           _vm._v("Matrícula")
                         ]),
-                        _vm._v(" "),
-                        _c("i", { staticClass: "fas fa-city iconos" }),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -13068,7 +13053,6 @@ var render = function() {
                             _vm._v(" "),
                             _vm._l(_vm.servicios, function(idServicio) {
                               return _c("option", {
-                                key: idServicio,
                                 domProps: {
                                   value: idServicio.idServicio,
                                   textContent: _vm._s(
@@ -13131,7 +13115,6 @@ var render = function() {
                             _vm._v(" "),
                             _vm._l(_vm.clase, function(idClase) {
                               return _c("option", {
-                                key: idClase,
                                 domProps: {
                                   value: idClase.idClase,
                                   textContent: _vm._s(idClase.descripcionClase)
@@ -13188,7 +13171,6 @@ var render = function() {
                             _vm._v(" "),
                             _vm._l(_vm.marca, function(idMarca) {
                               return _c("option", {
-                                key: idMarca,
                                 domProps: {
                                   value: idMarca.idMarca,
                                   textContent: _vm._s(idMarca.descripcionMarca)
@@ -13245,7 +13227,6 @@ var render = function() {
                             _vm._v(" "),
                             _vm._l(_vm.color, function(idColor) {
                               return _c("option", {
-                                key: idColor,
                                 domProps: {
                                   value: idColor.idColor,
                                   textContent: _vm._s(idColor.descripcionColor)
@@ -13306,7 +13287,6 @@ var render = function() {
                             _vm._v(" "),
                             _vm._l(_vm.carroceria, function(idCarroceria) {
                               return _c("option", {
-                                key: idCarroceria,
                                 domProps: {
                                   value: idCarroceria.idCarroceria,
                                   textContent: _vm._s(
@@ -13365,7 +13345,6 @@ var render = function() {
                             _vm._v(" "),
                             _vm._l(_vm.combustible, function(idCombustible) {
                               return _c("option", {
-                                key: idCombustible,
                                 domProps: {
                                   value: idCombustible.idCombustible,
                                   textContent: _vm._s(
@@ -13384,7 +13363,7 @@ var render = function() {
                           _vm._v("Linea")
                         ]),
                         _vm._v(" "),
-                        _c("i", { staticClass: "fas fa-palette iconos" }),
+                        _c("i", { staticClass: "icofont-car-alt-1 iconos" }),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -13422,7 +13401,7 @@ var render = function() {
                           _vm._v("Modelo")
                         ]),
                         _vm._v(" "),
-                        _c("i", { staticClass: "fas fa-palette iconos" }),
+                        _c("i", { staticClass: "fas fa-hashtag iconos" }),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -13725,10 +13704,10 @@ var render = function() {
                     _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-md-4" }, [
                         _c("label", { attrs: { for: "numeroInterno" } }, [
-                          _vm._v("numeroInterno")
+                          _vm._v("Número Interno")
                         ]),
                         _vm._v(" "),
-                        _c("i", { staticClass: "fas fa-palette iconos" }),
+                        _c("i", { staticClass: "fas fa-hashtag iconos" }),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -13994,7 +13973,6 @@ var render = function() {
                             _vm._v(" "),
                             _vm._l(_vm.tiposdePolizas, function(idPoliza) {
                               return _c("option", {
-                                key: idPoliza,
                                 domProps: {
                                   value: idPoliza.idPoliza,
                                   textContent: _vm._s(idPoliza.descripcion)
@@ -14103,7 +14081,6 @@ var render = function() {
                             _vm._v(" "),
                             _vm._l(_vm.terceros, function(idTercero) {
                               return _c("option", {
-                                key: idTercero,
                                 domProps: {
                                   value: idTercero.idTercero,
                                   textContent: _vm._s(
@@ -14551,7 +14528,6 @@ var render = function() {
                             _vm._v(" "),
                             _vm._l(_vm.terceros, function(idTercero) {
                               return _c("option", {
-                                key: idTercero,
                                 domProps: {
                                   value: idTercero.idTercero,
                                   textContent: _vm._s(
@@ -14971,7 +14947,6 @@ var render = function() {
                             _vm._v(" "),
                             _vm._l(_vm.terceros, function(idTercero) {
                               return _c("option", {
-                                key: idTercero,
                                 domProps: {
                                   value: idTercero.idTercero,
                                   textContent: _vm._s(
@@ -15300,7 +15275,6 @@ var render = function() {
                             _vm._v(" "),
                             _vm._l(_vm.terceros, function(idTercero) {
                               return _c("option", {
-                                key: idTercero,
                                 domProps: {
                                   value: idTercero.idTercero,
                                   textContent: _vm._s(
@@ -15629,7 +15603,6 @@ var render = function() {
                             _vm._v(" "),
                             _vm._l(_vm.rutas, function(idRuta) {
                               return _c("option", {
-                                key: idRuta,
                                 domProps: {
                                   value: idRuta.idRuta,
                                   textContent: _vm._s(idRuta.descripcion)

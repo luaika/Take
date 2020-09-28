@@ -10,19 +10,18 @@
                 <div class="row">
                     <div class="col">
                         <label for="placa">Placa</label>
-                        <i class="fas fa-digital-tachograph iconos"></i>   
+                        <i class="icofont-card iconos"></i>
                         <input type="text" class="form-control inputTeceros" id="placa" v-model="placa">
                     </div>
                     <div class="col">
                         <label for="idVehiculoMatricula">Matrícula</label>
-                        <i class="fas fa-city iconos"></i>
                         <input type="text" class="form-control inputTeceros" id="idVehiculoMatricula" v-model="idVehiculoMatricula">
                     </div>
                     <div class="col">
                         <label for="idServicio">Servicio</label>
                         <select class="custom-select" v-model="idServicio" required>
                             <option value="0">Seleccionar Servicio</option>
-                            <option v-for="idServicio in servicios" :value="idServicio.idServicio" v-text="idServicio.descripcionServicio" v-bind:key="idServicio" ></option>
+                            <option v-for="idServicio in servicios" :value="idServicio.idServicio" v-text="idServicio.descripcionServicio" ></option>
                         </select>
                      </div>
                 </div>
@@ -34,21 +33,21 @@
                         <label for="idClase">Clase</label>
                         <select class="custom-select" v-model="idClase" required>
                             <option value="0">Seleccionar Clase</option>
-                            <option v-for="idClase in clase" :value="idClase.idClase" v-text="idClase.descripcionClase" v-bind:key="idClase" ></option>
+                            <option v-for="idClase in clase" :value="idClase.idClase" v-text="idClase.descripcionClase" ></option>
                         </select>
                     </div>
                     <div class="col">
                         <label for="idMarca">Marca</label>
                         <select class="custom-select" v-model="idMarca" required>
                             <option value="0">Seleccionar Marca</option>
-                            <option v-for="idMarca in marca" :value="idMarca.idMarca" v-text="idMarca.descripcionMarca" v-bind:key="idMarca" ></option>
+                            <option v-for="idMarca in marca" :value="idMarca.idMarca" v-text="idMarca.descripcionMarca" ></option>
                         </select>
                     </div>
                     <div class="col">
                         <label for="idColor">Color</label>
                         <select class="custom-select" v-model="idColor" required>
                             <option value="0">Seleccionar Color</option>
-                            <option v-for="idColor in color" :value="idColor.idColor" v-text="idColor.descripcionColor" v-bind:key="idColor" ></option>
+                            <option v-for="idColor in color" :value="idColor.idColor" v-text="idColor.descripcionColor"  ></option>
                         </select>
                     </div>
                 </div>
@@ -60,19 +59,19 @@
                         <label for="idCarroceria">Carroceria</label>
                         <select class="custom-select" v-model="idCarroceria" required>
                             <option value="0">Seleccionar Carroceria</option>
-                            <option v-for="idCarroceria in carroceria" :value="idCarroceria.idCarroceria" v-text="idCarroceria.descripcionCarroceria" v-bind:key="idCarroceria" ></option>
+                            <option v-for="idCarroceria in carroceria" :value="idCarroceria.idCarroceria" v-text="idCarroceria.descripcionCarroceria" ></option>
                         </select>
                    </div>
                     <div class="col">
                         <label for="idCombustible">Combustible</label>
                         <select class="custom-select" v-model="idCombustible" required>
                             <option value="0">Seleccionar Combustible</option>
-                            <option v-for="idCombustible in combustible" :value="idCombustible.idCombustible" v-text="idCombustible.descripcionCombustible" v-bind:key="idCombustible" ></option>
+                            <option v-for="idCombustible in combustible" :value="idCombustible.idCombustible" v-text="idCombustible.descripcionCombustible" ></option>
                         </select>
                     </div>
                     <div class="col">
                         <label for="linea">Linea</label>
-                        <i class="fas fa-palette iconos"></i>
+                        <i class="icofont-car-alt-1 iconos"></i>
                         <input type="text" class="form-control inputTeceros" id="linea" v-model="linea">
                     </div>
                             
@@ -84,7 +83,7 @@
                 <div class="row">
                     <div class="col-4">
                         <label for="modelo">Modelo</label>
-                        <i class="fas fa-palette iconos"></i>
+                        <i class="fas fa-hashtag iconos"></i>
                         <input type="number" class="form-control inputTeceros" id="modelo" v-model="modelo">                    
                     </div>
                     <div class="col">
@@ -147,8 +146,8 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <label for="numeroInterno">numeroInterno</label>
-                    <i class="fas fa-palette iconos"></i>
+                    <label for="numeroInterno">Número Interno</label>
+                   <i class="fas fa-hashtag iconos"></i>
                     <input type="text" class="form-control inputTeceros" id="numeroInterno" v-model="numeroInterno">       
                 </div>
             </div>
@@ -178,19 +177,18 @@
                             <div class="row">
                                 <div class="col">
                                     <label for="placa">Placa</label>
-                                    <i class="fas fa-digital-tachograph iconos"></i>   
+                                    <i class="icofont-card iconos"></i>   
                                     <input type="text" class="form-control inputTeceros" id="placa" v-model="data_edit.placa">
                                 </div>
                                 <div class="col">
                                     <label for="idVehiculoMatricula">Matrícula</label>
-                                    <i class="fas fa-city iconos"></i>
                                     <input type="text" class="form-control inputTeceros" id="idVehiculoMatricula" v-model="data_edit.idVehiculoMatricula">
                                 </div>
                                 <div class="col">
                                     <label for="idServicio">Servicio</label>
                                     <select class="custom-select" v-model="data_edit.idServicio" required>
                                         <option value="0">Seleccionar Servicio</option>
-                                        <option v-for="idServicio in servicios" :value="idServicio.idServicio" v-text="idServicio.descripcionServicio" v-bind:key="idServicio" ></option>
+                                        <option v-for="idServicio in servicios" :value="idServicio.idServicio" v-text="idServicio.descripcionServicio" ></option>
                                     </select>
                                 </div>
                             </div>
@@ -201,21 +199,21 @@
                                     <label for="idClase">Clase</label>
                                     <select class="custom-select" v-model="data_edit.idClase" required>
                                         <option value="0">Seleccionar Clase</option>
-                                        <option v-for="idClase in clase" :value="idClase.idClase" v-text="idClase.descripcionClase" v-bind:key="idClase" ></option>
+                                        <option v-for="idClase in clase" :value="idClase.idClase" v-text="idClase.descripcionClase" ></option>
                                     </select>
                                 </div>
                                 <div class="col">
                                     <label for="idMarca">Marca</label>
                                     <select class="custom-select" v-model="data_edit.idMarca" required>
                                         <option value="0">Seleccionar Marca</option>
-                                        <option v-for="idMarca in marca" :value="idMarca.idMarca" v-text="idMarca.descripcionMarca" v-bind:key="idMarca" ></option>
+                                        <option v-for="idMarca in marca" :value="idMarca.idMarca" v-text="idMarca.descripcionMarca" ></option>
                                     </select>  
                                </div>
                                 <div class="col">
                                     <label for="idColor">Color</label>
                                     <select class="custom-select" v-model="data_edit.idColor" required>
                                         <option value="0">Seleccionar Color</option>
-                                        <option v-for="idColor in color" :value="idColor.idColor" v-text="idColor.descripcionColor" v-bind:key="idColor" ></option>
+                                        <option v-for="idColor in color" :value="idColor.idColor" v-text="idColor.descripcionColor" ></option>
                                     </select>
                              </div>
                             </div>
@@ -226,19 +224,19 @@
                                         <label for="idCarroceria">Carroceria</label>
                                         <select class="custom-select" v-model="data_edit.idCarroceria" required>
                                             <option value="0">Seleccionar Carroceria</option>
-                                            <option v-for="idCarroceria in carroceria" :value="idCarroceria.idCarroceria" v-text="idCarroceria.descripcionCarroceria" v-bind:key="idCarroceria" ></option>
+                                            <option v-for="idCarroceria in carroceria" :value="idCarroceria.idCarroceria" v-text="idCarroceria.descripcionCarroceria" ></option>
                                         </select>
                                     </div>
                                     <div class="col">
                                         <label for="idCombustible">Combustible</label>
                                         <select class="custom-select" v-model="data_edit.idCombustible" required>
                                             <option value="0">Seleccionar Combustible</option>
-                                            <option v-for="idCombustible in combustible" :value="idCombustible.idCombustible" v-text="idCombustible.descripcionCombustible" v-bind:key="idCombustible" ></option>
+                                            <option v-for="idCombustible in combustible" :value="idCombustible.idCombustible" v-text="idCombustible.descripcionCombustible" ></option>
                                         </select>
                                     </div>
                                     <div class="col">
                                         <label for="linea">Linea</label>
-                                        <i class="fas fa-palette iconos"></i>
+                                        <i class="icofont-car-alt-1 iconos"></i>
                                         <input type="text" class="form-control inputTeceros" id="linea" v-model="data_edit.linea">
                                     </div>
                                 </div>
@@ -247,7 +245,7 @@
                             <div class="row">
                                 <div class="col-4">
                                     <label for="modelo">Modelo</label>
-                                    <i class="fas fa-palette iconos"></i>
+                                    <i class="fas fa-hashtag iconos"></i>
                                     <input type="number" class="form-control inputTeceros" id="modelo" v-model="data_edit.modelo">                    
                                 </div>
                                 <div class="col">
@@ -305,8 +303,8 @@
 
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="numeroInterno">numeroInterno</label>
-                                    <i class="fas fa-palette iconos"></i>
+                                    <label for="numeroInterno">Número Interno</label>
+                                    <i class="fas fa-hashtag iconos"></i>
                                     <input type="text" class="form-control inputTeceros" id="numeroInterno" v-model="data_edit.numeroInterno">       
                                 </div>
                             </div>
@@ -410,7 +408,7 @@
                                     <label>Poliza</label>
                                     <select class="custom-select" v-model="data_poliza.idPoliza" required>
                                         <option value="0">Seleccionar Tipo de Póliza</option>
-                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion" v-bind:key="idPoliza" ></option>
+                                        <option v-for="idPoliza in tiposdePolizas" :value="idPoliza.idPoliza" v-text="idPoliza.descripcion"></option>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -428,7 +426,7 @@
                                  <label>Tercero</label>
                                     <select class="custom-select" v-model="data_poliza.idTercero" required>
                                         <option value="0">Seleccionar un Tercero</option>
-                                        <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" v-bind:key="idTercero" ></option>
+                                        <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" ></option>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -529,7 +527,7 @@
                                     <label>Tercero</label>
                                     <select class="custom-select" v-model="data_operacion.idTercero" required>
                                         <option value="0">Seleccionar un Tercero</option>
-                                        <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" v-bind:key="idTercero" ></option>
+                                        <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" ></option>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -627,7 +625,7 @@
                                     <label>Tercero</label>
                                     <select class="custom-select" v-model="data_rtm.idTercero" required>
                                         <option value="0">Seleccionar un Tercero</option>
-                                        <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" v-bind:key="idTercero" ></option>
+                                        <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion"  ></option>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -710,7 +708,7 @@
                                     <label>Tercero</label>
                                     <select class="custom-select" v-model="data_tercero.idTercero" required>
                                         <option value="0">Seleccionar un Tercero</option>
-                                        <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" v-bind:key="idTercero" ></option>
+                                        <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" ></option>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -790,7 +788,7 @@
                                     <label>Ruta</label>
                                     <select class="custom-select" v-model="data_ruta.idRuta" required>
                                         <option value="0">Seleccionar Ruta</option>
-                                        <option v-for="idRuta in rutas" :value="idRuta.idRuta" v-text="idRuta.descripcion" v-bind:key="idRuta" ></option>
+                                        <option v-for="idRuta in rutas" :value="idRuta.idRuta" v-text="idRuta.descripcion"  ></option>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -1895,7 +1893,6 @@ export default {
              
           }
             axios.put('/updateVehiculo/' + this.data_edit.idVehiculo, formData).then((response) => {
-                console.log('entro a actualizar');
                 this.buttons.edit.name = 'Actualizar';
                 this.buttons.edit.state = false;
                 swal("OK!", "Tercero actualizado exitosamente!", "success");
