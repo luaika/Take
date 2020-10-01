@@ -1,22 +1,30 @@
 <template>
   <div class="container contaRuta">
-     <div class="modal-header encabezadoFormulario" >
+      
+      <!-- crear -->
+    <div class="modal-header encabezadoFormulario" >
             <h5 class="text-center text-white" id="exampleModalLabel">Registrar vehículo</h5>
-      </div>
-      <div class="card cardRutas">
+    </div>
+    <div class="card cardRutas">
     <form method="POST" v-on:submit.prevent="setVehiculo" >
+      <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ show_alert.create.messaje }}
+        </div>
       <div>
             <div class="form-group">
                 <div class="row">
                     <div class="col">
                         <label for="placa">Placa</label>
                         <i class="icofont-card iconos"></i>
-                        <input type="text" class="form-control inputTeceros" id="placa" v-model="placa">
+                        <input type="text" class="form-control inputTeceros" id="placa" v-model="placa" required>
                     </div>
+                   
                     <div class="col">
-                        <label for="idVehiculoMatricula">Matrícula</label>
-                        <input type="text" class="form-control inputTeceros" id="idVehiculoMatricula" v-model="idVehiculoMatricula">
+                        <label for="numeroInterno">Número Interno</label>
+                        <i class="fas fa-hashtag iconos"></i>
+                        <input type="text" class="form-control inputTeceros" id="numeroInterno" v-model="numeroInterno" required>       
                     </div>
+                    
                     <div class="col">
                         <label for="idServicio">Servicio</label>
                         <select class="custom-select" v-model="idServicio" required>
@@ -72,7 +80,7 @@
                     <div class="col">
                         <label for="linea">Linea</label>
                         <i class="icofont-car-alt-1 iconos"></i>
-                        <input type="text" class="form-control inputTeceros" id="linea" v-model="linea">
+                        <input type="text" class="form-control inputTeceros" id="linea" v-model="linea" required> 
                     </div>
                             
                 </div>
@@ -84,12 +92,12 @@
                     <div class="col-4">
                         <label for="modelo">Modelo</label>
                         <i class="fas fa-hashtag iconos"></i>
-                        <input type="number" class="form-control inputTeceros" id="modelo" v-model="modelo">                    
+                        <input type="number" class="form-control inputTeceros" id="modelo" v-model="modelo" required>                    
                     </div>
                     <div class="col">
                         <label for="numeroSerie">Número de serie</label>
                         <i class="fas fa-hashtag iconos"></i>
-                        <input type="number" class="form-control inputTeceros" id="numeroSerie" v-model="numeroSerie">
+                        <input type="number" class="form-control inputTeceros" id="numeroSerie" v-model="numeroSerie" required>
                     </div>
                 </div>
             </div>
@@ -101,12 +109,12 @@
                 <div class="col">
                     <label for="numeroChasis">Número de chasis</label>
                     <i class="fas fa-hashtag iconos"></i>
-                    <input type="number" class="form-control inputTeceros" id="numeroChasis" v-model="numeroChasis">
+                    <input type="number" class="form-control inputTeceros" id="numeroChasis" v-model="numeroChasis" required>
                 </div>
                 <div class="col">
                     <label for="numeroMotor">Número de motor</label>
                     <i class="fas fa-hashtag iconos"></i>
-                    <input type="number" class="form-control inputTeceros" id="numeroMotor" v-model="numeroMotor">
+                    <input type="number" class="form-control inputTeceros" id="numeroMotor" v-model="numeroMotor" required>
                 </div>
             </div>
         </div>
@@ -117,13 +125,13 @@
                 <div class="col">
                     <label for="numeroPuertas">Número de puertas</label>
                     <i class="fas fa-hashtag iconos"></i>
-                    <input type="number" class="form-control inputTeceros" id="numeroPuertas" v-model="numeroPuertas">
+                    <input type="number" class="form-control inputTeceros" id="numeroPuertas" v-model="numeroPuertas" required>
                 </div>
                            
                 <div class="col">
                    <label for="numeroPasajeros">Número de pasajeros</label>
                     <i class="fas fa-users iconos"></i>
-                    <input type="number" class="form-control inputTeceros" id="numeroPasajeros" v-model="numeroPasajeros">
+                    <input type="number" class="form-control inputTeceros" id="numeroPasajeros" v-model="numeroPasajeros" required>
                 </div>
             </div>
         </div>
@@ -133,7 +141,7 @@
                 <div class="col">
                     <label for="observaciones">Observaciones</label>
                     <i class="fas fa-hand-point-right iconos"></i>
-                    <input type="text" class="form-control inputTeceros" id="observaciones" v-model="observaciones">              
+                    <input type="text" class="form-control inputTeceros" id="observaciones" v-model="observaciones" required>              
                 </div>
                 <div class="col">
                     <label for="estado" >Estado</label>
@@ -141,14 +149,6 @@
                         <option value="1">Activo</option>
                         <option value="0">Inactivo</option>
                     </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="numeroInterno">Número Interno</label>
-                   <i class="fas fa-hashtag iconos"></i>
-                    <input type="text" class="form-control inputTeceros" id="numeroInterno" v-model="numeroInterno">       
                 </div>
             </div>
         </div>  
@@ -161,7 +161,7 @@
     </form>
     </div>
 
-     <!-- Modal editar y ver-->
+    <!-- Modal editar y ver-->
    <div class="modal fade " id="exampleModalVer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content modal-lg">
@@ -173,17 +173,21 @@
                 </div>
                 <div class="modal-body">
                     <form  method="POST" v-on:submit.prevent="putVehiculo">
+                        <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ show_alert.create.messaje }}
+                        </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
                                     <label for="placa">Placa</label>
                                     <i class="icofont-card iconos"></i>   
-                                    <input type="text" class="form-control inputTeceros" id="placa" v-model="data_edit.placa">
+                                    <input type="text" class="form-control inputTeceros" id="placa" v-model="data_edit.placa" required>
                                 </div>
                                 <div class="col">
-                                    <label for="idVehiculoMatricula">Matrícula</label>
-                                    <input type="text" class="form-control inputTeceros" id="idVehiculoMatricula" v-model="data_edit.idVehiculoMatricula">
-                                </div>
+                                 <label for="numeroInterno">Número Interno</label>
+                                    <i class="fas fa-hashtag iconos"></i>
+                                 <input type="text" class="form-control inputTeceros" id="numeroInterno" v-model="data_edit.numeroInterno" required>       
+                                 </div>
                                 <div class="col">
                                     <label for="idServicio">Servicio</label>
                                     <select class="custom-select" v-model="data_edit.idServicio" required>
@@ -237,7 +241,7 @@
                                     <div class="col">
                                         <label for="linea">Linea</label>
                                         <i class="icofont-car-alt-1 iconos"></i>
-                                        <input type="text" class="form-control inputTeceros" id="linea" v-model="data_edit.linea">
+                                        <input type="text" class="form-control inputTeceros" id="linea" v-model="data_edit.linea" required>
                                     </div>
                                 </div>
                             </div>
@@ -246,12 +250,12 @@
                                 <div class="col-4">
                                     <label for="modelo">Modelo</label>
                                     <i class="fas fa-hashtag iconos"></i>
-                                    <input type="number" class="form-control inputTeceros" id="modelo" v-model="data_edit.modelo">                    
+                                    <input type="number" class="form-control inputTeceros" id="modelo" v-model="data_edit.modelo" required>                    
                                 </div>
                                 <div class="col">
                                     <label for="numeroSerie">Número de serie</label>
                                     <i class="fas fa-hashtag iconos"></i>
-                                    <input type="number" class="form-control inputTeceros" id="numeroSerie" v-model="data_edit.numeroSerie">
+                                    <input type="number" class="form-control inputTeceros" id="numeroSerie" v-model="data_edit.numeroSerie" required>
                                 </div>
                             </div>
                         </div>
@@ -261,12 +265,12 @@
                                 <div class="col">
                                     <label for="numeroChasis">Número de chasis</label>
                                     <i class="fas fa-hashtag iconos"></i>
-                                    <input type="number" class="form-control inputTeceros" id="numeroChasis" v-model="data_edit.numeroChasis">
+                                    <input type="number" class="form-control inputTeceros" id="numeroChasis" v-model="data_edit.numeroChasis" required>
                                 </div>
                                 <div class="col">
                                     <label for="numeroMotor">Número de motor</label>
                                     <i class="fas fa-hashtag iconos"></i>
-                                    <input type="number" class="form-control inputTeceros" id="numeroMotor" v-model="data_edit.numeroMotor">
+                                    <input type="number" class="form-control inputTeceros" id="numeroMotor" v-model="data_edit.numeroMotor" required>
                                 </div>
                             </div>
                         </div>
@@ -275,13 +279,13 @@
                                 <div class="col">
                                     <label for="numeroPuertas">Número de puertas</label>
                                     <i class="fas fa-hashtag iconos"></i>
-                                    <input type="number" class="form-control inputTeceros" id="numeroPuertas" v-model="data_edit.numeroPuertas">
+                                    <input type="number" class="form-control inputTeceros" id="numeroPuertas" v-model="data_edit.numeroPuertas" required>
                                 </div>
                                         
                                 <div class="col">
                                 <label for="numeroPasajeros">Número de pasajeros</label>
                                     <i class="fas fa-users iconos"></i>
-                                    <input type="number" class="form-control inputTeceros" id="numeroPasajeros" v-model="data_edit.numeroPasajeros">
+                                    <input type="number" class="form-control inputTeceros" id="numeroPasajeros" v-model="data_edit.numeroPasajeros" required>
                                 </div>
                             </div>
                         </div>
@@ -290,7 +294,7 @@
                                 <div class="col">
                                     <label for="observaciones">Observaciones</label>
                                     <i class="fas fa-hand-point-right iconos"></i>
-                                    <input type="text" class="form-control inputTeceros" id="observaciones" v-model="data_edit.observaciones">              
+                                    <input type="text" class="form-control inputTeceros" id="observaciones" v-model="data_edit.observaciones" required>              
                                 </div>
                                 <div class="col">
                                     <label for="estado" >Estado</label>
@@ -301,13 +305,6 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="numeroInterno">Número Interno</label>
-                                    <i class="fas fa-hashtag iconos"></i>
-                                    <input type="text" class="form-control inputTeceros" id="numeroInterno" v-model="data_edit.numeroInterno">       
-                                </div>
-                            </div>
                         </div>
                         <div v-if="show_alert.edit.state" class="alert alert-danger alert-dismissible fade show"
                                 role="alert">
@@ -336,37 +333,53 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form method="POST" v-on:submit.prevent="setVehiculoMatricula">
+                        <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ show_alert.create.messaje }}
+                        </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Licencia de transito">
+                                    <label>Número de licencia </label>
+                                    <input type="number" class="form-control" placeholder="Licencia" v-model="data_matricula.numeroLicenciaTransito">
                                 </div>
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Estado de matrícula">
+                                    <label>Tipo registro </label>
+                                    <input type="number" class="form-control" v-model="data_matricula.tipoRegistro">
                                 </div>
+                                
                             </div>
                         </div>
                          <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="date" class="form-control" placeholder="Licencia de transito">
+                                    <label>Fecha de registro</label>
+                                    <input type="date" class="form-control" v-model="data_matricula.fechaRegistro">
                                 </div>
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Tipo de registro">
+                                        <label>Tercero</label>
+                                        <select class="custom-select" v-model="data_matricula.idTercero" required>
+                                            <option value="0">Seleccionar un Tercero</option>
+                                            <option v-for="idTercero in terceros" :value="idTercero.idTercero" v-text="idTercero.numeroIdentificacion" ></option>
+                                        </select>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
+                                
                                 <div class="col">
-                                <input type="text" class="form-control" placeholder="Observaciones">
+                                    <label>Estado</label>
+                                    <select class="custom-select" id="estado" v-model="data_matricula.estado" required>
+                                            <option value="1">Activo</option>
+                                            <option value="0">Inactivo</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label>Observaciones</label>
+                                <input type="text" class="form-control" placeholder="Observaciones" v-model="data_matricula.observaciones">
                                 </div>
                             </div>
-                        </div>
-                        <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show"
-                                role="alert">
-                                {{ show_alert.create.messaje }}
                         </div>
                         <div class="modal-footer centrar">
                                 <button class="btn btn-warning botonAsctualizar" :disabled="buttons.create.state">
@@ -377,9 +390,9 @@
                         </div>
                     </form>
                     <div class="container-fluid">
-                        <vue-bootstrap4-table :rows="vehiculos" :columns="columnMatricula"  :config = "config" thead-class="green-bg bg-dark text-white">
+                        <vue-bootstrap4-table :rows="matriculaList" :columns="columnMatricula"  :config = "config" thead-class="green-bg bg-dark text-white">
                             <templete slot="delete" slot-scope="props">
-                                <button type="button" class="btn btn-danger"   v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
+                                <button type="button" class="btn btn-danger"   v-on:click="deleteMatriculaVehiculo(props.row.idVehiculoMatricula)" v-bind:idVehiculo="props.row.idVehiculo">
                                 <i class="icofont-ui-delete"></i>
                                 </button>
                             </templete>
@@ -402,6 +415,9 @@
                 </div>
                 <div class="modal-body">
                     <form method="POST" v-on:submit.prevent="setVehiculoPoliza">
+                        <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ show_alert.create.messaje }}
+                        </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
@@ -431,7 +447,7 @@
                                 </div>
                                 <div class="col">
                                 <label>Número de póliza</label>
-                                <input type="number" class="form-control" v-model="data_poliza.numeroPoliza">
+                                <input type="number" class="form-control" v-model="data_poliza.numeroPoliza" required>
                                 </div>
                             </div>
                         </div>
@@ -439,11 +455,11 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Fecha de Inicio de vigencia</label>
-                                    <input type="date" class="form-control" v-model="data_poliza.fechaVigenciaInicio">
+                                    <input type="date" class="form-control" v-model="data_poliza.fechaVigenciaInicio" required>
                                 </div>
                                 <div class="col">
                                     <label>Fecha de Finalización de vigencia</label>
-                                    <input type="date" class="form-control"  v-model="data_poliza.fechaVigenciaFin" >
+                                    <input type="date" class="form-control"  v-model="data_poliza.fechaVigenciaFin" required>
                                 </div>
                             </div>
                         </div>
@@ -451,19 +467,15 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Observaciones</label>
-                                    <input type="text" class="form-control"  v-model="data_poliza.observaciones">
+                                    <input type="text" class="form-control"  v-model="data_poliza.observaciones" required>
                                 </div>
                                 <div class="col">
                                     <label>Fecha de expedición</label>
-                                    <input type="date" class="form-control"  v-model="data_poliza.fechaExpedicion">
+                                    <input type="date" class="form-control"  v-model="data_poliza.fechaExpedicion" required>
                                 </div>
                             </div>
                         </div>
-    
-                        <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show"
-                                role="alert">
-                                {{ show_alert.create.messaje }}
-                        </div>
+
                         <div class="modal-footer centrar">
                                 <button class="btn btn-warning botonAsctualizar" :disabled="buttons.create.state">
                                     <i class="icofont-ui-add"></i>
@@ -506,11 +518,14 @@
                 </div>
                 <div class="modal-body">
                    <form method="POST" v-on:submit.prevent="setVehiculoOperacion">
+                        <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ show_alert.create.messaje }}
+                        </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
                                     <label>Número de tarjeta operación</label>
-                                    <input type="text" class="form-control" v-model="data_operacion.numeroTarjetaOperacion">
+                                    <input type="text" class="form-control" v-model="data_operacion.numeroTarjetaOperacion" required>
                                 </div>
                                 <div class="col">
                                     <label for="estado" >Estado</label>
@@ -532,7 +547,7 @@
                                 </div>
                                 <div class="col">
                                     <label>Fecha de expedición</label>
-                                    <input type="date" class="form-control" v-model="data_operacion.fechaExpedicion" >
+                                    <input type="date" class="form-control" v-model="data_operacion.fechaExpedicion" required>
                                 </div>
                             </div>
                         </div>
@@ -541,11 +556,11 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Fecha de Inicio de vigencia</label>
-                                    <input type="date" class="form-control" v-model="data_operacion.fechaVigenciaInicia">
+                                    <input type="date" class="form-control" v-model="data_operacion.fechaVigenciaInicia" required>
                                 </div>
                                 <div class="col">
                                     <label>Fecha de Finalización de vigencia</label>
-                                    <input type="date" class="form-control" v-model="data_operacion.fechaVigenciaFin">
+                                    <input type="date" class="form-control" v-model="data_operacion.fechaVigenciaFin" required>
                                 </div>
                             </div>
                         </div>
@@ -553,15 +568,11 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Observaciones</label>
-                                    <input type="text" class="form-control" v-model="data_operacion.observaciones">
+                                    <input type="text" class="form-control" v-model="data_operacion.observaciones" required>
                                 </div>
                             </div>
                         </div>
-    
-                        <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show"
-                                role="alert">
-                                {{ show_alert.create.messaje }}
-                        </div>
+
                         <div class="modal-footer centrar">
                                 <button class="btn btn-warning botonAsctualizar" :disabled="buttons.create.state">
                                     <i class="icofont-ui-add"></i>
@@ -604,11 +615,14 @@
                 </div>
                 <div class="modal-body">
                     <form method="POST" v-on:submit.prevent="setVehiculoRtm">
+                        <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ show_alert.create.messaje }}
+                        </div>
                          <div class="form-group">
                             <div class="row">
                                 <div class="col">
                                     <label>Número de certificado</label>
-                                    <input type="text" class="form-control" placeholder="Certificado" v-model="data_rtm.numeroCertificado">
+                                    <input type="text" class="form-control" placeholder="Certificado" v-model="data_rtm.numeroCertificado" required>
                                 </div>
                                 <div class="col">
                                     <label for="estado" >Estado</label>
@@ -630,7 +644,7 @@
                                 </div>
                                 <div class="col">
                                     <label>Fecha de expedición</label>
-                                    <input type="date" class="form-control" v-model="data_rtm.fechaExpedicion">
+                                    <input type="date" class="form-control" v-model="data_rtm.fechaExpedicion" required>
                                 </div>
                             </div>
                         </div>
@@ -639,11 +653,11 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Fecha de Inicio de vigencia</label>
-                                    <input type="date" class="form-control" v-model="data_rtm.fechaVigenciaInicia">
+                                    <input type="date" class="form-control" v-model="data_rtm.fechaVigenciaInicia" required>
                                 </div>
                                 <div class="col">
                                     <label>Fecha de Finalización de vigencia</label>
-                                    <input type="date" class="form-control" v-model="data_rtm.fechaVigenciaFin" >
+                                    <input type="date" class="form-control" v-model="data_rtm.fechaVigenciaFin" required>
                                 </div>
                             </div>
                         </div>
@@ -651,13 +665,9 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Observaciones</label>
-                                    <input type="text" class="form-control" v-model="data_rtm.observaciones" >
+                                    <input type="text" class="form-control" v-model="data_rtm.observaciones" required >
                                 </div>
                             </div>
-                        </div>
-                        <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show"
-                                role="alert">
-                                {{ show_alert.create.messaje }}
                         </div>
                         <div class="modal-footer centrar">
                                 <button class="btn btn-warning botonAsctualizar" :disabled="buttons.create.state">
@@ -701,7 +711,9 @@
                 </div>
                 <div class="modal-body">
                     <form method="POST" v-on:submit.prevent="setVehiculoTercero">
-                        
+                        <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ show_alert.create.messaje }}
+                        </div>
                          <div class="form-group">
                             <div class="row">
                                 <div class="col">
@@ -725,11 +737,11 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Inicio</label>
-                                    <input type="date" class="form-control" v-model="data_tercero.fechaInicia">
+                                    <input type="date" class="form-control" v-model="data_tercero.fechaInicia" required>
                                 </div>
                                 <div class="col">
                                     <label>Fin</label>
-                                    <input type="date" class="form-control" v-model="data_tercero.fechaFin" >
+                                    <input type="date" class="form-control" v-model="data_tercero.fechaFin" required>
                                 </div>
                             </div>
                         </div>
@@ -737,12 +749,12 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Observaciones</label>
-                                    <input type="text" class="form-control" v-model="data_tercero.observaciones">
+                                    <input type="text" class="form-control" v-model="data_tercero.observaciones" required>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer centrar">
-                                <button class="btn btn-warning botonAsctualizar" :disabled="buttons.create.state">
+                                <button class="btn btn-warning botonAsctualizar" :disabled="buttons.create.state" >
                                     <i class="icofont-ui-add"></i>
                                     {{ buttons.create.name }}
                                     <i v-if="buttons.create.state" class="fa fa-spinner fa-spin"></i>
@@ -770,6 +782,7 @@
             </div>
         </div>
    </div>
+
     <!-- Modal Ruta -->
    <div class="modal fade " id="exampleModalRuta" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -782,6 +795,9 @@
                 </div>
                 <div class="modal-body">
                     <form method="POST" v-on:submit.prevent="setVehiculoRuta">
+                        <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ show_alert.create.messaje }}
+                        </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
@@ -800,7 +816,7 @@
                                 </div>
                                 <div class="col">
                                     <label>Observaciones</label>
-                                    <input type="text" class="form-control" placeholder="Observación" v-model="data_ruta.observaciones">
+                                    <input type="text" class="form-control" placeholder="Observación" v-model="data_ruta.observaciones" required>
                                 </div>
                             </div>
                         </div>
@@ -867,7 +883,7 @@
                     </div>
                 </templete>
                 <templete slot="matricula" slot-scope="props">
-                    <button type="button" class="btn btn-warning botonesModal" data-toggle="modal" data-target="#exampleModalMatricula" v-on:click="deleteTercero(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
+                    <button type="button" class="btn btn-warning botonesModal" data-toggle="modal" data-target="#exampleModalMatricula" v-on:click="verMatricula(props.row.idVehiculo)" v-bind:idVehiculo="props.row.idVehiculo">
                       <i class="icofont-card"></i>
                     </button>
                 </templete>
@@ -915,7 +931,7 @@ export default {
     return {
      placa:'',
      numeroInterno:'',
-     idVehiculoMatricula:'',
+     idVehiculoMatricula:1,
      idServicio:0,
      idClase:0,
      idMarca:0,
@@ -951,8 +967,9 @@ export default {
      operacionesList:[],
      rtmList:[],
      terceroList:[],
+     matriculaList:[],
      editar:false,
-      config: {
+     config: {
                 pagination: true, // default true
                 pagination_info: true, // default true
                 num_of_visibile_pagination_buttons: 7, // default 5
@@ -967,7 +984,7 @@ export default {
                         placeholder: "Buscar ",
                 },
             },
-      columns: [
+    columns: [
                 {
                     label: "Placa",
                     name: "placa",
@@ -1026,8 +1043,8 @@ export default {
             ],
     columnMatricula:[
         {
-            label: "Licencia",
-            name: "licencia",
+            label: "Tercero",
+            name: "idTercero",
             sort: false,
         },
         {
@@ -1036,18 +1053,18 @@ export default {
             sort: false,
         },
         {
-            label: "Fecha de registro",
-            name: "fecha",
+            label: "Número de licencia",
+            name: "numeroLicenciaTransito",
             sort: false,
         },
         {
-            label: "Tipo de registro",
-            name: "tipo",
+            label: "Fecha de registro",
+            name: "fechaRegistro",
             sort: false,
         },
         {
             label: "Observaciones",
-            name: "observacion",
+            name: "observaciones",
             sort: false,
         },
         {
@@ -1272,7 +1289,7 @@ export default {
                 contenedor: false ,
                 placa:'',
                 numeroInterno:'',
-                idVehiculoMatricula:'',
+                idVehiculoMatricula:1,
                 idServicio:0,
                 descripcionServicio:0,
                 descripcionServicio:'',
@@ -1355,6 +1372,18 @@ export default {
          idUsuarioCrea:1,
          idUsuarioModifica:1,
      },
+     data_matricula:{
+        idVehiculoMatricula:'',
+        idVehiculo:'',
+         idTercero:0,
+         numeroLicenciaTransito:'',
+         fechaRegistro:'',
+         tipoRegistro:'',
+         observaciones:'',
+         estado:1,
+         idUsuarioCrea:1,
+         idUsuarioModifica:1,
+     }
     };
   },
   components:{
@@ -1369,233 +1398,316 @@ export default {
       this.getCombustible();
       this.getVehiculo();
       this.getTiposPoliza();
-      this.getTercero();
+      this.getTercero(); 
       this.getRutas();
     },
   methods:{
     //INSERTAR
     //insertar vehiculo
     setVehiculo: function(){
-      this.buttons.create.name = 'Agregando ...';
-      this.buttons.create.state = true;
-      let formData = {
-        'placa':this.placa,
-        'numeroInterno':this.numeroInterno,
-        'idVehiculoMatricula':this.idVehiculoMatricula,
-        'idServicio':this.idServicio,
-        'idClase':this.idClase,
-        'idMarca':this.idMarca,
-        'idColor':this.idColor,
-        'idCarroceria':this.idCarroceria,
-        'idCombustible':this.idCombustible,
-        'linea':this.linea,
-        'modelo':this.modelo,
-        'numeroSerie':this.numeroSerie,
-        'numeroChasis':this.numeroChasis,
-        'numeroMotor':this.numeroMotor,
-        'numeroPuertas':this.numeroPuertas,
-        'numeroPasajeros':this.numeroPasajeros,
-        'observaciones':this.observaciones,
-        'estado':this.estado,
-        'idUsuarioCrea':this.idUsuarioCrea,
-        'idUsuarioModifica':this.idUsuarioModifica
-      }
-      axios.post('/setVehiculo', formData).then((response) =>{
-        this.placa='',
-        this.numeroInterno='',
-        this.idVehiculoMatricula='',
-        this.idServicio='',
-        this.idClase='',
-        this.idMarca='',
-        this.idColor='',
-        this.idCarroceria='',
-        this.idCombustible='',
-        this.linea='',
-        this.modelo='',
-        this.numeroSerie='',
-        this.numeroChasis='',
-        this.numeroMotor='',
-        this.numeroPuertas='',
-        this.numeroPasajeros='',
-        this.observaciones='',
-        this.estado='',
-        this.idUsuarioCrea=1,
-        this.idUsuarioModifica=1,
-        this.getVehiculo();
-        swal("OK!", "Vehículo creado exitosamente!", "success"); 
-            this.buttons.create.name = 'Agregar' ;
-            this.buttons.create.state = false ;
-      }).catch((error)=>{
-         swal("Lo sentimos!", "Parece que algo salio mal!", "error");
-          console.log(error.response);
-      });
+         if (this.idVehiculoMatricula == 0 || this.idServicio == 0 || this.idClase == 0  || this.idMarca == 0 || this.idColor == 0 || this.idCarroceria == 0 || this.idCombustible == 0) {
+                this.show_alert.create.state = true;
+                this.show_alert.create.messaje = 'Debe seleccionar matrícula, servicio, clase, marca, color, carroceria,  y combustible ';
+                setTimeout(() => this.show_alert.create.state = false, 2000);
+            }
+        else {
+            this.buttons.create.name = 'Agregando ...';
+            this.buttons.create.state = true;
+            let formData = {
+                'placa':this.placa,
+                'numeroInterno':this.numeroInterno,
+                'idVehiculoMatricula':this.idVehiculoMatricula,
+                'idServicio':this.idServicio,
+                'idClase':this.idClase,
+                'idMarca':this.idMarca,
+                'idColor':this.idColor,
+                'idCarroceria':this.idCarroceria,
+                'idCombustible':this.idCombustible,
+                'linea':this.linea,
+                'modelo':this.modelo,
+                'numeroSerie':this.numeroSerie,
+                'numeroChasis':this.numeroChasis,
+                'numeroMotor':this.numeroMotor,
+                'numeroPuertas':this.numeroPuertas,
+                'numeroPasajeros':this.numeroPasajeros,
+                'observaciones':this.observaciones,
+                'estado':this.estado,
+                'idUsuarioCrea':this.idUsuarioCrea,
+                'idUsuarioModifica':this.idUsuarioModifica
+            }
+            axios.post('/setVehiculo', formData).then((response) =>{
+                this.placa='',
+                this.numeroInterno='',
+                this.idVehiculoMatricula='',
+                this.idServicio='',
+                this.idClase='',
+                this.idMarca='',
+                this.idColor='',
+                this.idCarroceria='',
+                this.idCombustible='',
+                this.linea='',
+                this.modelo='',
+                this.numeroSerie='',
+                this.numeroChasis='',
+                this.numeroMotor='',
+                this.numeroPuertas='',
+                this.numeroPasajeros='',
+                this.observaciones='',
+                this.estado='',
+                this.idUsuarioCrea=1,
+                this.idUsuarioModifica=1,
+                this.getVehiculo();
+                swal("OK!", "Vehículo creado exitosamente!", "success"); 
+                    this.buttons.create.name = 'Agregar' ;
+                    this.buttons.create.state = false ;
+            }).catch((error)=>{
+                swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+                console.log(error.response);
+            });
+        }
+    },
+    
+    //insertar matricula vehiculo
+    setVehiculoMatricula: function(){
+        if (this.data_matricula.idTercero == 0 ){
+                this.show_alert.create.state = true;
+                this.show_alert.create.messaje = 'Debe seleccionar un tercero';
+                setTimeout(() => this.show_alert.create.state = false, 2000);
+            }
+       else {
+            this.buttons.create.name = 'Agregando ...';
+            this.buttons.create.state = true;
+            let formData = {
+                'idVehiculo':this.data_matricula.idVehiculo,
+                'idTercero':this.data_matricula.idTercero,
+                'observaciones':this.data_matricula.observaciones,
+                'numeroLicenciaTransito':this.data_matricula.numeroLicenciaTransito,
+                'estado':this.data_matricula.estado,
+                'tipoRegistro':this.data_matricula.tipoRegistro,
+                'fechaRegistro':this.data_matricula.fechaRegistro,
+                'idUsuarioCrea':this.data_matricula.idUsuarioCrea,
+                'idUsuarioModifica':this.data_matricula.idUsuarioModifica
+            }
+            axios.post('/vehiculoMatricula', formData).then((response) =>{
+                
+                
+                this.data_matricula.idTercero = 0,
+                this.data_matricula.observaciones = '',
+                this.data_matricula.estado = 1,
+                this.data_matricula.tipoRegistro = '',
+                this.data_matricula.fechaRegistro = '',
+                this.data_matricula.numeroLicenciaTransito = '',
+
+                this.verMatricula(this.data_matricula.idVehiculo);
+                swal("OK!", "Matricula agregada exitosamente!", "success"); 
+                    this.buttons.create.name = 'Agregar' ;
+                    this.buttons.create.state = false ;
+            }).catch((error)=>{
+                swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+                console.log(error.response);
+            });
+       }
     },
     
     //insertar Ruta vehiculo
     setVehiculoRuta: function(){
-      this.buttons.create.name = 'Agregando ...';
-      this.buttons.create.state = true;
-      let formData = {
-        'idVehiculo':this.data_ruta.idVehiculo,
-        'idRuta':this.data_ruta.idRuta,
-        'observaciones':this.data_ruta.observaciones,
-        'estado':this.data_ruta.estado,
-        'idUsuarioCrea':this.data_ruta.idUsuarioCrea,
-        'idUsuarioModifica':this.data_ruta.idUsuarioModifica
-      }
-      axios.post('/vehiculoRuta', formData).then((response) =>{
-        
-        
-        this.data_ruta.idRuta = 0,
-        this.data_ruta.observaciones = ''
-        this.data_ruta.estado = 1
-        this.verRuta(this.data_ruta.idVehiculo);
-        swal("OK!", "Ruta agregada exitosamente!", "success"); 
-            this.buttons.create.name = 'Agregar' ;
-            this.buttons.create.state = false ;
-      }).catch((error)=>{
-         swal("Lo sentimos!", "Parece que algo salio mal!", "error");
-          console.log(error.response);
-      });
+        if (this.data_ruta.idRuta == 0){
+                this.show_alert.create.state = true;
+                this.show_alert.create.messaje = 'Debe seleccionar una ruta ';
+                setTimeout(() => this.show_alert.create.state = false, 2000);
+            }
+       else {
+            this.buttons.create.name = 'Agregando ...';
+            this.buttons.create.state = true;
+            let formData = {
+                'idVehiculo':this.data_ruta.idVehiculo,
+                'idRuta':this.data_ruta.idRuta,
+                'observaciones':this.data_ruta.observaciones,
+                'estado':this.data_ruta.estado,
+                'idUsuarioCrea':this.data_ruta.idUsuarioCrea,
+                'idUsuarioModifica':this.data_ruta.idUsuarioModifica
+            }
+            axios.post('/vehiculoRuta', formData).then((response) =>{
+                
+                
+                this.data_ruta.idRuta = 0,
+                this.data_ruta.observaciones = ''
+                this.data_ruta.estado = 1
+                this.verRuta(this.data_ruta.idVehiculo);
+                swal("OK!", "Ruta agregada exitosamente!", "success"); 
+                    this.buttons.create.name = 'Agregar' ;
+                    this.buttons.create.state = false ;
+            }).catch((error)=>{
+                swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+                console.log(error.response);
+            });
+       }
     },
     
     //insertar poliza
     setVehiculoPoliza: function(){
-      this.buttons.create.name = 'Agregando ...';
-      this.buttons.create.state = true;
-      let formData = {
+        if (this.data_poliza.idPoliza == 0 || this.data_poliza.idTercero == 0 ) {
+                this.show_alert.create.state = true;
+                this.show_alert.create.messaje = 'Debe seleccionar tipo de poliza y tercero';
+                setTimeout(() => this.show_alert.create.state = false, 2000);
+            }
+        else {
+            this.buttons.create.name = 'Agregando ...';
+            this.buttons.create.state = true;
+            let formData = {
 
-        'idVehiculo':this.data_poliza.idVehiculo,
-        'idTercero':this.data_poliza.idTercero,
-        'idPoliza':this.data_poliza.idPoliza,
-        'numeroPoliza':this.data_poliza.numeroPoliza,
-        'estado':this.data_poliza.estado,
-        'fechaExpedicion':this.data_poliza.fechaExpedicion,
-        'observaciones':this.data_poliza.observaciones,
-        'fechaVigenciaInicio':this.data_poliza.fechaVigenciaInicio,
-        'fechaVegenciaFin':this.data_poliza.fechaVigenciaFin,
-        'idUsuarioCrea':this.data_poliza.idUsuarioCrea,
-        'idUsuarioModifica':this.data_poliza.idUsuarioModifica
-      }
-      axios.post('/vehiculoPoliza', formData).then((response) =>{
-        this.data_poliza.idTercero = 0,
-        this.data_poliza.idPoliza = 0,
-        this.data_poliza.numeroPoliza='',
-        this.data_poliza.observaciones = '',
-        this.data_poliza.fechaExpedicion='',
-        this.data_poliza.fechaVigenciaInicio='',
-        this.data_poliza.fechaVigenciaFin='',
-        this.data_poliza.estado = 1
-        this.verPoliza(this.data_poliza.idVehiculo);
-        swal("OK!", "Ruta agregada exitosamente!", "success"); 
-            this.buttons.create.name = 'Agregar' ;
-            this.buttons.create.state = false ;
-      }).catch((error)=>{
-         swal("Lo sentimos!", "Parece que algo salio mal!", "error");
-          console.log(error.response);
-      });
+                'idVehiculo':this.data_poliza.idVehiculo,
+                'idTercero':this.data_poliza.idTercero,
+                'idPoliza':this.data_poliza.idPoliza,
+                'numeroPoliza':this.data_poliza.numeroPoliza,
+                'estado':this.data_poliza.estado,
+                'fechaExpedicion':this.data_poliza.fechaExpedicion,
+                'observaciones':this.data_poliza.observaciones,
+                'fechaVigenciaInicio':this.data_poliza.fechaVigenciaInicio,
+                'fechaVegenciaFin':this.data_poliza.fechaVigenciaFin,
+                'idUsuarioCrea':this.data_poliza.idUsuarioCrea,
+                'idUsuarioModifica':this.data_poliza.idUsuarioModifica
+            }
+            axios.post('/vehiculoPoliza', formData).then((response) =>{
+                this.data_poliza.idTercero = 0,
+                this.data_poliza.idPoliza = 0,
+                this.data_poliza.numeroPoliza='',
+                this.data_poliza.observaciones = '',
+                this.data_poliza.fechaExpedicion='',
+                this.data_poliza.fechaVigenciaInicio='',
+                this.data_poliza.fechaVigenciaFin='',
+                this.data_poliza.estado = 1
+                this.verPoliza(this.data_poliza.idVehiculo);
+                swal("OK!", "Ruta agregada exitosamente!", "success"); 
+                    this.buttons.create.name = 'Agregar' ;
+                    this.buttons.create.state = false ;
+            }).catch((error)=>{
+                swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+                console.log(error.response);
+            });
+        }
     },
     
     //insertar operacion
     setVehiculoOperacion: function(){
-      this.buttons.create.name = 'Agregando ...';
-      this.buttons.create.state = true;
-      let formData = {
-
-        'idVehiculo':this.data_operacion.idVehiculo,
-        'idTercero':this.data_operacion.idTercero,
-        'numeroTarjetaOperacion':this.data_operacion.numeroTarjetaOperacion,
-        'fechaExpedicion':this.data_operacion.fechaExpedicion,
-        'estado':this.data_operacion.estado,
-        'fechaExpedicion':this.data_operacion.fechaExpedicion,
-        'observaciones':this.data_operacion.observaciones,
-        'fechaVigenciaInicia':this.data_operacion.fechaVigenciaInicia,
-        'fechaVigenciaFin':this.data_operacion.fechaVigenciaFin,
-        'idUsuarioCrea':this.data_operacion.idUsuarioCrea,
-        'idUsuarioModifica':this.data_operacion.idUsuarioModifica
-      }
-      axios.post('/vehiculoOperacion', formData).then((response) =>{
-        this.data_operacion.idTercero = 0,
-        this.data_operacion.numeroTarjetaOperacion='',
-        this.data_operacion.observaciones = '',
-        this.data_operacion.fechaExpedicion='',
-        this.data_operacion.fechaVigenciaInicia='',
-        this.data_operacion.fechaVigenciaFin='',
-        this.data_operacion.estado = 1
-        this.verOperacion(this.data_operacion.idVehiculo);
-        swal("OK!", "Ruta agregada exitosamente!", "success"); 
-            this.buttons.create.name = 'Agregar' ;
-            this.buttons.create.state = false ;
-      }).catch((error)=>{
-         swal("Lo sentimos!", "Parece que algo salio mal!", "error");
-          console.log(error.response);
-      });
+        if (this.data_operacion.idTercero == 0 ){
+                this.show_alert.create.state = true;
+                this.show_alert.create.messaje = 'Debe seleccionar el Tercero ';
+                setTimeout(() => this.show_alert.create.state = false, 2000);
+            }
+        else{
+            this.buttons.create.name = 'Agregando ...';
+            this.buttons.create.state = true;
+            let formData = {
+                'idVehiculo':this.data_operacion.idVehiculo,
+                'idTercero':this.data_operacion.idTercero,
+                'numeroTarjetaOperacion':this.data_operacion.numeroTarjetaOperacion,
+                'fechaExpedicion':this.data_operacion.fechaExpedicion,
+                'estado':this.data_operacion.estado,
+                'fechaExpedicion':this.data_operacion.fechaExpedicion,
+                'observaciones':this.data_operacion.observaciones,
+                'fechaVigenciaInicia':this.data_operacion.fechaVigenciaInicia,
+                'fechaVigenciaFin':this.data_operacion.fechaVigenciaFin,
+                'idUsuarioCrea':this.data_operacion.idUsuarioCrea,
+                'idUsuarioModifica':this.data_operacion.idUsuarioModifica
+            }
+            axios.post('/vehiculoOperacion', formData).then((response) =>{
+                this.data_operacion.idTercero = 0,
+                this.data_operacion.numeroTarjetaOperacion='',
+                this.data_operacion.observaciones = '',
+                this.data_operacion.fechaExpedicion='',
+                this.data_operacion.fechaVigenciaInicia='',
+                this.data_operacion.fechaVigenciaFin='',
+                this.data_operacion.estado = 1
+                this.verOperacion(this.data_operacion.idVehiculo);
+                swal("OK!", "Operación agregada exitosamente!", "success"); 
+                    this.buttons.create.name = 'Agregar' ;
+                    this.buttons.create.state = false ;
+            }).catch((error)=>{
+                swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+                console.log(error.response);
+            });
+        }
     },
     
     //insertar RTM
     setVehiculoRtm: function(){
-      this.buttons.create.name = 'Agregando ...';
-      this.buttons.create.state = true;
-      let formData = {
+        if (this.data_rtm.idTercero == 0){
+                this.show_alert.create.state = true;
+                this.show_alert.create.messaje = 'Debe seleccionar un tercero ';
+                setTimeout(() => this.show_alert.create.state = false, 2000);
+            }
+       else {
+            this.buttons.create.name = 'Agregando ...';
+            this.buttons.create.state = true;
+            let formData = {
 
-        'idVehiculo':this.data_rtm.idVehiculo,
-        'idTercero':this.data_rtm.idTercero,
-        'numeroCertificado':this.data_rtm.numeroCertificado,
-        'fechaExpedicion':this.data_rtm.fechaExpedicion,
-        'estado':this.data_rtm.estado,
-        'fechaExpedicion':this.data_rtm.fechaExpedicion,
-        'observaciones':this.data_rtm.observaciones,
-        'fechaVigenciaInicia':this.data_rtm.fechaVigenciaInicia,
-        'fechaVigenciaFin':this.data_rtm.fechaVigenciaFin,
-        'idUsuarioCrea':this.data_rtm.idUsuarioCrea,
-        'idUsuarioModifica':this.data_rtm.idUsuarioModifica
-      }
-      axios.post('/vehiculoRtm', formData).then((response) =>{
-        this.data_rtm.idTercero = 0,
-        this.data_rtm.numeroCertificado='',
-        this.data_rtm.observaciones = '',
-        this.data_rtm.fechaExpedicion='',
-        this.data_rtm.fechaVigenciaInicia='',
-        this.data_rtm.fechaVigenciaFin='',
-        this.data_rtm.estado = 1
-        this.verRtm(this.data_rtm.idVehiculo);
-        swal("OK!", "Rtm agregada exitosamente!", "success"); 
-            this.buttons.create.name = 'Agregar' ;
-            this.buttons.create.state = false ;
-      }).catch((error)=>{
-         swal("Lo sentimos!", "Parece que algo salio mal!", "error");
-          console.log(error.response);
-      });
+                'idVehiculo':this.data_rtm.idVehiculo,
+                'idTercero':this.data_rtm.idTercero,
+                'numeroCertificado':this.data_rtm.numeroCertificado,
+                'fechaExpedicion':this.data_rtm.fechaExpedicion,
+                'estado':this.data_rtm.estado,
+                'fechaExpedicion':this.data_rtm.fechaExpedicion,
+                'observaciones':this.data_rtm.observaciones,
+                'fechaVigenciaInicia':this.data_rtm.fechaVigenciaInicia,
+                'fechaVigenciaFin':this.data_rtm.fechaVigenciaFin,
+                'idUsuarioCrea':this.data_rtm.idUsuarioCrea,
+                'idUsuarioModifica':this.data_rtm.idUsuarioModifica
+            }
+            axios.post('/vehiculoRtm', formData).then((response) =>{
+                this.data_rtm.idTercero = 0,
+                this.data_rtm.numeroCertificado='',
+                this.data_rtm.observaciones = '',
+                this.data_rtm.fechaExpedicion='',
+                this.data_rtm.fechaVigenciaInicia='',
+                this.data_rtm.fechaVigenciaFin='',
+                this.data_rtm.estado = 1
+                this.verRtm(this.data_rtm.idVehiculo);
+                swal("OK!", "Rtm agregada exitosamente!", "success"); 
+                    this.buttons.create.name = 'Agregar' ;
+                    this.buttons.create.state = false ;
+            }).catch((error)=>{
+                swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+                console.log(error.response);
+            });
+       }
     },
     
     //insertar Tercero
     setVehiculoTercero: function(){
-      this.buttons.create.name = 'Agregando ...';
-      this.buttons.create.state = true;
-      let formData = {
-        'idVehiculo':this.data_tercero.idVehiculo,
-        'idTercero':this.data_tercero.idTercero,
-        'estado':this.data_tercero.estado,
-        'observaciones':this.data_tercero.observaciones,
-        'fechaInicia':this.data_tercero.fechaInicia,
-        'fechaFin':this.data_tercero.fechaFin,
-        'idUsuarioCrea':this.data_tercero.idUsuarioCrea,
-        'idUsuarioModifica':this.data_tercero.idUsuarioModifica
-      }
-      axios.post('/vehiculoTercero', formData).then((response) =>{
-        this.data_tercero.idTercero = 0,
-        this.data_tercero.observaciones = '',
-        this.data_tercero.fechaInicia='',
-        this.data_tercero.fechaFin='',
-        this.data_tercero.estado = 1
-        this.verTercero(this.data_tercero.idVehiculo);
-        swal("OK!", "Tercero agregada exitosamente!", "success"); 
-            this.buttons.create.name = 'Agregar' ;
-            this.buttons.create.state = false ;
-      }).catch((error)=>{
-         swal("Lo sentimos!", "Parece que algo salio mal!", "error");
-          console.log(error.response);
-      });
+      if (this.data_tercero.idTercero == 0){
+                this.show_alert.create.state = true;
+                this.show_alert.create.messaje = 'Debe seleccionar un tercero ';
+                setTimeout(() => this.show_alert.create.state = false, 2000);
+            }
+       else {
+            this.buttons.create.name = 'Agregando ...';
+            this.buttons.create.state = true;
+            let formData = {
+                'idVehiculo':this.data_tercero.idVehiculo,
+                'idTercero':this.data_tercero.idTercero,
+                'estado':this.data_tercero.estado,
+                'observaciones':this.data_tercero.observaciones,
+                'fechaInicia':this.data_tercero.fechaInicia,
+                'fechaFin':this.data_tercero.fechaFin,
+                'idUsuarioCrea':this.data_tercero.idUsuarioCrea,
+                'idUsuarioModifica':this.data_tercero.idUsuarioModifica
+            }
+            axios.post('/vehiculoTercero', formData).then((response) =>{
+                this.data_tercero.idTercero = 0,
+                this.data_tercero.observaciones = '',
+                this.data_tercero.fechaInicia='',
+                this.data_tercero.fechaFin='',
+                this.data_tercero.estado = 1
+                this.verTercero(this.data_tercero.idVehiculo);
+                swal("OK!", "Tercero agregado exitosamente!", "success"); 
+                    this.buttons.create.name = 'Agregar' ;
+                    this.buttons.create.state = false ;
+            }).catch((error)=>{
+                swal("Lo sentimos!", "Parece que algo salio mal!", "error");
+                console.log(error.response);
+            });
+       }
     },
     
     //LISTAR
@@ -1616,6 +1728,7 @@ export default {
      axios.get('/tercero-resource').then((response) => {
                 if (response.data.length > 0) {
                     this.terceros = response.data;
+                    console.log(this.terceros);
                 } else {
                     this.message = 'No hay registro de terceros!!!';
                 }
@@ -1756,12 +1869,29 @@ export default {
             });
         },
 
+     //ver ruta
+     verMatricula: function (idVehiculo){
+            axios.get('/vehiculo-listMatricula/'+idVehiculo).then((response) => {
+                if (response.data.length > 0) {
+                    this.matriculaList  = response.data;
+                    
+                } else {
+                    
+                    this.matriculaList  = [];
+                    this.message = 'No hay registro de vehículos!!!';
+                }
+                this.data_matricula.idVehiculo = idVehiculo;
+            }).catch((error) => {
+                console.log(error.response);
+            });
+    },
+
     //ver ruta
      verRuta: function (idVehiculo){
             axios.get('/vehiculo-listarRuta/'+idVehiculo).then((response) => {
                 if (response.data.length > 0) {
                     this.rutasList  = response.data;
-                    this.data_ruta.idVehiculo = response.data[0].idVehiculo;
+                    this.data_ruta.idVehiculo = idVehiculo;
                 } else {
                     
                     this.rutasList  = [];
@@ -1777,11 +1907,12 @@ export default {
             axios.get('/vehiculo-listarPoliza/'+idVehiculo).then((response) => {
                 if (response.data.length > 0) {
                     this.polizasList  = response.data;
-                    this.data_poliza.idVehiculo = response.data[0].idVehiculo;
+                    
                 } else {
                      this.polizasList  = [];
                     this.message = 'No hay registro de vehículos!!!';
                 }
+                this.data_poliza.idVehiculo = idVehiculo;
             }).catch((error) => {
                 console.log(error.response);
             });
@@ -1792,11 +1923,12 @@ export default {
             axios.get('/vehiculo-listarOperacion/'+idVehiculo).then((response) => {
                 if (response.data.length > 0) {
                     this.operacionesList  = response.data;
-                    this.data_operacion.idVehiculo = response.data[0].idVehiculo;
+                    
                 } else {
                     this.operacionesList  = [];
                     this.message = 'No hay registro de vehículos!!!';
                 }
+                this.data_operacion.idVehiculo = idVehiculo;
             }).catch((error) => {
                 console.log(error.response);
             });
@@ -1806,11 +1938,12 @@ export default {
             axios.get('/vehiculo-listarRtm/'+idVehiculo).then((response) => {
                 if (response.data.length > 0) {
                     this.rtmList  = response.data;
-                    this.data_rtm.idVehiculo = response.data[0].idVehiculo;
+                    
                 } else {
                      this.rtmList  = [];
                     this.message = 'No hay registro de vehículos!!!';
                 }
+                this.data_rtm.idVehiculo = idVehiculo;
             }).catch((error) => {
                 console.log(error.response);
             });
@@ -1820,11 +1953,12 @@ export default {
             axios.get('/vehiculo-listarTerceros/'+idVehiculo).then((response) => {
                 if (response.data.length > 0) {
                      this.terceroList  = response.data;
-                    this.data_tercero.idVehiculo = response.data[0].idVehiculo;
+                    
                 } else {
                     this.terceroList  = [];
                     this.message = 'No hay registro de vehículos!!!';
                 }
+                this.data_tercero.idVehiculo = idVehiculo;
             }).catch((error) => {
                 console.log(error.response);
             });
@@ -1846,7 +1980,7 @@ export default {
                      }
                     swal({
                         title: "Estado de vehículo",
-                        text: "Este tercero quedará " + nomState + " en tus registros!",
+                        text: "Este vehìculo quedará " + nomState + " en tus registros!",
                         icon: "success",
                         dangerMode: false,
                     }).then((willDelete) => {
@@ -1895,7 +2029,7 @@ export default {
             axios.put('/updateVehiculo/' + this.data_edit.idVehiculo, formData).then((response) => {
                 this.buttons.edit.name = 'Actualizar';
                 this.buttons.edit.state = false;
-                swal("OK!", "Tercero actualizado exitosamente!", "success");
+                swal("OK!", "Vehículo actualizado exitosamente!", "success");
                 $("#exampleModalVer").modal('hide');
                 this.getVehiculo();
             }).catch((error) => {
@@ -1921,7 +2055,7 @@ export default {
     deleteVehiculo: function(idVehiculo){
         swal({
          title: "Estas seguro ?",
-         text: "Este Vehiculo quedará eliminado de tus registros!",
+         text: "Este Vehículo quedará eliminado de tus registros!",
          icon: "warning",
          buttons: ["Cancelar","Confirmar"],
          dangerMode: true,
@@ -1929,7 +2063,7 @@ export default {
          if (willDelete) {
              this.data_edit.idVehiculo = idVehiculo;
              axios.delete('/vehiculo-delete/' + this.data_edit.idVehiculo).then((response) => {
-                 swal("OK!", "El tercero se elimino exitosamente", "success");
+                 swal("OK!", "El vehículo se elimino exitosamente", "success");
                  this.getVehiculo();
              }).catch((error)=>{
                  swal("Lo sentimos", "Parece que algo salio mal!", "error");
@@ -2043,7 +2177,27 @@ export default {
      });
     },
     
-
+    //eliminar matricula
+    deleteMatriculaVehiculo: function(idVehiculo){
+        swal({
+         title: "Estas seguro ?",
+         text: "Esta matrícula quedará eliminado de tus registros!",
+         icon: "warning",
+         buttons: ["Cancelar","Confirmar"],
+         dangerMode: true,
+      }).then((willDelete) => {
+         if (willDelete) {
+             this.data_matricula.idVehiculoMatricula = idVehiculo;
+             axios.delete('/vehiculoMatricula-delete/' + this.data_matricula.idVehiculoMatricula).then((response) => {
+                 swal("OK!", "La matricula se elimino exitosamente", "success");
+                 this.verMatricula(this.data_matricula.idVehiculo);
+             }).catch((error)=>{
+                 swal("Lo sentimos", "Parece que algo salio mal!", "error");
+             });
+         }
+     });
+    },
+    
 
  }
 }

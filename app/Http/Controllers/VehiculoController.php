@@ -7,6 +7,7 @@ use App\Vehiculopoliza;
 use App\Vehiculooperacion;
 use App\Vehiculortm;
 use App\Vehiculotercero;
+use App\VehiculoMatricula;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -80,6 +81,22 @@ class VehiculoController extends Controller
    ]);
     return response()->json($vehiculoRuta);
    }
+   //insertar matricula
+   public function vehiculoMatricula(Request $request){
+    $vehiculomatricula = vehiculomatricula::create([
+        'idVehiculo'=>$request->idVehiculo,
+        'idTercero'=>$request->idTercero,
+        'observaciones'=>$request->observaciones,
+        'estado'=>$request->estado,
+        'numeroLicenciaTransito'=>$request->numeroLicenciaTransito,
+        'tipoRegistro'=>$request->tipoRegistro,
+        'fechaRegistro'=>$request->fechaRegistro,
+        'idUsuarioCrea'=>$request->idUsuarioCrea,
+        'idUsuarioModifica'=>$request->idUsuarioModifica
+        ]);
+    return response()->json($vehiculomatricula);
+   }
+
    
    //insertar ruta
    public function vehiculoPoliza(Request $request){
@@ -173,6 +190,15 @@ class VehiculoController extends Controller
     {
         $query = Vehiculoruta::join('ruta', 'ruta.idRuta', 'vehiculoruta.idRuta')
             ->select('vehiculoruta.*' , 'ruta.descripcion as nombreRuta')
+            ->where('idVehiculo',$idVehiculo)
+            ->get();
+        return response()->json($query);
+    }
+
+    public function verMatricula($idVehiculo)
+    {
+        $query = VehiculoMatricula::join('tercero', 'tercero.idTercero', 'vehiculomatricula.idTercero')
+            ->select('vehiculomatricula.*' , 'tercero.numeroIdentificacion')
             ->where('idVehiculo',$idVehiculo)
             ->get();
         return response()->json($query);
@@ -317,6 +343,12 @@ class VehiculoController extends Controller
      public function destroyTercero($idVehiculo)
      {
          Vehiculotercero::destroy($idVehiculo);
+     }
+
+     //eliminar matricula de vehiculo
+     public function destroyMatricula($idVehiculo)
+     {
+        VehiculoMatricula::destroy($idVehiculo);
      }
 
 

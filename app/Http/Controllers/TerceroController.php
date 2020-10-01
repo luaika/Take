@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Tercero;
+use App\Departamento;
+use App\Municipio;
 use Illuminate\Http\Request;
 
 class TerceroController extends Controller
@@ -22,13 +24,7 @@ class TerceroController extends Controller
         ->get();
         return response()->json($lista);
 
-       /*  $query = Tercero::where([
-
-        $query = Tercero::where([
-        pb/Tercero
-            ['estado', 1],
-        ])->orderBy('nombres')->get();
-        return response()->json($query); */
+      
     }
 
     /**
@@ -39,6 +35,20 @@ class TerceroController extends Controller
     public function create()
     {
         //
+    }
+
+    public function departamento()
+    {
+        $query = Departamento::where([
+            ['estado', 1],
+        ])->orderBy('descripcion')->get();
+        return response()->json($query);
+       
+    }
+
+    public function municipio($idDepartamento){
+        $query = Municipio::where('idDepartamento','=',$idDepartamento)->orderBy('descripcion')->get();
+        return response()->json($query);
     }
 
     /**
@@ -92,8 +102,16 @@ class TerceroController extends Controller
      */
     public function edit($idTercero)
     {
-        $query= Tercero::find($idTercero);
-        return response()->json($query);
+        $lista = \DB::table('tercero')
+        ->join('municipio', 'municipio.idMunicipio', '=','tercero.idMunicipio')
+        ->join('departamento', 'departamento.idDepartamento', '=','municipio.idDepartamento')
+        ->select('tercero.*' , 'municipio.descripcion as municipio','departamento.descripcion as departamento')
+        ->where('idTercero',$idTercero)
+        ->get();
+        return response()->json($lista);
+        
+        /* $query= Tercero::find($idTercero);
+        return response()->json($query); */
     }
 
     /**

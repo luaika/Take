@@ -73,7 +73,7 @@
                 <div class="form-group col-md-6">
                   <label for="idMunicipio">Ciudad</label>
                   <i class="fas fa-city iconos"></i>
-                  <input type="text" class="form-control inputTeceros" id="idMunicipio" v-model="data_edit.idMunicipio" >
+                  <input type="text" class="form-control inputTeceros"  v-model="data_edit.municipio" >
                 </div>
               </div>
               <div class="row">
@@ -187,11 +187,18 @@
                 </div>
               </div>
               <div class="row">
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-6">
                     <label for="email">Correo</label>
                     <i class="far fa-envelope iconos"></i>
                     <input type="email" class="form-control inputTeceros" id="email" v-model="data_edit.email" >
                 </div>
+                <div class="form-group col-md-6">
+                   <label for="estado" >Estado</label>
+                    <select class="custom-select" id="estado" v-model="data_edit.estado" required>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>                   
+                  </div>
               </div>
             </div>
             <hr>
@@ -232,6 +239,9 @@
 
   <div class="card cardRutas">
     <form method="POST" v-on:submit.prevent="setTercero" enctype="multipart/form-data">
+      <div v-if="show_alert.create.state" class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ show_alert.create.messaje }}
+      </div>
       <div class=" primerContenedor">
         <div class="row">
           <div class="form-group col-md-6">
@@ -298,41 +308,43 @@
             <input type="text" class="form-control inputTeceros" id="direccion" v-model="direccion">
           </div>
           <div class="form-group col-md-6">
-            <label for="idMunicipio">Ciudad</label>
-            <i class="fas fa-city iconos"></i>
-            <input type="text" class="form-control inputTeceros" id="idMunicipio" v-model="idMunicipio" >
-          </div>
-        </div>
-      </div>
-      <hr>
-      <div class="segundoContenedor">
-        <div class="row">
-          <div class="form-group col-md-6">
-            <label for="razonSocial">Razon social</label>
-            <i class="fas fa-city iconos"></i>
-            <input type="text" class="form-control inputTeceros"  id="razonSocial" v-model="razonSocial" >
-          </div>
-          <div class="form-group col-md-6">
             <label for="nombreComercial">Nombre comercial</label>
             <i class="fas fa-city iconos"></i>
             <input type="text" class="form-control inputTeceros" id="nombreComercial" v-model="nombreComercial" >
           </div>
         </div>
-          
         <div class="row">
-      <!-- <div class="form-group col-md-6">
-        <label>Tipo Tercero</label>
-        <select class="custom-select" v-model="" required>
-          <option></option>
-        </select>
-      </div> -->
-          <div class="form-group col-md-4">
-            <label for="estado" >Estado</label>
+            <div class="form-group col-md-6">
+              <label for="direccion">Departamento</label>
+              <select class="custom-select"  >
+                  <option value="0">Seleccionar un Departamento</option>
+                  <option id="idDepartamento" v-for="idDepartamento in departamentos" v-on:click="getMunicipio(idDepartamento.idDepartamento)" v-bind:idDepartamento="idDepartamento">{{idDepartamento.descripcion}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="idMunicipio">Municipio</label>
+              <select class="custom-select" v-model="idMunicipio" required>
+                  <option value="0">Seleccionar un Municipio</option>
+                  <option v-for="idMunicipio in municipios" :value="idMunicipio.idMunicipio" v-text="idMunicipio.descripcion"></option>
+              </select>
+            </div>
+        </div>
+      </div>
+      <hr>
+      <div class="segundoContenedor form-group">
+        <div class="row">
+          <div class="col">
+            <label for="razonSocial">Razon social</label>
+            <i class="fas fa-city iconos"></i>
+            <input type="text" class="form-control inputTeceros"  id="razonSocial" v-model="razonSocial" >
+          </div>
+          <div class="col">
+            <label>Estado</label>
             <select class="custom-select" id="estado" v-model="estado" required>
               <option value="1">Activo</option>
               <option value="0">Inactivo</option>
-            </select>
-          </div>
+            </select>          
+            </div>
         </div>
       </div>
     
@@ -398,12 +410,15 @@ export default {
       email:'',
       foto:'ninguna',
       direccion:'',
-      idMunicipio:'',
+      idMunicipio:0,
       estado:1,
+      idDepartamento:0,
       idUsuarioCrea:1,
       idUsuarioModifica:1,
       imagenMiniatura:'',
       terceros:[],
+      departamentos:[],
+      municipios:[],
       buttons: {
         create: {
           name: 'Agregar',
@@ -435,22 +450,22 @@ export default {
                 {
                     label: "Nombre",
                     name: "nombres",
-                    sort: true,
+                    sort: false,
                 },
                 {
-                    label: "Identificaciòn",
+                    label: "Identificación",
                     name: "numeroIdentificacion",
-                    sort: true,
+                    sort: false,
                 },
                 {
                     label: "Celular",
                     name: "celular",
-                    sort: true,
+                    sort: false,
                 },
                 {
-                    label: "Direcciòn",
+                    label: "Dirección",
                     name: "direccion",
-                    sort: true,
+                    sort: false,
                 },
                 {
                     label: "Ver",
@@ -506,8 +521,13 @@ export default {
                 direccion:'',
                 idMunicipio:'',
                 estado:'',
+                municipio:'',
+                departamento:'',
+                nombreMunicipio:'',
                 idUsuarioModifica:1,
                 idUsuarioCrea:1,
+                departamentos:[],
+                municipios:[],
             },
     }
   },
@@ -517,10 +537,17 @@ export default {
   
    mounted(){
       this.getTercero();
+      this.getDepartamento();
     },
   methods:{
     //agregar tercero
     setTercero: function(){
+       if (this.idMunicipio == 0) {
+          this.show_alert.create.state = true;
+          this.show_alert.create.messaje = 'Debe seleccionar Departamento y Municipio ';
+          setTimeout(() => this.show_alert.create.state = false, 2000);
+            }
+      else {
        this.buttons.create.name = 'Agregando ...';
        this.buttons.create.state = true;
           let formData = {
@@ -570,6 +597,7 @@ export default {
                 swal("Lo sentimos!", "Parece que algo salio mal!", "error");
                 console.log(error.response);
             });
+      }
     },
 
     //listar terceros
@@ -586,28 +614,51 @@ export default {
             });
     },
     
+    //listar departamentos
+    getDepartamento:function(){
+      axios.get('/departamento').then((response) => {
+                this.departamentos = response.data;
+                console.log(this.departamentos);
+            }).catch((error) => {
+                    console.log(error.response);
+            });
+    },
+
+    //listar municipio
+    getMunicipio:function(idDepartamento){
+      console.log(idDepartamento);
+     axios.get('/municipio/'+idDepartamento).then((response) => {
+             this.municipios = response.data; 
+        }).catch((error) => {
+              console.log(error.response);
+        });
+    },
+    
     //ver tercero
     verTercero: function (idTercero) {
             this.data_edit.idTercero = idTercero ;
             axios.get('/tercero-resource/'+idTercero+'/edit').then((response) => {
                 this.data_edit.contenedor= true;
                 this.data_edit.show= false;
+                console.log(response.data);
                 let data = response.data;
-                this.data_edit.numeroIdentificacion = data['numeroIdentificacion'];
-                this.data_edit.tipoIdentificacion = data['tipoIdentificacion'];
-                this.data_edit.nombres = data['nombres'];
-                this.data_edit.apellidos = data['apellidos'];
-                this.data_edit.razonSocial = data['razonSocial'];
-                this.data_edit.nombreComercial = data['nombreComercial'];
-                this.data_edit.genero = data['genero'];
-                this.data_edit.fechaNacimiento = data['fechaNacimiento'];
-                this.data_edit.telefono = data['telefono'];
-                this.data_edit.celular = data['celular'];
-                this.data_edit.email = data['email'];
-                this.data_edit.foto = data['foto'];
-                this.data_edit.direccion = data['direccion'];
-                this.data_edit.idMunicipio = data['idMunicipio'];
-                this.data_edit.estado = data['estado'];               
+                this.data_edit.numeroIdentificacion = response.data[0].numeroIdentificacion;
+                this.data_edit.tipoIdentificacion = response.data[0].tipoIdentificacion;
+                this.data_edit.nombres = response.data[0].nombres;
+                this.data_edit.apellidos = response.data[0].apellidos;
+                this.data_edit.razonSocial = response.data[0].razonSocial;
+                this.data_edit.nombreComercial = response.data[0].nombreComercial;
+                this.data_edit.genero = response.data[0].genero;
+                this.data_edit.fechaNacimiento = response.data[0].fechaNacimiento;
+                this.data_edit.telefono = response.data[0].telefono;
+                this.data_edit.celular = response.data[0].celular;
+                this.data_edit.email =response.data[0].email;
+                this.data_edit.foto = response.data[0].foto;
+                this.data_edit.direccion = response.data[0].direccion;
+                this.data_edit.idMunicipio = response.data[0].idMunicipio;
+                this.data_edit.municipio = response.data[0].municipio;
+                this.data_edit.departamento = response.data[0].departamento;
+                this.data_edit.estado = response.data[0].estado;               
             }).catch((error) => {
                 console.log(error);
             });

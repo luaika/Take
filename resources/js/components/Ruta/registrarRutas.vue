@@ -232,7 +232,7 @@ export default {
                     per_page: 5, // default 10
                     per_page_options:  [5,  10,  20,  30],
                 filas_seleccionables: true,
-                card_title: "USUARIOS",
+                card_title: "RUTAS",
                 show_refresh_button: false,
                 show_reset_button: false,
                 global_search: {
@@ -317,6 +317,7 @@ export default {
             axios.get('/barrio-resource').then((response) => {
                // console.log('response_ '+JSON.stringify(response.data));
                 this.barrio = response.data;
+                console.log(this.barrio);
             }).catch((error) => {
                     console.log(error.response);
             });

@@ -49,12 +49,14 @@ Route::resource('/barrio-resource', 'BarrioController');
 Route::resource('/vehiculo-resource', 'VehiculoController');
 Route::delete('/vehiculo-delete/{idVehiculo}', 'VehiculoController@destroy');
 Route::post('/stateVehiculo','VehiculoController@stateVehiculo');
+Route::post('/vehiculoMatricula','VehiculoController@vehiculoMatricula');
 Route::post('/vehiculoRuta','VehiculoController@vehiculoRuta');
 Route::post('/vehiculoPoliza','VehiculoController@vehiculoPoliza');
 Route::post('/vehiculoOperacion','VehiculoController@vehiculoOperacion');
 Route::post('/vehiculoRtm','VehiculoController@vehiculoRtm');
 Route::post('/vehiculoTercero','VehiculoController@vehiculoTercero');
 Route::put('/updateVehiculo/{idVehiculo}', 'VehiculoController@update');
+Route::get('/vehiculo-listMatricula/{idVehiculo}', 'VehiculoController@verMatricula');
 Route::get('/vehiculo-listarPoliza/{idVehiculo}', 'VehiculoController@verPolizas');
 Route::get('/vehiculo-listarRuta/{idVehiculo}', 'VehiculoController@verRutas');
 Route::get('/vehiculo-listarOperacion/{idVehiculo}', 'VehiculoController@verOperaciones');
@@ -66,6 +68,7 @@ Route::delete('/vehiculoPoliza-delete/{idVehiculoPolia}', 'VehiculoController@de
 Route::delete('/vehiculoOperacion-delete/{idVehiculo}', 'VehiculoController@destroyOperacion');
 Route::delete('/vehiculoRtm-delete/{idVehiculo}', 'VehiculoController@destroyRtm');
 Route::delete('/vehiculoTercero-delete/{idVehiculo}', 'VehiculoController@destroyTercero');
+Route::delete('/vehiculoMatricula-delete/{idVehiculo}', 'VehiculoController@destroyMatricula');
 //marca
 Route::resource('/marca-resource', 'MarcaController');
 //servicio
@@ -97,6 +100,8 @@ Route::delete('/tercero-delete/{idTercero}', 'TerceroController@destroy');
 Route::put('/updateTercero/{idTercero}', 'TerceroController@update');
 Route::view('/registrarTercero','Home');
 Route::post('/setTercero', 'TerceroController@store');
+Route::get('/departamento', 'TerceroController@departamento');
+Route::get('/municipio/{idDepartamento}', 'TerceroController@municipio');
 
 //Usuario
 Route::post('/setUsuario', 'UsuarioController@store');
