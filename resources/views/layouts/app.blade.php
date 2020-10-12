@@ -42,7 +42,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-  <script src=" https://unpkg.com/vue-bootstrap4-table@1.1.10/dist/vue-bootstrap4-table.min.js " crossorigin = " anonymous " > </script>    
+  <script src=" https://unpkg.com/vue-bootstrap4-table@1.1.10/dist/vue-bootstrap4-table.min.js " crossorigin = " anonymous " > </script>
 
 </head>
 
@@ -93,7 +93,7 @@
               <li><a href="#"><i class="icofont-checked"></i><span>Reporte de calificación <br> del servicio</span></a></li>
             </ul>
           </li>
-          <li><a href="#"><i class="icofont-dashboard-web"></i>Estadísticas y comparativos</a></li>
+          <li><a href="/estadisticas"><i class="icofont-dashboard-web"></i>Estadísticas y comparativos</a></li>
         </ul>
       </nav>
 
