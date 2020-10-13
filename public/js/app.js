@@ -11940,12 +11940,30 @@ var render = function() {
                           }
                         })
                       ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _vm.show_alert.edit.state
-                    ? _c(
-                        "div",
+                    ]),
+                    _vm._v(" "),
+                    _vm.show_alert.edit.state
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "alert alert-danger alert-dismissible fade show",
+                            attrs: { role: "alert" }
+                          },
+                          [
+                            _vm._v(
+                              "\r\n                            " +
+                                _vm._s(_vm.show_alert.edit.messaje) +
+                                "\r\n                        "
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+
                         {
                           staticClass:
                             "alert alert-danger alert-dismissible fade show",
@@ -11953,13 +11971,65 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                          " +
-                              _vm._s(_vm.show_alert.edit.messaje) +
-                              "\n                      "
-                          )
+
+                            "\r\n                                " +
+                              _vm._s(_vm.buttons.edit.name) +
+                              "\r\n                                "
+                          ),
+                          _vm.buttons.edit.state
+                            ? _c("i", { staticClass: "fa fa-spinner fa-spin" })
+                            : _vm._e()
                         ]
                       )
-                    : _vm._e(),
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "card cardRutas" }, [
+          _c(
+            "form",
+            {
+              attrs: { method: "POST", id: "form-ruta" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.setRuta($event)
+                }
+              }
+            },
+            [
+              _vm.show_alert.create.state
+                ? _c(
+                    "div",
+                    {
+                      staticClass:
+                        "alert alert-danger alert-dismissible fade show",
+                      attrs: { role: "alert" }
+                    },
+                    [
+                      _vm._v(
+                        "\r\n                " +
+                          _vm._s(_vm.show_alert.create.messaje) +
+                          "\r\n            "
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "form-group col-md-6" }, [
+                  _c("label", { attrs: { for: "codigo" } }, [_vm._v("Codigo")]),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "fas fa-asterisk iconosRutas" }),
+
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-footer" }, [
                     _c(
