@@ -24,20 +24,19 @@ class RutaController extends Controller
             ->select('ruta.*' , 'barrio.nombreBarrio as barrio_inicia')
             ->get();
             return response()->json($lista);
-            
+
         case 1:
             $query = Ruta::where([
             ['estado', 1],
             ])->get();
             return response()->json($query);
-            
+
         case 2:
             $btermina = Barrio::join('ruta', 'ruta.idBarrioTermina', 'barrio.idBarrio')
             ->select('barrio.nombreBarrio' , 'ruta.descripcion','barrio.nombreBarrio as barrio_termina')
             ->get();
             return response()->json($btermina);
     }
-
 
       //orderBy('descripcion')
 
@@ -63,16 +62,16 @@ class RutaController extends Controller
     {
         $ruta = Ruta::create([
 
-            'codigo' => $request->codigo,
-            'descripcion' => $request->descripcion,
-            'idBarrioInicia' => $request->idBarrioInicia,
-            'idBarrioTermina' => $request->idBarrioTermina,
-            'estado' => $request->estado,
-            'idUsuarioModifica' => $request->idUsuarioModifica,
-            'idUsuarioCrea' => $request->idUsuarioCrea
-            ]);
+            'codigo'=>$request->codigo,
+            'descripcion'=>$request->descripcion,
+            'idBarrioInicia'=>$request->idBarrioInicia,
+            'idBarrioTermina'=>$request->idBarrioTermina,
+            'estado'=>$request->estado,
+            'idUsuarioModifica'=>$request->idUsuarioModifica,
+            'idUsuarioCrea'=>$request->idUsuarioCrea
+        ]);
 
-         return response()->json($ruta);
+        return response()->json($ruta);
     }
 
     /**
@@ -120,7 +119,7 @@ class RutaController extends Controller
             'codigo' => $request->codigo,
             'descripcion' =>$request->descripcion,
             'estado' =>  $request->estado,
-           
+
         ]);
         return response()->json($ruta);
     }

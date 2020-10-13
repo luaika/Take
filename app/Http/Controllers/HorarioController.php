@@ -15,7 +15,15 @@ class HorarioController extends Controller
      */
     public function index()
     {
-        return response()->json(Horario::all()) ;
+        //return response()->json(Horario::all()) ;
+
+       $lista = Horario::join('ruta', 'ruta.idRuta', 'horario.idRuta')
+        ->select('horario.*' , 'ruta.descripcion as ruta')
+        ->get();
+        return response()->json($lista);
+
+        //('vehiculo', 'vehiculo.idvehiculo', 'horario.idVehiculo')
+        //('horario.*' , 'vehiculo.placa as vehiculo')
     }
 
     /**
@@ -64,9 +72,10 @@ class HorarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($idHorario)
     {
-        //
+        $query= Horario::find($idHorario);
+        return response()->json($query);
     }
 
     /**
@@ -76,9 +85,21 @@ class HorarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idHorario)
     {
-        //
+        $attributes = [
+            'hora' => 'Hora',
+            'fecha' => 'Fecha',
+        ];
+
+        $horario = Horario::find($idHorario);
+
+        $horario->update([
+            'hora' => $request->hora,
+            'fecha' =>$request->fecha,
+
+        ]);
+        return response()->json($horario);
     }
 
     /**
@@ -87,8 +108,17 @@ class HorarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($idHorario)
     {
-        //
+        Horario::destroy($idHorario);
+    }
+
+    //cambiar estado
+    public function stateRuta(Request $request){
+        $horario = Horario::find($request->idHorario);
+        $horario->estado = $request->estado;
+        $horario->save();
+        return response()->json($horario);
+
     }
 }

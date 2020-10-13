@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Tercero;
+use App\Departamento;
+use App\Municipio;
 use Illuminate\Http\Request;
 
 class TerceroController extends Controller
@@ -15,10 +17,14 @@ class TerceroController extends Controller
     public function index()
     {
 
-        $query = Tercero::where([
-            ['estado', 1],
-        ])->orderBy('nombres')->get();
-        return response()->json($query);
+
+        $lista = \DB::table('tercero')
+        ->join('municipio', 'municipio.idMunicipio', '=','tercero.idMunicipio')
+        ->select('tercero.*' , 'municipio.descripcion as municipio')
+        ->get();
+        return response()->json($lista);
+
+      
     }
 
     /**
@@ -29,6 +35,20 @@ class TerceroController extends Controller
     public function create()
     {
         //
+    }
+
+    public function departamento()
+    {
+        $query = Departamento::where([
+            ['estado', 1],
+        ])->orderBy('descripcion')->get();
+        return response()->json($query);
+       
+    }
+
+    public function municipio($idDepartamento){
+        $query = Municipio::where('idDepartamento','=',$idDepartamento)->orderBy('descripcion')->get();
+        return response()->json($query);
     }
 
     /**
@@ -80,9 +100,18 @@ class TerceroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($idTercero)
     {
-        //
+        $lista = \DB::table('tercero')
+        ->join('municipio', 'municipio.idMunicipio', '=','tercero.idMunicipio')
+        ->join('departamento', 'departamento.idDepartamento', '=','municipio.idDepartamento')
+        ->select('tercero.*' , 'municipio.descripcion as municipio','departamento.descripcion as departamento')
+        ->where('idTercero',$idTercero)
+        ->get();
+        return response()->json($lista);
+        
+        /* $query= Tercero::find($idTercero);
+        return response()->json($query); */
     }
 
     /**
@@ -92,9 +121,30 @@ class TerceroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idTercero)
     {
-        //
+        $tercero=Tercero::find($idTercero);
+
+        $tercero->update([
+            'numeroIdentificacion' => $request->numeroIdentificacion,
+            'tipoIdentificacion' => $request->tipoIdentificacion,
+            'nombres' => $request->nombres,
+            'apellidos' => $request->apellidos,
+            'razonSocial' => $request->razonSocial,
+            'nombreComercial' => $request->nombreComercial,
+            'genero' => $request->genero,
+            'fechaNacimiento' => $request->fechaNacimiento,
+            'telefono' => $request->telefono,
+            'celular' => $request->celular,
+            'email' => $request->email,
+            'direccion' => $request->direccion,
+            'idMunicipio' => $request->idMunicipio,
+            'foto' => $request->foto,
+            'estado' => $request->estado,
+            'idUsuarioCrea' => $request->idUsuarioCrea,
+            'idUsuarioModifica' => $request->idUsuarioModifica,
+        ]);
+        return response()->json($tercero);
     }
 
     /**
@@ -103,8 +153,17 @@ class TerceroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($idTercero)
     {
-        //
+        Tercero::destroy($idTercero);
+    }
+
+
+    //cambiar estado
+    public function stateTerceros(Request $request){
+        $tercero = Tercero::find($request->idTercero);
+        $tercero->estado = $request->estado;
+        $tercero->save();
+        return response()->json($tercero);
     }
 }
