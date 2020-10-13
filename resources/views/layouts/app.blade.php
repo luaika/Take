@@ -71,21 +71,7 @@
 
             </ul>
           </li>
-          <li><a href="#"><i class="icofont-ui-settings"></i><span>Rodamiento</span> <i class="icofont-simple-down iconoSubMenu"></i></a>
-            <ul>
-             <li><a href="/consultarRutasVehiculos"><i class="icofont-look"></i><span>Consultar rutas y vehículos</span></a></li>
-            </ul>
-          </li>
-          <li><a href="#"><i class="icofont-settings"></i><span>Desapachos</span> <i class="icofont-simple-down iconoSubMenu"></i></a>
-            <ul>
-              <li><a href="#"><i class="icofont-location-pin"></i><span>Rutas y vehiculos <br> en tiempo real</span></a></li>
-              <li><a href="/despacho"><i class="bx bx-file-blank"></i> <span>Despacho </span></a></li>
-              <li><a href="/cantidadPasajeros"><i class="icofont-people"></i><span>Cantidad de pasajeros <br> movilizados</span></a></li>
-              <li><a href="#"><i class="icofont-data"></i><span>Comparativos e históricos</span></a></li>
-              <li><a href="#"><i class="icofont-checked"></i><span>Reporte de calificación <br> del servicio</span></a></li>
-            </ul>
-          </li>
-          <li><a href="#"><i class="icofont-dashboard-web"></i>Estadísticas y comparativos</a></li>
+          <li><a href="#"><i class="icofont-dashboard-web"></i>Reporte de Calificación</a></li>
         </ul>
       </nav>
 
@@ -135,8 +121,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
   <script  src="https://unpkg.com/vue-bootstrap4-table@1.1.10/dist/vue-bootstrap4-table.min.js"  crossorigin="anonymous"></script>
   <script src="http://demo.itsolutionstuff.com/plugin/jquery.js"></script>
-  
-
   @yield('js')
   @include('sweet::alert')
 </body>

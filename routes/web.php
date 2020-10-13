@@ -13,18 +13,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layouts/inicio');
+Route::get('/registro', function () {
+    return view('auth/register');
 });
 
-Route::resource('/login', 'LoginController');
+Route::resource('/', 'LoginController');
+Route::post('login', 'Auth\LoginController@login')->name('login');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 //inicio de administrador
 Route::get('/inicio', function () {
     return view('layouts/inicio');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
 Route::get('my-notification/{type}', 'HomeController@myNotification');
 
 Route::view('/crearHorario', 'Home');
@@ -115,6 +118,8 @@ Route::view('/consultarRutasVehiculos','Home');
 Route::view('/despacho','Home');
 Route::view('/cantidadPasajeros','Home');
 Route::view('/registrarUsuarios','Home');
+
+
 
 
 
