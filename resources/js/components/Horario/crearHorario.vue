@@ -95,7 +95,7 @@
                     </button>
                 </templete>
                 <templete slot="delete" slot-scope="props">
-                    <button type="button" class="btn btn-danger"  v-on:click="deleteHorario(props.row.idRuta)" v-bind:idRuta="props.row.idHorario">
+                    <button type="button" class="btn btn-danger"  v-on:click="deleteHorario(props.row.idHorario)" v-bind:idHorario="props.row.idHorario">
                        <i class="icofont-ui-delete"></i>
                     </button>
                 </templete>
@@ -239,7 +239,6 @@ export default {
                     this.buttons.create.name = 'Agregar' ;
                     this.buttons.create.state = false ;
                     this.getListHorario();
-                    $("#Horario").modal('hide');
                 }).catch((error) => {
                     swal("Lo sentimos!", "Parece que algo salio mal!", "error");
                     console.log(error.response);

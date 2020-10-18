@@ -2172,8 +2172,6 @@ __webpack_require__.r(__webpack_exports__);
           _this.buttons.create.state = false;
 
           _this.getListHorario();
-
-          $("#Horario").modal('hide');
         })["catch"](function (error) {
           swal("Lo sentimos!", "Parece que algo salio mal!", "error");
           console.log(error.response);
@@ -8843,10 +8841,13 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-danger",
-                        attrs: { type: "button", idRuta: props.row.idHorario },
+                        attrs: {
+                          type: "button",
+                          idHorario: props.row.idHorario
+                        },
                         on: {
                           click: function($event) {
-                            return _vm.deleteHorario(props.row.idRuta)
+                            return _vm.deleteHorario(props.row.idHorario)
                           }
                         }
                       },
