@@ -8910,7 +8910,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
       _c("h5", { staticClass: "modal-title", attrs: { id: "" } }, [
-        _vm._v("Editar Horario")
+        _vm._v("Editar Usuarios")
       ]),
       _vm._v(" "),
       _c(

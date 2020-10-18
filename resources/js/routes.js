@@ -10,11 +10,10 @@ import Despacho from './components/Vehiculo/despacho';
 import CantidadPasajeros from './components/Pasajero/cantidadPasajeros';
 import RegistrarUsuarios from './components/Tercero/registrarUsuarios';
 
-
 Vue.use(VueRouter);
 
 const router =  new VueRouter({
-    
+
     mode: 'history',
     routes: [
         {

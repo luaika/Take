@@ -24,6 +24,7 @@ Route::get('/inicio', function () {
     return view('layouts/inicio');
 });
 
+Route::get('/estadisticas','EstadisticasController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('my-notification/{type}', 'HomeController@myNotification');
 
@@ -56,7 +57,6 @@ Route::resource('/vehiculo-resource', 'VehiculoController');
 Route::post('/setHorario', 'HorarioController@store');
 Route::put('/updateHorario/{idHorario}', 'HorarioController@update');
 Route::delete('/horario-delete/{idHorario}', 'HorarioController@destroy');
-
 Route::resource('/horario-resource', 'HorarioController');
 
 //Tercero
