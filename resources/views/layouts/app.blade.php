@@ -35,15 +35,10 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-
-
-	<script src="http://demo.itsolutionstuff.com/plugin/jquery.js"></script>
-
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
   <script src=" https://unpkg.com/vue-bootstrap4-table@1.1.10/dist/vue-bootstrap4-table.min.js " crossorigin = " anonymous " > </script>
-
 </head>
 
 <body>
@@ -71,29 +66,15 @@
           <li><a href="/inicio"><i class="bx bx-home"></i> Inicio</a></li>
           <li><a href="#"><i class="icofont-address-book"></i><span>Parámetros</span> <i class="icofont-simple-down iconoSubMenu"></i></a>
             <ul>
-              <li><a href="/registrarTercero"><i class="icofont-users-alt-5"></i><span>Registrar terceros</span></a></li>
-              <li><a href="/registrarUsuarios"><i class="icofont-users-alt-5"></i><span>Registrar Usuarios</span></a></li>
-              <li><a href="/registrarVehiculo"><i class="icofont-bus"></i><span>Registrar vehículos</span></a></li>
-              <li><a href="/registrarRutas"><i class="icofont-location-pin"></i><span>Registrar rutas</span></a></li>
-              <li><a href="/crearHorario"><i class="icofont-calendar"></i><span>Registrar horarios</span></a></li>
+              <li><a href="/registrarTercero"><i class="icofont-users-alt-4"></i><span>Registrar tercero</span></a></li>
+              <li><a href="/registrarUsuarios"><i class="icofont-user-alt-4"></i><span>Registrar Usuario</span></a></li>
+              <li><a href="/registrarVehiculo"><i class="icofont-bus"></i><span>Registrar vehículo</span></a></li>
+              <li><a href="/registrarRutas"><i class="icofont-location-pin"></i><span>Registrar ruta</span></a></li>
+              <li><a href="/crearHorario"><i class="icofont-calendar"></i><span>Registrar horario</span></a></li>
 
             </ul>
           </li>
-          <li><a href="#"><i class="icofont-ui-settings"></i><span>Rodamiento</span> <i class="icofont-simple-down iconoSubMenu"></i></a>
-            <ul>
-             <li><a href="/consultarRutasVehiculos"><i class="icofont-look"></i><span>Consultar rutas y vehículos</span></a></li>
-            </ul>
-          </li>
-          <li><a href="#"><i class="icofont-settings"></i><span>Desapachos</span> <i class="icofont-simple-down iconoSubMenu"></i></a>
-            <ul>
-              <li><a href="#"><i class="icofont-location-pin"></i><span>Rutas y vehiculos <br> en tiempo real</span></a></li>
-              <li><a href="/despacho"><i class="bx bx-file-blank"></i> <span>Despacho </span></a></li>
-              <li><a href="/cantidadPasajeros"><i class="icofont-people"></i><span>Cantidad de pasajeros <br> movilizados</span></a></li>
-              <li><a href="#"><i class="icofont-data"></i><span>Comparativos e históricos</span></a></li>
-              <li><a href="#"><i class="icofont-checked"></i><span>Reporte de calificación <br> del servicio</span></a></li>
-            </ul>
-          </li>
-          <li><a href="/estadisticas"><i class="icofont-dashboard-web"></i>Estadísticas y comparativos</a></li>
+          <li><a href="#"><i class="icofont-dashboard-web"></i>Reporte de Calificación</a></li>
         </ul>
       </nav>
 
@@ -125,6 +106,7 @@
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
   <!-- Vendor JS Files -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> -->
   <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
   <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('plugins/jquery.easing/jquery.easing.min.js')}}"></script>
@@ -136,8 +118,12 @@
   <script src="{{asset('plugins/owl.carousel/owl.carousel.min.js')}}"></script>
   <script src="{{asset('plugins/typed.js/typed.min.js')}}"></script>
   <script src="{{asset('plugins/aos/aos.js')}}"></script>
+
   <!-- Template Main JS File -->
   <script src="{{asset ('js/main.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+  <script  src="https://unpkg.com/vue-bootstrap4-table@1.1.10/dist/vue-bootstrap4-table.min.js"  crossorigin="anonymous"></script>
+  <script src="http://demo.itsolutionstuff.com/plugin/jquery.js"></script>
   @yield('js')
   @include('sweet::alert')
 </body>

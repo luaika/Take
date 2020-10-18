@@ -18,6 +18,7 @@ class Ruta extends Model
         'idBarrioInicia',
         'idBarrioTermina',
         'estado',
+        'recorridoRuta',
         'idUsuarioCrea',
         'idUsuarioModifica',
     ];

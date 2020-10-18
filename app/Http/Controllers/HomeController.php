@@ -23,9 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('layouts/inicio');
     }
-    public function myNotification($type)
+        public function myNotification($type)
 
     {
 

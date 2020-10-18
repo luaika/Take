@@ -35,6 +35,7 @@
                                     <option value="0">Inactivo</option>
                                 </select>
                                 </div>
+
                             </div>
                         </div>
                         <div v-if="show_alert.edit.state" class="alert alert-danger alert-dismissible fade show"
@@ -104,26 +105,18 @@
                     <option value="0">Inactivo</option>
                 </select>
                 </div>
-
-                <div class="form-group col-md-6">
-                <label for="idUsuarioModifica">idUsuarioModifica</label>
-                <i class="fas fa-map-marked-alt iconosRutas"></i>
-                <input type="text" id="idUsuarioModifica" class="form-control inputRutas" v-model="idUsuarioModifica" required>
-                </div>
-
+                  <div class="form-group col-md-6">
+                        <label for="recorridoRuta">Recorrido de Ruta</label>
+                        <i class="icofont-location-pin iconosRutas"></i>
+                        <input type="text" class="form-control inputRutas" id="recorridoRuta" v-model="recorridoRuta" required>
+                    </div>
             </div>
-            <div class="row">
-                <div class="form-group col-md-4">
-                <label for="idUsuarioCrea">idUsuarioCrea</label>
-                <i class="fas fa-map-marked-alt iconosRutas"></i>
-                <input type="text" id="idUsuarioCrea" class="form-control inputRutas" v-model="idUsuarioCrea" required>
-                </div>
-            </div>
+
             <div class="btn-width">
                 <button class="btn  botonCancelar botones" v-on:click="cancelarRegistro()" >Cancelar</button>
                 <button class="btn botonAgregar botones"  :disabled="buttons.create.state">{{ buttons.create.name }}</button>
             </div>
-        </form>
+       </form>
         </div>
     <!-- End crear ruta -->
         <br>
@@ -155,7 +148,7 @@
         </div>
     </div>
 
-    </div>
+</div>
 
 </template>
 
@@ -174,8 +167,9 @@ export default {
                 idBarrioInicia : 0,
                 idBarrioTermina : 0,
                 estado :1,
-                idUsuarioModifica: '',
-                idUsuarioCrea:'',
+                recorridoRuta:'',
+                idUsuarioModifica: 1,
+                idUsuarioCrea:1,
                 barrioTermina:[],
                 show_barrios:true,
                 barrio:[],
@@ -220,7 +214,12 @@ export default {
                 {
                     label: "Destino",
                     name: "barrio_termina",
-                    sort: true,
+                    sort: false,
+                },
+                {
+                    label: "Recorrido",
+                    name: "recorridoRuta",
+                    sort: false,
                 },
                 {
                     label: "Editar",
@@ -245,7 +244,7 @@ export default {
                     per_page: 5, // default 10
                     per_page_options:  [5,  10,  20,  30],
                 filas_seleccionables: true,
-                card_title: "USUARIOS",
+                card_title: "RUTAS",
                 show_refresh_button: false,
                 show_reset_button: false,
                 global_search: {
@@ -282,43 +281,34 @@ export default {
             }
             else {
                 this.buttons.create.name = 'Agregando ...';
-                this.buttons.create.state = true;
+                this.buttons.create.state = false;
                 let formData = {
                     'codigo': this.codigo,
                     'descripcion': this.descripcion,
                     'idBarrioInicia': this.idBarrioInicia,
                     'idBarrioTermina': this.idBarrioTermina,
                     'estado': this.estado,
+                    'recorridoRuta':this.recorridoRuta,
                     'idUsuarioModifica': this.idUsuarioModifica,
                     'idUsuarioCrea': this.idUsuarioModifica
                 }
 
             axios.post('/setRuta', formData).then((response) =>{
 
-                this.codigo = '';
-                this.descripcion = '';
-                this.idBarrioInicia = 0;
-                this.idBarrioTermina = 0;
-                this.estado = 1;
-                this.idUsuarioModifica = '';
-                this.idUsuarioCrea = '';
-
-                    swal("OK!", "Ruta creada exitosamente!", "success");
+                    this.codigo = '';
+                    this.descripcion = '';
+                    this.idBarrioInicia = 0;
+                    this.idBarrioTermina = 0;
+                    this.estado = 1;
+                    this.recorridoRuta = '';
+                    this.idUsuarioModifica = 1;
+                    this.idUsuarioCrea = 1;
                     this.buttons.create.name = 'Agregar' ;
-
                     this.buttons.create.state = false ;
-
-                    this.getRutas();
-                    this.getBarrioTermina();
-                    $("#Ruta").modal('hide');
-
-
                 swal("OK!", "Ruta creada exitosamente!", "success");
                 this.buttons.create.name = 'Agregar' ;
                 this.buttons.create.state = false ;
-                     this.getRutaTermina();
-                    $("#Ruta").modal('hide');
-
+                this.getRutaTermina();
                 }).catch((error) => {
                     swal("Lo sentimos!", "Parece que algo salio mal!", "error");
                     console.log(error.response);
@@ -328,19 +318,20 @@ export default {
        },
         //cancelar registro
         cancelarRegistro:function (){
-            this.codigo = '';
+                this.codigo = '';
                 this.descripcion = '';
                 this.idBarrioInicia = 0;
                 this.idBarrioTermina = 0;
                 this.estado = 1;
-                this.idUsuarioModifica = '';
-                this.idUsuarioCrea = '';
+                this.idUsuarioModifica = 1;
+                this.idUsuarioCrea = 1;
         },
         // Lista Barrios
         getListBarrios: function () {
             axios.get('/barrio-resource').then((response) => {
                // console.log('response_ '+JSON.stringify(response.data));
                 this.barrio = response.data;
+                console.log(this.barrio);
             }).catch((error) => {
                     console.log(error.response);
             });
@@ -353,7 +344,7 @@ export default {
                     this.barrioTermina = response.data;
                     this.getRutas();
                 } else {
-                    this.message = 'No hay registro de cupones!!!';
+                    this.message = 'No hay registro de rutas!!!';
 
                 }
             }).catch((error) => {
@@ -393,7 +384,6 @@ export default {
                 this.data_edit.codigo = data['codigo'];
                 this.data_edit.descripcion = data['descripcion'];
                 this.data_edit.estado = data['estado'];
-
             }).catch((error) => {
                 console.log(error);
             });
@@ -468,13 +458,13 @@ export default {
                  if(estado == 1 ){
                      var nomState = "Activo";
                  }else{
-                     var nomState = "Inactivo";
+                     var nomState = "Inactiva";
                  }
                 swal({
                     title: "Estado de ruta",
                     text: "Esta ruta quedará " + nomState + " en tus registros!",
                     icon: "success",
-                    dangerMode: true,
+                    dangerMode: false,
                 }).then((willDelete) => {
                     if (willDelete) {
                         axios.post('/stateRuta', formData).then((response) => {

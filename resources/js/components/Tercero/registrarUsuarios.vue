@@ -388,7 +388,7 @@ export default {
                     title: "Estado de usuario",
                     text: "Este usuario quedará " + nomState + " en tus registros!",
                     icon: "success",
-                    dangerMode: true,
+                    dangerMode: false,
                 }).then((willDelete) => {
                     if (willDelete) {
                         axios.post('/stateUsuario', formData).then((response) => {
