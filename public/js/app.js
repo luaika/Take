@@ -2275,7 +2275,6 @@ __webpack_require__.r(__webpack_exports__);
         _this7.buttons.edit.name = 'Actualizar';
         _this7.buttons.edit.state = false;
         swal("OK!", "Horario actualizado exitosamente!", "success");
-        $("#ModalEditHorario").modal('hide');
 
         _this7.getListHorario();
       })["catch"](function (error) {

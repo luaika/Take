@@ -316,7 +316,6 @@ export default {
             });
         },
 
-
          //cancelar registro
         cancelarRegistro:function (){
             this.show_alert.create.state = false;
@@ -339,7 +338,6 @@ export default {
                 this.buttons.edit.name = 'Actualizar';
                 this.buttons.edit.state = false;
                 swal("OK!", "Horario actualizado exitosamente!", "success");
-                $("#ModalEditHorario").modal('hide');
                 this.getListHorario();
 
             }).catch((error) => {
