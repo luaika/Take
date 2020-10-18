@@ -111,7 +111,7 @@ class HorarioController extends Controller
     }
 
     //cambiar estado
-    public function stateRuta(Request $request){
+    public function stateHorario(Request $request){
         $horario = Horario::find($request->idHorario);
         $horario->estado = $request->estado;
         $horario->save();
