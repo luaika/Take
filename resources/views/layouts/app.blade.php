@@ -36,6 +36,13 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<<<<<<< HEAD
+=======
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+  <script src=" https://unpkg.com/vue-bootstrap4-table@1.1.10/dist/vue-bootstrap4-table.min.js " crossorigin = " anonymous " > </script>
+
+>>>>>>> pb/Tercero
 </head>
 
 <body>

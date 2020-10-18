@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use App\Horario;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,15 +15,12 @@ class HorarioController extends Controller
      */
     public function index()
     {
-        //return response()->json(Horario::all()) ;
-
-       $lista = Horario::join('ruta', 'ruta.idRuta', 'horario.idRuta')
-        ->select('horario.*' , 'ruta.descripcion as ruta')
+       $lista = \DB::table('horario')
+        ->join('vehiculo', 'vehiculo.idvehiculo', '=', 'horario.idVehiculo')
+        ->join('ruta', 'ruta.idRuta', '=', 'horario.idRuta')
+        ->select('horario.*' , 'ruta.descripcion as ruta','vehiculo.placa as vehiculo')
         ->get();
         return response()->json($lista);
-
-        //('vehiculo', 'vehiculo.idvehiculo', 'horario.idVehiculo')
-        //('horario.*' , 'vehiculo.placa as vehiculo')
     }
 
     /**
