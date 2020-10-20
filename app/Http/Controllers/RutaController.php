@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ruta;
-use App\Barrio;
+use App\Barrios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,7 +32,7 @@ class RutaController extends Controller
             return response()->json($query);
 
         case 2:
-            $btermina = Barrio::join('ruta', 'ruta.idBarrioTermina', 'barrio.idBarrio')
+            $btermina = Barrios::join('ruta', 'ruta.idBarrioTermina', 'barrio.idBarrio')
             ->select('barrio.nombreBarrio' , 'ruta.descripcion','barrio.nombreBarrio as barrio_termina')
             ->get();
             return response()->json($btermina);

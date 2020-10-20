@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Barrio;
+use App\Barrios;
 use Illuminate\Http\Request;
 
-class BarrioController extends Controller
+class BarriosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class BarrioController extends Controller
      */
     public function index()
     {
-        $query = Barrio::where([
+        $query = Barrios::where([
             ['estado', 1],
         ])->orderBy('nombreBarrio')->get();
         return response()->json($query);

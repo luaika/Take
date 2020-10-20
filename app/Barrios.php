@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Barrio extends Model
+class Barrios extends Model
 {
 
     protected $table = 'barrio';
@@ -16,6 +16,8 @@ class Barrio extends Model
         'idMunicipio',
         'nombreBarrio',
         'estado',
+        'latitud',
+        'longitud',
         'fechaCrea',
         'fechaModifica',
         'idUsuarioCrea',

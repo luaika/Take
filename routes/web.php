@@ -49,7 +49,7 @@ Route::post('/stateRuta','RutaController@stateRuta');
 //Route::get('changeStatus', 'UserController@ChangeRutaStatus');
 
 //Barrio
-Route::resource('/barrio-resource', 'BarrioController');
+Route::resource('/barrio-resource', 'BarriosController');
 
 //Vehiculo
 Route::resource('/vehiculo-resource', 'VehiculoController');

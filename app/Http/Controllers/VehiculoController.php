@@ -97,7 +97,7 @@ class VehiculoController extends Controller
     return response()->json($vehiculomatricula);
    }
 
-   
+
    //insertar ruta
    public function vehiculoPoliza(Request $request){
     $vehiculoPoliza = Vehiculopoliza::create([
@@ -166,8 +166,8 @@ class VehiculoController extends Controller
         ]);
             return response()->json($vehiculoTercero);
        }
-    
-   
+
+
 
     /**
      * Display the specified resource.
@@ -266,7 +266,7 @@ class VehiculoController extends Controller
             ->where('idVehiculo',$idVehiculo)
             ->get();
         return response()->json($query);
-       
+
     }
     /**
      * Update the specified resource in storage.
