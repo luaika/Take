@@ -74,7 +74,7 @@
 
             </ul>
           </li>
-          <li><a href="#"><i class="icofont-dashboard-web"></i>Reporte de Calificación</a></li>
+          <li><a href="/estadisticas"><i class="icofont-dashboard-web"></i>Reporte de Calificación</a></li>
         </ul>
       </nav>
 

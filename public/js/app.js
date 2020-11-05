@@ -3889,7 +3889,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       idTercero: 0,
-      estado: 1,
+      estado: 0,
       codigo: '',
       clave: '',
       show_tercero: true,
@@ -3916,17 +3916,13 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       columns: [{
-        label: "idTercero",
+        label: "Tercero",
         name: "idTercero",
         sort: false
       }, {
         label: "Codigo",
         name: "codigo",
         sort: false
-      }, {
-        label: "Clave",
-        name: "clave",
-        sort: true
       }, {
         label: "Editar",
         name: "edit",
@@ -3979,7 +3975,7 @@ __webpack_require__.r(__webpack_exports__);
     setUsuario: function setUsuario() {
       var _this = this;
 
-      if (this.idTercero == 0 || this.estado == 1) {
+      if (this.idTercero == 0 || this.estado == 0) {
         this.show_alert.create.state = true;
         this.show_alert.create.messaje = 'Debe seleccionar tercero y estado ';
         setTimeout(function () {
@@ -4003,6 +3999,8 @@ __webpack_require__.r(__webpack_exports__);
           _this.buttons.create.name = 'Agregar';
           _this.buttons.create.state = false;
           $("#Usuario").modal('hide');
+
+          _this.getListUsuario();
         })["catch"](function (error) {
           swal("Lo sentimos!", "Parece que algo salio mal!", "error");
           console.log(error.response);
@@ -11925,11 +11923,11 @@ var render = function() {
                             }
                           },
                           [
-                            _c("option", { attrs: { value: "1" } }, [
+                            _c("option", { attrs: { value: "0" } }, [
                               _vm._v("Activo")
                             ]),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "0" } }, [
+                            _c("option", { attrs: { value: "1" } }, [
                               _vm._v("Inactivo")
                             ])
                           ]

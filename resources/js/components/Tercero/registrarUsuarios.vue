@@ -17,8 +17,8 @@
                                 <div class="form-group col-md-12">
                                 <label>Estado</label>
                                 <select class="custom-select" v-model="data_edit.estado" required>
-                                    <option value="1">Activo</option>
-                                    <option value="0">Inactivo</option>
+                                    <option value="0">Activo</option>
+                                    <option value="1">Inactivo</option>
                                 </select>
                                 </div>
                                 <div class="form-group col-md-12">
@@ -143,7 +143,7 @@ export default {
      data(){
             return {
                 idTercero : 0,
-                estado : 1,
+                estado : 0,
                 codigo: '',
                 clave:'',
                 show_tercero:true,
@@ -172,7 +172,7 @@ export default {
                 },
             columns: [
                 {
-                    label: "idTercero",
+                    label: "Tercero",
                     name: "idTercero",
                     sort: false,
                 },
@@ -180,11 +180,6 @@ export default {
                     label: "Codigo",
                     name: "codigo",
                     sort: false,
-                },
-                {
-                    label: "Clave",
-                    name: "clave",
-                    sort: true,
                 },
                  {
                     label: "Editar",
@@ -240,7 +235,7 @@ export default {
     },
     methods:{
        setUsuario:function() {
-            if (this.idTercero == 0 || this.estado == 1) {
+            if (this.idTercero == 0 || this.estado == 0) {
                 this.show_alert.create.state = true;
                 this.show_alert.create.messaje = 'Debe seleccionar tercero y estado ';
                 setTimeout(() => this.show_alert.create.state = false, 2000);
@@ -264,6 +259,7 @@ export default {
                     this.buttons.create.name = 'Agregar' ;
                     this.buttons.create.state = false ;
                     $("#Usuario").modal('hide');
+                    this.getListUsuario();
                 }).catch((error) => {
                     swal("Lo sentimos!", "Parece que algo salio mal!", "error");
                     console.log(error.response);
@@ -317,7 +313,7 @@ export default {
                 let data = response.data;
                 this.data_edit.codigo = data['codigo'];
                 this.data_edit.estado = data['estado'];
-                  this.data_edit.clave = data['clave'];
+                this.data_edit.clave = data['clave'];
 
             }).catch((error) => {
                 console.log(error);
